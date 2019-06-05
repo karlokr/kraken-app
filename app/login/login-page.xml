@@ -1,0 +1,14 @@
+<Page class="page" navigatingTo="onNavigatingTo" xmlns="http://schemas.nativescript.org/tns.xsd">
+
+    <GridLayout rows="*,160" class="page page-login" backgroundImage="res://mesh">
+        <FlexboxLayout row="0" class="company-logo-container">
+            <Image src="https://krakentraining.com/wp-content/uploads/2019/02/LS-Design-KrakenTraining-Primary-NEW-LOGO-STR-CON-RESULTStransparent.png" class="company-logo"></Image>
+        </FlexboxLayout>
+        <StackLayout row= "1" class="flexbox-item login-container">
+            <Label class="t-18 login-text" text="Log into your account!"></Label>
+            <Button class="btn btn-login btn-rounded-sm font-weight-bold t-18" tap="{{ login }}" text="Log in"></Button>      
+            <Button class="btn btn-signup btn-rounded-sm font-weight-bold t-18" tap="{{ login }}" text="Sign up"></Button>   
+        </StackLayout>
+    </GridLayout>
+
+</Page>
