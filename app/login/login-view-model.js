@@ -1,39 +1,75 @@
 const observableModule = require("tns-core-modules/data/observable");
-const Kinvey = require("kinvey-nativescript-sdk").Kinvey;
+const dialogsModule = require("tns-core-modules/ui/dialogs");
+const userService = require("~/services/user-service");
 const topmost = require("tns-core-modules/ui/frame").topmost;
 
 function LoginViewModel() {
     const viewModel = observableModule.fromObject({
-
-        login: function () {
-            var that = this;
-            var activeUser = Kinvey.User.getActiveUser();
-            if (activeUser == null) {
-                Kinvey.User.loginWithMIC()
-                    .then(function (user) {
-                        activeUser = user;
-                        that._navigateHome(activeUser);
-                        console.log("user: " + JSON.stringify(user));
-                    })
-                    .catch(function (error) {
-                        alert("An error occurred. Check your Kinvey settings.");
-                        console.log("error: " + error);
-                    });
+        email: "",
+        password: "",
+        confirmPassword: "",
+        isLoggingIn: true,
+        toggleForm() {
+            this.isLoggingIn = !this.isLoggingIn;
+        },
+        submit() {
+            if (this.email.trim() === "" || this.password.trim() === "") {
+                alert("Please provide both an email address and password.");
+                return;
             }
-            else {
-                this._navigateHome(activeUser);
+
+            if (this.isLoggingIn) {
+                this.login();
+            } else {
+                this.register();
             }
         },
-
-        _navigateHome: function (user) {
-            topmost().navigate({
-                moduleName: "home/home-page",
-                context: user.data['_socialIdentity'].kinveyAuth.id,
-                animated: true,
-                transition: {
-                    name: "slideTop",
-                    duration: 350,
-                    curve: "ease"
+        login() {
+            userService.login({
+                email: this.email,
+                password: this.password
+            }).then(() => {
+                topmost().navigate({
+                    moduleName: "./home/home-page",
+                    clearHistory: true
+                });
+            })
+            .catch((e) => {
+                alert("Unfortunately we could not find your account.");
+            });
+        },
+        register() {
+            if (this.password != this.confirmPassword) {
+                alert("Your passwords do not match.");
+                return;
+            }
+            userService.register({
+                email: this.email,
+                password: this.password
+            }).then(() => {
+                    alert("Your account was successfully created. You can now login.");
+                    this.isLoggingIn = true;
+                })
+                .catch(() => {
+                    alert("Unfortunately we were unable to create your account.");
+                });
+        },
+        forgotPassword() {
+            dialogsModule.prompt({
+                title: "Forgot Password",
+                message: "Enter the email address you used to register for APP NAME to reset your password.",
+                inputType: "email",
+                defaultText: "",
+                okButtonText: "Ok",
+                cancelButtonText: "Cancel"
+            }).then((data) => {
+                if (data.result) {
+                    userService.resetPassword(data.text.trim())
+                      .then(() => {
+                        alert("Your password was successfully reset. Please check your email for instructions on choosing a new password.");
+                      }).catch(() => {
+                        alert("Unfortunately, an error occurred resetting your password.");
+                      });
                 }
             });
         }

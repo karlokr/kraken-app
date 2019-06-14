@@ -1,16 +1,9 @@
+const frameModule = require("tns-core-modules/ui/frame");
 const LoginViewModel = require("./login-view-model");
 
-/* ***********************************************************
-* Use the "onNavigatingTo" handler to initialize the page binding context.
-* Call any view model data initialization load here.
-*************************************************************/
-function onNavigatingTo(args) {
-    const page = args.object;
-    page.actionBarHidden = true;
-    page.backgroundSpanUnderStatusBar = true;
-    page.className = "page-login-container";
-    page.statusBarStyle = "dark";
-    page.bindingContext = new LoginViewModel();
-}
+const loginViewModel = new LoginViewModel();
 
-exports.onNavigatingTo = onNavigatingTo;
+exports.pageLoaded = function (args) {
+    const page = args.object;
+    page.bindingContext = loginViewModel;
+}

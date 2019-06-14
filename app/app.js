@@ -1,13 +1,9 @@
-const app = require("tns-core-modules/application");
+const application = require("tns-core-modules/application");
+const backendService = require("~/services/backend-service");
 
-/* ***********************************************************
-* The {N} Kinvey plugin needs some initialization steps before it is ready
-* for use. Check out the initialization script at /shared/kinvey.common.ts
-* along with more information about it.
-*************************************************************/
-require("./shared/kinvey.common");
+backendService.setup(); // Initialize Kinvey Backend
 
-app.start({ moduleName: "login/login-page" });
+application.run({ moduleName: "login/login-page" });
 
 /*
 Do not place any code after the application has been started as it will not
