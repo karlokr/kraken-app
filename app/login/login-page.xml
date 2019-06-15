@@ -11,6 +11,18 @@
 				<Label class="hr-light" />
 			</StackLayout>
 
+			<StackLayout class="input-field" visibility="{{ !isLoggingIn ? 'visible' : 'collapse' }}">
+				<TextField id="firstName" class="input" text="{{ firstName }}" hint="First name" secure="false" autocorrect="false" returnKeyType="next"
+				/>
+				<Label class="hr-light" />
+			</StackLayout>
+
+			<StackLayout class="input-field" visibility="{{ !isLoggingIn ? 'visible' : 'collapse' }}">
+				<TextField id="lastName" class="input" text="{{ lastName }}" hint="Last name" secure="false" autocorrect="false" returnKeyType="next"
+				/>
+				<Label class="hr-light" />
+			</StackLayout>
+
 			<StackLayout class="input-field">
 				<TextField id="password" class="input" text="{{ password }}" hint="Password" secure="true" returnKeyType="{{ isLoggingIn ? 'done' : 'next' }}"
 				/>

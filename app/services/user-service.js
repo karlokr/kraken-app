@@ -1,34 +1,45 @@
-const Kinvey = require("kinvey-nativescript-sdk").Kinvey;
+const httpModule = require("https");
 
 function handleErrors(error) {
     console.error(error.message);
 }
 
 exports.register = function (user) {
-    return new Promise((resolve, reject) => {
-        Kinvey.User.logout()
-            .then(() => {
-                Kinvey.User.signup({ username: user.email, password: user.password })
-                    .then(resolve)
-                    .catch((error) => { handleErrors(error); reject(); })
-            })
-            .catch((error) => { handleErrors(error); reject(); })
+    var promise = httpModule.request({
+        url: "https://localhost/register.php",
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        content: JSON.stringify({
+            email: user.email,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            password: user.password
+        })
     });
+    return promise;
 };
 
 exports.login = function (user) {
-    return new Promise((resolve, reject) => {
-        Kinvey.User.logout()
-            .then(() => {
-                Kinvey.User.login(user.email, user.password)
-                    .then(resolve)
-                    .catch((error) => { handleErrors(error); reject(); })
-            })
-            .catch((error) => { handleErrors(error); reject(); })
+    var promise = httpModule.request({
+        url: "https://localhost/signin.php",
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        content: JSON.stringify({
+            email: user.email,
+            password: user.password
+        })
     });
+    return promise;
 };
 
 exports.resetPassword = function (email) {
-    return Kinvey.User.resetPassword(email)
-        .catch(handleErrors);
+    var promise = httpModule.request({
+        url: "https://localhost/resetpw.php",
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        content: JSON.stringify({
+            email: email
+        })
+    });
+    return promise;
 }

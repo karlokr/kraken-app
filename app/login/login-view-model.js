@@ -6,6 +6,8 @@ const topmost = require("tns-core-modules/ui/frame").topmost;
 function LoginViewModel() {
     const viewModel = observableModule.fromObject({
         email: "",
+        firstName: "",
+        lastName: "",
         password: "",
         confirmPassword: "",
         isLoggingIn: true,
@@ -28,7 +30,7 @@ function LoginViewModel() {
             userService.login({
                 email: this.email,
                 password: this.password
-            }).then(() => {
+            }).then((data) => {
                 topmost().navigate({
                     moduleName: "./home/home-page",
                     clearHistory: true
@@ -45,19 +47,23 @@ function LoginViewModel() {
             }
             userService.register({
                 email: this.email,
+                firstName: this.firstName,
+                lastName: this.lastName,
                 password: this.password
-            }).then(() => {
+            }).then((data) => {
+                    console.error(data.result);
                     alert("Your account was successfully created. You can now login.");
                     this.isLoggingIn = true;
                 })
-                .catch(() => {
+                .catch((error) => {
+                    console.error(error);
                     alert("Unfortunately we were unable to create your account.");
                 });
         },
         forgotPassword() {
             dialogsModule.prompt({
                 title: "Forgot Password",
-                message: "Enter the email address you used to register for APP NAME to reset your password.",
+                message: "Enter the email address you used to register for Kraken App to reset your password.",
                 inputType: "email",
                 defaultText: "",
                 okButtonText: "Ok",
