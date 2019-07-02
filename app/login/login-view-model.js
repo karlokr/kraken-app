@@ -2,7 +2,7 @@ const observableModule = require("tns-core-modules/data/observable");
 const dialogsModule = require("tns-core-modules/ui/dialogs");
 const userService = require("~/services/user-service");
 const topmost = require("tns-core-modules/ui/frame").topmost;
-
+var appSettings = require("application-settings");
 
 function LoginViewModel() {
     const viewModel = observableModule.fromObject({
@@ -32,11 +32,12 @@ function LoginViewModel() {
                 email: this.email,
                 password: this.password
             }).then((data) => { 
-                console.log(data["_bodyText"][0]);
-                res = data["_bodyText"][0];
-                switch (res) {
+                res = data["_bodyText"].split("\t");
+                code = res[0];
+                switch (code) {
                     case "0": 
-                        console.log(res + " entered case");
+                        appSettings.setString("email", this.email);
+                        appSettings.setString("id", res[1])
                         topmost().navigate({
                             moduleName: "home/home-page",
                             clearHistory: true
