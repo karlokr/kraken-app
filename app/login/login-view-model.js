@@ -73,9 +73,9 @@ function LoginViewModel() {
                 lastName: this.lastName,
                 password: this.password
             }).then((data) => {
-                console.log(data["_bodyText"][0]);
-                res = data["_bodyText"][0];
-                switch (res) {
+                res = data["_bodyText"].split("\t");
+                code = res[0];
+                switch (code) {
                     case "0": 
                         alert("Your account was successfully created. You can now login.");
                         this.isLoggingIn = true;

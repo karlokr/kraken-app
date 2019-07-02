@@ -13,8 +13,8 @@ exports.register = function (user) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
             email: user.email,
-            //firstName: user.firstName,
-            //lastName: user.lastName,
+            firstName: user.firstName,
+            lastName: user.lastName,
             password: user.password
         })
     });
