@@ -1,4 +1,6 @@
 const application = require("tns-core-modules/application");
+var appSettings = require("application-settings");
+
 
 application.start({ moduleName: "login/login-page" });
 

@@ -32,14 +32,33 @@ function LoginViewModel() {
                 email: this.email,
                 password: this.password
             }).then((data) => { 
-                topmost().navigate({
-                    moduleName: "home/home-page",
-                    clearHistory: true
-                });
+                console.log(data["_bodyText"][0]);
+                res = data["_bodyText"][0];
+                switch (res) {
+                    case "0": 
+                        console.log(res + " entered case");
+                        topmost().navigate({
+                            moduleName: "home/home-page",
+                            clearHistory: true
+                        });
+                        break;
+                    case "1":
+                        alert("Server is down for maintainence. Please try again later.");
+                        break;
+                    case "2":
+                        alert("Username does not exist. Please sign up for an account.");
+                        break;
+                    case "3":
+                        alert("Username does not exist. Please sign up for an account.");
+                        break;
+                    case "6":
+                        alert("The password you've entered is incorrect.");
+                        break;
+                }
             })
             .catch((e) => {
                 console.error(e);
-                alert("Unfortunately we could not find your account.");
+                alert("Server is down for maintainence. Please try again later.");
             });
         },
         register() {
@@ -53,12 +72,33 @@ function LoginViewModel() {
                 lastName: this.lastName,
                 password: this.password
             }).then((data) => {
-                    alert("Your account was successfully created. You can now login.");
-                    this.isLoggingIn = true;
+                console.log(data["_bodyText"][0]);
+                res = data["_bodyText"][0];
+                switch (res) {
+                    case "0": 
+                        alert("Your account was successfully created. You can now login.");
+                        this.isLoggingIn = true;
+                        break;
+                    case "1":
+                        alert("Server is down for maintainence. Please try again later.");
+                        break;
+                    case "2":
+                        alert("Server is down for maintainence. Please try again later.");
+                        break;
+                    case "3":
+                        alert("Email already exists in system. Did you forget your password?");
+                        break;
+                    case "4":
+                        alert("Server is down for maintainence. Please try again later.");
+                        break;
+                    case "5":
+                        alert("Server is down for maintainence. Please try again later.");
+                        break;
+                }                    
                 })
                 .catch((error) => {
                     console.error(error);
-                    alert("Unfortunately we were unable to create your account.");
+                    alert("Server is down for maintainence. Please try again later.");
                 });
         },
         forgotPassword() {
