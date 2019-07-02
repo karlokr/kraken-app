@@ -3,6 +3,7 @@ const dialogsModule = require("tns-core-modules/ui/dialogs");
 const userService = require("~/services/user-service");
 const topmost = require("tns-core-modules/ui/frame").topmost;
 
+
 function LoginViewModel() {
     const viewModel = observableModule.fromObject({
         email: "",
@@ -30,13 +31,14 @@ function LoginViewModel() {
             userService.login({
                 email: this.email,
                 password: this.password
-            }).then((data) => {
+            }).then((data) => { 
                 topmost().navigate({
-                    moduleName: "./home/home-page",
+                    moduleName: "home/home-page",
                     clearHistory: true
                 });
             })
             .catch((e) => {
+                console.error(e);
                 alert("Unfortunately we could not find your account.");
             });
         },
@@ -51,7 +53,6 @@ function LoginViewModel() {
                 lastName: this.lastName,
                 password: this.password
             }).then((data) => {
-                    console.error(data.result);
                     alert("Your account was successfully created. You can now login.");
                     this.isLoggingIn = true;
                 })

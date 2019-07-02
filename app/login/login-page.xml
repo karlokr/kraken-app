@@ -1,4 +1,5 @@
 <Page loaded="pageLoaded" class="page" actionBarHidden="true" xmlns="http://www.nativescript.org/tns.xsd">
+<Frame id="myFrame"/>
 	<FlexboxLayout class="page">
 		<StackLayout class="form">
 			<Image class="logo" src="~/images/logo.jpg" />

@@ -1,18 +1,20 @@
 const httpModule = require("https");
+const fetchModule = require("fetch");
 
 function handleErrors(error) {
     console.error(error.message);
 }
 
 exports.register = function (user) {
-    var promise = httpModule.request({
-        url: "https://localhost/register.php",
+    var promise = fetchModule.fetch(
+        "https://joshkraken.com/sqlconnect/register.php",
+        {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        content: JSON.stringify({
+        body: JSON.stringify({
             email: user.email,
-            firstName: user.firstName,
-            lastName: user.lastName,
+            //firstName: user.firstName,
+            //lastName: user.lastName,
             password: user.password
         })
     });
@@ -20,11 +22,12 @@ exports.register = function (user) {
 };
 
 exports.login = function (user) {
-    var promise = httpModule.request({
-        url: "https://localhost/signin.php",
+    var promise = fetchModule.fetch(
+        "https://joshkraken.com/sqlconnect/login.php",
+        {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        content: JSON.stringify({
+        body: JSON.stringify({
             email: user.email,
             password: user.password
         })
@@ -34,7 +37,7 @@ exports.login = function (user) {
 
 exports.resetPassword = function (email) {
     var promise = httpModule.request({
-        url: "https://localhost/resetpw.php",
+        url: "https://joshkraken.com/sqlconnect/resetpw.php",
         method: "POST",
         headers: { "Content-Type": "application/json" },
         content: JSON.stringify({
