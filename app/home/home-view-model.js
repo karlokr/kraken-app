@@ -1,9 +1,11 @@
 const observableModule = require("tns-core-modules/data/observable");
 const topmost = require("tns-core-modules/ui/frame").topmost;
+var utilityModule = require("utils/utils");
+var appSettings = require("application-settings");
 
 function HomeViewModel(userInfo) {
     const viewModel = observableModule.fromObject({
-        loggedUser: userInfo,
+        loggedUser: appSettings.getString("email"),
 
         logout: function () {
             // Kinvey.User.logout()
@@ -23,12 +25,18 @@ function HomeViewModel(userInfo) {
         onMenuButtonTap: function(args) {
             // Navigate to corresponding page
             const menuButtonParent = args.object.parent;
-            alert("Navigate to " + menuButtonParent.get("data-name"));
+            utilityModule.openUrl(menuButtonParent.get("data-name"));
         },
 
         onProfileButtonTap: function() {
             // Navigate to profile page here
             alert("Navigate to profile page");
+        },
+
+        onStatsTap: function(args) {
+            topmost().navigate({
+                moduleName: "stats/stats-page",
+            });
         }
     });
 

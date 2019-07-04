@@ -1,6 +1,6 @@
 <Page class="page" navigatingTo="onNavigatingTo"  xmlns="http://schemas.nativescript.org/tns.xsd">
 
-    <ActionBar class="action-bar" title="Your Company Name">
+    <ActionBar class="action-bar" title="Kraken Training">
         <ActionItem android.position="actionBar" ios.position="right" tap=" {{ onProfileButtonTap }}">
             <Label text="&#xf2bd;" class="fa action-button"></Label>
         </ActionItem>
@@ -17,13 +17,13 @@
                 <Button text="&#xf015;" class="fa menu-icon" tap="{{ onMenuButtonTap }}"></Button>
                 <Label text="Home" class="text-center" tap="{{ onMenuButtonTap }}"></Label>
             </StackLayout>
-            <StackLayout row="0" col="1" data-name="news" class="menu-item">
+            <StackLayout row="0" col="1" data-name="https://krakentraining.com/" class="menu-item">
                 <Button text="&#xf1ea;" class="fa menu-icon" tap="{{ onMenuButtonTap }}"></Button>
                 <Label text="News" class="text-center" tap="{{ onMenuButtonTap }}"></Label>
             </StackLayout>
-            <StackLayout row="1" col="0" data-name="favorites" class="menu-item">
-                <Button text="&#xf005;" class="fa menu-icon" tap="{{ onMenuButtonTap }}"></Button>
-                <Label text="Favorites" class="text-center" tap="{{ onMenuButtonTap }}"></Label>
+            <StackLayout row="1" col="0" data-name="stats" class="menu-item">
+                <Button text="&#xf005;" class="fa menu-icon" tap="{{ onStatsTap }}"></Button>
+                <Label text="Stats" class="text-center" tap="{{ onStatsTap }}"></Label>
             </StackLayout>
             <StackLayout row="1" col="1" data-name="settings" class="menu-item">
                 <Button text="&#xf013;" class="fa menu-icon" tap="{{ onMenuButtonTap }}"></Button>
