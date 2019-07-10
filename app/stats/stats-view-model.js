@@ -11,15 +11,15 @@ function HomeViewModel() {
 		topmost().navigate("./new-folder/new-page");
 	}
 
-	viewModel.set("dialogOpen", false);
+	viewModel.set("dialogOpen", true);
 	viewModel.set("calories_data", [
 		{ day: "Mon", count: 204 },
-		{ day: "Tue", count: 302 },
-		{ day: "Wed", count: 130 },
-		{ day: "Thu", count: 144 },
-		{ day: "Fri", count: 210 },
-		{ day: "Sat", count: 106 },
-		{ day: "Sun", count: 156 }
+		{ day: "Tue", count: 205 },
+		{ day: "Wed", count: 210 },
+		{ day: "Thu", count: 182 },
+		{ day: "Fri", count: 206 },
+		{ day: "Sat", count: 191 },
+		{ day: "Sun", count: 200 }
 	]);
 	viewModel.showDialog = function () {
 		viewModel.set("dialogOpen", true);

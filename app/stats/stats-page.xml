@@ -1,248 +1,39 @@
 <Page id="main" loaded="pageLoaded" xmlns="http://www.nativescript.org/tns.xsd"
     backgroundColor="#ebf1f2" class="page">
-    <ActionBar height="40" flat="true" title="Home" class="action-bar">
-        <NavigationButton visibility="hidden"></NavigationButton>
-        <Image src="~/images/logo.png" />
+    <ActionBar class="action-bar" height="40" flat="true" title="Weight" class="action-bar">
+        <NavigationButton ></NavigationButton>
     </ActionBar>
-    <GridLayout columns="*" rows="*, auto" class="{{ dialogOpen ? 'dialogOpen page' : 'page' }}"
-        backgroundColor="#ebf1f2">
-        <!-- scroll view -->
-        <ScrollView id="main_scroll" row="0" orientation="vertical"
-            scrollBarIndicatorVisible="false">
-            <GridLayout rows="auto,70,*" col="auto">
-
-                <!-- blue main area -->
-                <StackLayout row="0" style="background:#25325c; color:white">
-                    <StackLayout height="100%" style="background:#021042; border-radius:12 12 0 0; padding:20 0 30 0">
-                        <FlexboxLayout alignItems="center" width="100%"
-                            flexDirection="row" style="padding-right:15;">
-                            <FlexboxLayout flexDirection="column">
-                                <Label class="subheading" text="Welcome back, Harsimran" />
-                                <Label class="heading light" text="Your Daily Overview" />
-                            </FlexboxLayout>
-                            <Label text="&#xf1c4;" tap="{{ submenu }}" class="icon"
-                                style="margin-top:-10;color:#ff2e63;font-size:24; text-align:right;"
-                                flexGrow="1" />
-                        </FlexboxLayout>
-                        <ScrollView orientation="horizontal"
-                            scrollBarIndicatorVisible="false">
-                            <WrapLayout orientation="horizontal">
-                                <StackLayout tap="{{ showDialog }}"
-                                    orientation="vertical" class="card heartbeat overview"
-                                    width="100" style="text-align:center; margin-left:15">
-                                    <FlexboxLayout flexDirection="column"
-                                        style="padding: 15 10">
-                                        <Image width="55" marginBottom="10"
-                                            src="~/images/ico-heartbeat.png" />
-                                        <Label text="87" class="val" />
-                                        <Label text="bpm" class="sub" />
-                                    </FlexboxLayout>
-                                    <Label text="Heartbeat" class="label"
-                                        style=" font-size:13;" />
-                                </StackLayout>
-                                <StackLayout tap="{{ showDialog }}"
-                                    orientation="vertical" class="card calories overview"
-                                    width="100" style="text-align:center">
-                                    <FlexboxLayout flexDirection="column"
-                                        style="padding: 15 10">
-                                        <Image width="55" marginBottom="10"
-                                            src="~/images/ico-colories_1.png" />
-                                        <Label text="242" class="val" />
-                                        <Label text="kcal" class="sub" />
-                                    </FlexboxLayout>
-                                    <Label text="Calories" class="label"
-                                        style=" font-size:13;" />
-                                </StackLayout>
-                                <StackLayout tap="{{ showDialog }}"
-                                    orientation="vertical" class="card walk overview"
-                                    width="100" style="text-align:center">
-                                    <FlexboxLayout flexDirection="column"
-                                        style="padding: 15 10">
-                                        <Image width="55" marginBottom="10"
-                                            src="~/images/ico-walk_1.png" />
-                                        <Label text="407" class="val" />
-                                        <Label text="steps" class="sub" />
-                                    </FlexboxLayout>
-                                    <Label text="Walk" class="label" style=" font-size:13;" />
-                                </StackLayout>
-                                <StackLayout tap="{{ showDialog }}" width="100"
-                                    orientation="vertical" class=" water overview card"
-                                    style="text-align:center;">
-                                    <FlexboxLayout flexDirection="column"
-                                        style="padding: 15 10">
-                                        <Image width="55" marginBottom="10"
-                                            src="~/images/ico-water_1.png" />
-                                        <Label text="03" class="val" />
-                                        <Label text="cups" class="sub" />
-                                    </FlexboxLayout>
-                                    <Label text="Water" class="label" style=" font-size:13;" />
-                                </StackLayout>
-                            </WrapLayout>
-                        </ScrollView>
-                    </StackLayout>
-                </StackLayout>
-
-                <!-- Sleep data -->
-                <StackLayout class="sleep" row="1">
-                    <FlexboxLayout height="100%" width="100%" flexDirection="row"
-                        justifyContent="space-between" alignItems="center"
-                        style="padding:0 15;">
-                        <Image width="50" src="~/images/moon.png" />
-                        <FlexboxLayout flexDirection="column" justifyContent="center"
-                            style="text-align:center; border-right-width:2; border-color:rgba(255,255,255,0.1);"
-                            flexGrow="1">
-                            <Label class="heading light">
-                                <FormattedString>
-                                    <Span text="03" style="font-weight:700" />
-                                    <Span style="font-weight:400; font-size:11;"
-                                        text=" hr" />
-                                </FormattedString>
-                            </Label>
-                            <Label class="subheading" text="Deep Sleep" />
-                        </FlexboxLayout>
-                        <FlexboxLayout flexDirection="column" justifyContent="center"
-                            style="text-align:center;" flexGrow="1">
-                            <Label class="heading light">
-                                <FormattedString>
-                                    <Span text="02" style="font-weight:700" />
-                                    <Span style="font-weight:400; font-size:10;"
-                                        text=" hr" />
-                                </FormattedString>
-                            </Label>
-                            <Label class="subheading" text="Light Sleep" />
-                        </FlexboxLayout>
-                        <Label style="text-align:center; color:white" class="icon"
-                            text="&#xf121;" />
-                    </FlexboxLayout>
-                </StackLayout>
-
-                <!-- Leaderboard -->
-                <StackLayout class="card leaderboard" orientation="vertical"
-                    row="2" style="margin:10 15 0 15;padding: 0">
-                    <FlexboxLayout width="100%" flexDirection="row"
-                        justifyContent="space-between" alignItems="flex-end"
-                        style=" background:#fafbfc; border-radius: 3 3 0 0;">
-                        <FlexboxLayout flexDirection="row-reverse" alignItems="center"
-                            class="objective" alignSelf="flex-start" style="padding-top:20">
-                            <Label class="subheading" text="Week #23" style="padding-left:10" />
-                            <Label class="heading dark" text="Leaderboard" />
-                        </FlexboxLayout>
-                        <Image width="50" alignSelf="flex-start" src="~/images/badge.png" />
-                    </FlexboxLayout>
-                    <StackLayout orientation="vertical" style="padding:15 0 ; margin:0 15;">
-                        <FlexboxLayout class="list" flexDirection="row"
-                            alignItems="center">
-                            <Image class="story-img" src="https://pbs.twimg.com/profile_images/1036583277488787456/VDBW6mWj.jpg" />
-                            <FlexboxLayout flexGrow="1" flexDirection="column">
-                                <Label class="user" text="Bruce Wayne" />
-                                <Label class="heading light" style=" font-size:16; color:#ff2e63;font-weight:500; margin-bottom:0; margin-top:0">
-                                    <FormattedString>
-                                        <Span text="843" style="font-weight:500" />
-                                        <Span style="font-weight:400; font-size:10;"
-                                            text=" kcal" />
-                                    </FormattedString>
-                                </Label>
-                            </FlexboxLayout>
-                            <Label text="01" style=" font-size:20;font-weight:600; color:#ebf1f2; text-align:center; width:40" />
-                        </FlexboxLayout>
-                        <Image width="100%" src="" style="background:#ebf1f2;height:1; margin:15 0;" />
-                        <FlexboxLayout class="list" flexDirection="row"
-                            alignItems="center">
-                            <Image class="story-img" src="https://d3iw72m71ie81c.cloudfront.net/female-7.jpg" />
-                            <FlexboxLayout flexGrow="1" flexDirection="column">
-                                <Label class="user" text="Selina Kyle" />
-                                <Label class="heading light" style=" font-size:16; color:#ff2e63;font-weight:500; margin-bottom:0; margin-top:0">
-                                    <FormattedString>
-                                        <Span text="764" style="font-weight:500" />
-                                        <Span style="font-weight:400; font-size:10;"
-                                            text=" kcal" />
-                                    </FormattedString>
-                                </Label>
-                            </FlexboxLayout>
-                            <Label text="02" style=" font-size:20;font-weight:600; color:#ebf1f2; text-align:center; width:40" />
-                        </FlexboxLayout>
-                        <Image width="100%" src="" style="background:#ebf1f2;height:1; margin:15 0;" />
-                        <FlexboxLayout class="list" flexDirection="row"
-                            alignItems="center">
-                            <Image class="story-img" src="~/images/avatar.png" />
-                            <FlexboxLayout flexGrow="1" flexDirection="column">
-                                <Label class="user" text="Harvey Dent" />
-                                <Label class="heading light" style=" font-size:16; color:#ff2e63;font-weight:500; margin-bottom:0; margin-top:0">
-                                    <FormattedString>
-                                        <Span text="730" style="font-weight:500" />
-                                        <Span style="font-weight:400; font-size:10;"
-                                            text=" kcal" />
-                                    </FormattedString>
-                                </Label>
-                            </FlexboxLayout>
-                            <Label text="03" style=" font-size:20;font-weight:600; color:#ebf1f2; text-align:center; width:40" />
-                        </FlexboxLayout>
-                    </StackLayout>
-                </StackLayout>
-            </GridLayout>
-        </ScrollView>
-
-        <!-- Bottom Naviagtion -->
-        <StackLayout row="1" style="padding:10 15 10 15;" backgroundColor="#ebf1f2"
-            class="bottom-nav-wrapper">
-            <FlexboxLayout alignItems="center" flexDirection="row" id="bottom-nav">
-                <StackLayout flexGrow="1" class="ico active" height="100%">
-                    <Image class="ico-wrapper" width="100%" />
-                    <Label style="text-align:center;" class="icon" flexGrow="1"
-                        text="&#xf237;" />
-                </StackLayout>
-                <StackLayout flexGrow="1" class="ico" height="100%">
-                    <Image class="ico-wrapper" width="100%" />
-                    <Label style="text-align:center;" class="icon" flexGrow="1"
-                        text="&#xf19d;" />
-                </StackLayout>
-                <Image class="ico-plus" tap="{{ submenu }}" width="100%" src="~/images/ico-plus.png" />
-                <StackLayout flexGrow="1" class="ico" height="100%">
-                    <Image class="ico-wrapper" width="100%" />
-                    <Label style="text-align:center;" class="icon" flexGrow="1"
-                        text="&#xf19a;" />
-                </StackLayout>
-                <StackLayout flexGrow="1" class="ico" height="100%">
-                    <Image class="ico-wrapper" width="100%" />
-                    <Label style="text-align:center;" class="icon " flexGrow="1"
-                        text="&#xf140;" />
-                </StackLayout>
-            </FlexboxLayout>
-        </StackLayout>
-
-        <!-- dialog -->
-        <FlexboxLayout class="dialog-wrapper" alignItems="flex-end" width="100%">
+    <!-- dialog -->
+        <StackLayout class="wrapper" alignItems="flex-end" width="100%">
             <StackLayout class="dialog">
                 <FlexboxLayout class="header" width="100%" flexDirection="row"
                     tap="{{closeDialog}}" justifyContent="space-between"
-                    alignItems="center" style="background:#fafbfc; margin-bottom:15; border-radius:12 12 0 0">
+                    alignItems="center" style="background:#3E646C; margin-bottom:15;">
                     <FlexboxLayout flexDirection="row-reverse" alignItems="center">
                         <Label class="subheading" text="Week #23" style="padding:0; margin-top:2" />
                         <Label class="heading dark" text="Heartbeat" style="margin:0" />
                     </FlexboxLayout>
-                    <Image src="~/images/close.png" style="width:22; height:22; margin-right:15" />
                 </FlexboxLayout>
 
 
                 <GridLayout rows="auto, *" xmlns:chart="nativescript-ui-chart"
                     class="modal_chart">
 
-                    <chart:RadCartesianChart row="1" selectionMode="Single">
+                    <chart:RadCartesianChart row="1" selectionMode="None">
                         <chart:RadCartesianChart.horizontalAxis>
-                            <chart:CategoricalAxis lineColor="#ebf1f2"
-                                lineThickness="2" labelTextColor="#021042"
+                            <chart:DateTimeCategoricalAxis lineHidden="true"
+                                labelTextColor="#ffffff" ticksHidden="true"
                                 labelMargin="10" android:labelMargin="20" />
                         </chart:RadCartesianChart.horizontalAxis>
                         <chart:RadCartesianChart.verticalAxis>
-                            <chart:LinearAxis lineColor="#ebf1f2" labelFormat="%.0f"
-                                lineThickness="2" labelTextColor="#021042"
-                                labelMargin="10" android:labelMargin="20" />
+                            <chart:LinearAxis lineHidden="true" labelFormat="%.0f"
+                                labelTextColor="#ffffff" ticksHidden="true"
+                                labelMargin="10" android:labelMargin="20" minimum="180" maximum="210" majorStep="10" />
                         </chart:RadCartesianChart.verticalAxis>
                         <chart:RadCartesianChart.series>
-                            <chart:AreaSeries seriesName="Area"
+                            <chart:LineSeries seriesName="Weight"
                                 categoryProperty="day" items="{{ calories_data }}"
-                                stackMode="Stack" valueProperty="count"
-                                selectionMode="Series" />
+                                stackMode="None" valueProperty="count" />
                         </chart:RadCartesianChart.series>
                         <chart:RadCartesianChart.grid>
                             <chart:RadCartesianChartGrid
@@ -250,39 +41,27 @@
                                 verticalLinesVisible="false"
                                 verticalStripLinesVisible="false"
                                 horizontalStripLinesVisible="false"
-                                horizontalStrokeColor="#e5e5e5" />
+                                horizontalStrokeColor="#A4D1DA" />
                         </chart:RadCartesianChart.grid>
                         <chart:RadCartesianChart.palettes>
-                            <chart:Palette seriesName="Area">
+                            <chart:Palette seriesName="Weight">
                                 <chart:Palette.entries>
-                                    <chart:PaletteEntry android:fillColor="rgba(235,241,242,0.6)"
-                                        ios:fillColor="rgba(235,241,242,0.6)"
-                                        strokeColor="#ff2e63" strokeWidth="3"
+                                    <chart:PaletteEntry 
+                                        strokeColor="rgb(164, 209, 218)" strokeWidth="3"
                                         android:strokeWidth="6" />
-                                    <chart:PaletteEntry android:fillColor="rgba(235,241,242,0.6)"
-                                        ios:fillColor="rgba(235,241,242,0.6)"
-                                        strokeColor="#ff2e63" strokeWidth="3"
-                                        android:strokeWidth="6" />
-                                </chart:Palette.entries>
-                            </chart:Palette>
-                            <chart:Palette seriesName="Area" seriesState="Selected">
-                                <chart:Palette.entries>
-                                    <chart:PaletteEntry android:fillColor="rgba(235,241,242,1)"
-                                        ios:fillColor="rgba(235,241,242,1)"
-                                        strokeColor="#ff2e63" strokeWidth="3"
-                                        android:strokeWidth="6" />
-                                    <chart:PaletteEntry android:fillColor="rgba(235,241,242,1)"
-                                        ios:fillColor="rgba(235,241,242,1)"
-                                        strokeColor="#ff2e63" strokeWidth="3"
+                                    <chart:PaletteEntry 
+                                        strokeColor="rgb(164, 209, 218)" strokeWidth="3"
                                         android:strokeWidth="6" />
                                 </chart:Palette.entries>
                             </chart:Palette>
                         </chart:RadCartesianChart.palettes>
                     </chart:RadCartesianChart>
                 </GridLayout>
-                <Button class="btn btn-outline" text="Cancel" tap="{{closeDialog}}"></Button>
             </StackLayout>
-        </FlexboxLayout>
-    </GridLayout>
+            
+        </StackLayout>
+
+		
+
 
 </Page>
