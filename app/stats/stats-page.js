@@ -1,15 +1,11 @@
-var frameModule = require("tns-core-modules/ui/frame");
 var StatsViewModel = require("./stats-view-model");
 var statsViewModel = new StatsViewModel();
-var platform = require("platform");
-var app = require("tns-core-modules/application");
-var platform = require("platform");
-var color = require("tns-core-modules/color");
-
-function pageLoaded(args) {
 
 
-	var page = args.object;
+exports.pageLoaded = function(args) {
+
+
+	const page = args.object;
 
 	page.bindingContext = statsViewModel;
 // 	if (app.ios) {
@@ -30,8 +26,5 @@ function pageLoaded(args) {
 // 	else if (app.ios) {
 // 		scrollView.ios.bounces = false;
 // 	}
-
-
 }
 
-exports.pageLoaded = pageLoaded;

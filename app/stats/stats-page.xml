@@ -21,19 +21,22 @@
 
                     <chart:RadCartesianChart row="1" selectionMode="None">
                         <chart:RadCartesianChart.horizontalAxis>
-                            <chart:DateTimeCategoricalAxis lineHidden="true"
+                            <chart:DateTimeCategoricalAxis dateFormat="MM-dd" verticalLocation="Bottom"
+                                lineHidden="true" majorTickInterval="10"
                                 labelTextColor="#ffffff" ticksHidden="true"
                                 labelMargin="10" android:labelMargin="20" />
                         </chart:RadCartesianChart.horizontalAxis>
                         <chart:RadCartesianChart.verticalAxis>
                             <chart:LinearAxis lineHidden="true" labelFormat="%.0f"
                                 labelTextColor="#ffffff" ticksHidden="true"
-                                labelMargin="10" android:labelMargin="20" minimum="180" maximum="210" majorStep="10" />
+                                labelMargin="10" android:labelMargin="20"  majorStep="10"/>
                         </chart:RadCartesianChart.verticalAxis>
                         <chart:RadCartesianChart.series>
                             <chart:LineSeries seriesName="Weight"
-                                categoryProperty="day" items="{{ calories_data }}"
-                                stackMode="None" valueProperty="count" />
+                                categoryProperty="date" 
+                                valueProperty="weight" 
+                                stackMode="None"
+                                items="{{ graphStats }}" />
                         </chart:RadCartesianChart.series>
                         <chart:RadCartesianChart.grid>
                             <chart:RadCartesianChartGrid
@@ -60,6 +63,8 @@
             </StackLayout>
             
         </StackLayout>
+
+
 
 		
 
