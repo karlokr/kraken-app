@@ -1,12 +1,8 @@
 var StatsViewModel = require("./stats-view-model");
 var statsViewModel = new StatsViewModel();
 
-
 exports.pageLoaded = function(args) {
-
-
 	const page = args.object;
-
 	page.bindingContext = statsViewModel;
 // 	if (app.ios) {
 // 		frameModule.topmost().ios.controller.navigationBar.barStyle = 1;

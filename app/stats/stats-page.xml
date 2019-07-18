@@ -1,6 +1,6 @@
 <Page id="main" loaded="pageLoaded" xmlns="http://www.nativescript.org/tns.xsd"
     backgroundColor="#ebf1f2" class="page">
-    <ActionBar class="action-bar" height="40" flat="true" title="Weight" class="action-bar">
+    <ActionBar class="action-bar" height="40" flat="true" title="{{ title }}" class="action-bar">
         <NavigationButton ></NavigationButton>
     </ActionBar>
     <!-- dialog -->
@@ -22,8 +22,9 @@
                     <chart:RadCartesianChart row="1" selectionMode="None">
                         <chart:RadCartesianChart.horizontalAxis>
                             <chart:DateTimeCategoricalAxis dateFormat="MM-dd" verticalLocation="Bottom"
-                                lineHidden="true" majorTickInterval="10"
+                                lineHidden="true" majorTickInterval="1"
                                 labelTextColor="#ffffff" ticksHidden="true"
+                                firstLabelVisibility="Visible" lastLabelVisibility="Visible"
                                 labelMargin="10" android:labelMargin="20" />
                         </chart:RadCartesianChart.horizontalAxis>
                         <chart:RadCartesianChart.verticalAxis>
@@ -34,7 +35,7 @@
                         <chart:RadCartesianChart.series>
                             <chart:LineSeries seriesName="Weight"
                                 categoryProperty="date" 
-                                valueProperty="weight" 
+                                valueProperty="{{ stat }}"
                                 stackMode="None"
                                 items="{{ graphStats }}" />
                         </chart:RadCartesianChart.series>
@@ -62,6 +63,32 @@
                 </GridLayout>
             </StackLayout>
             
+        <GridLayout rows="auto, auto" columns="*, *, *, *" class="menu-container">
+            <StackLayout row="0" col="0" data-name="weight" class="menu-item">
+                <Button text="Weight" class="fa menu-icon" tap="{{ switchStat }}"></Button>
+            </StackLayout>
+            <StackLayout row="0" col="1" data-name="arms" class="menu-item">
+                <Button text="Arms" class="fa menu-icon" tap="{{ switchStat }}"></Button>
+            </StackLayout>
+            <StackLayout row="0" col="2" data-name="arrastms" class="menu-item">
+                <Button text="Arms" class="fa menu-icon" tap="{{ switchStat }}"></Button>
+            </StackLayout>
+            <StackLayout row="0" col="3" data-name="armtrss" class="menu-item">
+                <Button text="Arms" class="fa menu-icon" tap="{{ switchStat }}"></Button>
+            </StackLayout>
+            <StackLayout row="1" col="0" data-name="thighs" class="menu-item">
+                <Button text="Thighs" class="fa menu-icon" tap="{{ switchStat }}"></Button>
+            </StackLayout>
+            <StackLayout row="1" col="1" data-name="chearstst" class="menu-item">
+                <Button text="Chest" class="fa menu-icon" tap="{{ switchStat }}"></Button>
+            </StackLayout>
+            <StackLayout row="1" col="2" data-name="carstt" class="menu-item">
+                <Button text="Chest" class="fa menu-icon" tap="{{ switchStat }}"></Button>
+            </StackLayout>
+            <StackLayout row="1" col="3" data-name="b" class="menu-item">
+                <Button text="Chest" class="fa menu-icon" tap="{{ switchStat }}"></Button>
+            </StackLayout>
+        </GridLayout>
         </StackLayout>
 
 
