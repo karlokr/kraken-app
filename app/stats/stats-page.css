@@ -1,29 +1,9 @@
-/*
-In NativeScript, the app.css file is where you place CSS rules that
-you would like to apply to your entire application. Check out
-http://docs.nativescript.org/ui/styling for a full list of the CSS
-selectors and properties you can use to style UI components.
-
-/*
-For example, the following CSS rule changes the font size of all UI
-components that have the btn class name.
-*/
-
-/* active icon fix on android */ 
-
-/*
-In many cases you may want to use the NativeScript core theme instead
-of writing your own CSS rules. For a full list of class names in the theme
-refer to http://docs.nativescript.org/ui/theme.
-*/
 @import '~nativescript-theme-core/css/core.light.css';
 .action-bar {
     background-color: #3E646C;
     color: #ffffff;
     padding-right: 10;
 }
-/** dialog **/
-
 
 .dialog {
     /* background: linear-gradient(#3E646C 0%, #3E646C 20%,  rgb(98, 161, 173) 100%); */
@@ -33,7 +13,32 @@ refer to http://docs.nativescript.org/ui/theme.
     height: 30%;
 }
 
+
+
+.menu-container {
+    margin: 10em;
+    padding: 5em;
+    margin-top: 30em;
+    border-radius: 10px;
+    background-color: rgb(176, 235, 247);
+}
+
+.menu-icon {
+    background: rgb(252, 246, 202);
+    border-radius: 10px;
+    border-width: 2px;
+    border-color: #BCA817;
+    margin: 3em;
+    color: black;
+}
+
+.back-btn{
+    color: red;
+    background-color: blue;
+}
+
 .wrapper {
+    padding-top: 5em;
     background: linear-gradient(#3E646C 0%, #3E646C 10%,  rgb(98, 161, 173) 38%);
 }
 

@@ -1,99 +1,94 @@
-<Page id="main" loaded="pageLoaded" xmlns="http://www.nativescript.org/tns.xsd"
-    backgroundColor="#ebf1f2" class="page">
-    <ActionBar class="action-bar" height="40" flat="true" title="{{ title }}" class="action-bar">
-        <NavigationButton ></NavigationButton>
+<Page id="main" loaded="pageLoaded" 
+    xmlns="http://www.nativescript.org/tns.xsd" 
+    xmlns:lv="nativescript-ui-listview" backgroundColor="#ebf1f2" class="page">
+    <ActionBar class="action-bar" height="40" flat="true" title="{{ title }}">
+        <NavigationButton class="back-btn" android.systemIcon="ic_menu_back" tap="onNavBtnTap" style="color:white;"/>
     </ActionBar>
     <!-- dialog -->
-        <StackLayout class="wrapper" alignItems="flex-end" width="100%">
-            <StackLayout class="dialog">
-                <FlexboxLayout class="header" width="100%" flexDirection="row"
-                    tap="{{closeDialog}}" justifyContent="space-between"
-                    alignItems="center" style="background:#3E646C; margin-bottom:15;">
-                    <FlexboxLayout flexDirection="row-reverse" alignItems="center">
-                        <Label class="subheading" text="Week #23" style="padding:0; margin-top:2" />
-                        <Label class="heading dark" text="Heartbeat" style="margin:0" />
-                    </FlexboxLayout>
-                </FlexboxLayout>
+    <StackLayout class="wrapper" alignItems="flex-end" width="100%">
+        <StackLayout class="dialog">
+            <FlexboxLayout justifyContent="center" padding="0" margin="0">
+                <Label text="{{ title + ' Trends 30 days' }}" style="padding:0; margin-top:0; margin-bottom:3em; color:white;" />
+            </FlexboxLayout>
+
+            <FlexboxLayout justifyContent="center" padding="0" margin="0">
+                <Label style="height:20em;width:10px;background-color:rgb(164, 209, 218);border-radius:50%;"/>
+                <Label text="{{ title }}" style="color:white;" />
+                <Label style="height:20em;width:10px;background-color:rgb(27, 55, 61);border-radius:50%;"/>
+                <Label text="{{ 'Your ' + title + ' Trend' }}" style="color:white;"/>
+            </FlexboxLayout>
 
 
-                <GridLayout rows="auto, *" xmlns:chart="nativescript-ui-chart"
-                    class="modal_chart">
 
-                    <chart:RadCartesianChart row="1" selectionMode="None">
-                        <chart:RadCartesianChart.horizontalAxis>
-                            <chart:DateTimeCategoricalAxis dateFormat="MM-dd" verticalLocation="Bottom"
-                                lineHidden="true" majorTickInterval="1"
-                                labelTextColor="#ffffff" ticksHidden="true"
-                                firstLabelVisibility="Visible" lastLabelVisibility="Visible"
-                                labelMargin="10" android:labelMargin="20" />
-                        </chart:RadCartesianChart.horizontalAxis>
-                        <chart:RadCartesianChart.verticalAxis>
-                            <chart:LinearAxis lineHidden="true" labelFormat="%.0f"
-                                labelTextColor="#ffffff" ticksHidden="true"
-                                labelMargin="10" android:labelMargin="20"  majorStep="10"/>
-                        </chart:RadCartesianChart.verticalAxis>
-                        <chart:RadCartesianChart.series>
-                            <chart:LineSeries seriesName="Weight"
-                                categoryProperty="date" 
-                                valueProperty="{{ stat }}"
-                                stackMode="None"
-                                items="{{ graphStats }}" />
-                        </chart:RadCartesianChart.series>
-                        <chart:RadCartesianChart.grid>
-                            <chart:RadCartesianChartGrid
-                                horizontalLinesVisible="true"
-                                verticalLinesVisible="false"
-                                verticalStripLinesVisible="false"
-                                horizontalStripLinesVisible="false"
-                                horizontalStrokeColor="#A4D1DA" />
-                        </chart:RadCartesianChart.grid>
-                        <chart:RadCartesianChart.palettes>
-                            <chart:Palette seriesName="Weight">
-                                <chart:Palette.entries>
-                                    <chart:PaletteEntry 
-                                        strokeColor="rgb(164, 209, 218)" strokeWidth="3"
-                                        android:strokeWidth="6" />
-                                    <chart:PaletteEntry 
-                                        strokeColor="rgb(164, 209, 218)" strokeWidth="3"
-                                        android:strokeWidth="6" />
-                                </chart:Palette.entries>
-                            </chart:Palette>
-                        </chart:RadCartesianChart.palettes>
-                    </chart:RadCartesianChart>
-                </GridLayout>
-            </StackLayout>
-            
-        <GridLayout rows="auto, auto" columns="*, *, *, *" class="menu-container">
-            <StackLayout row="0" col="0" data-name="weight" class="menu-item">
-                <Button text="Weight" class="fa menu-icon" tap="{{ switchStat }}"></Button>
-            </StackLayout>
-            <StackLayout row="0" col="1" data-name="arms" class="menu-item">
-                <Button text="Arms" class="fa menu-icon" tap="{{ switchStat }}"></Button>
-            </StackLayout>
-            <StackLayout row="0" col="2" data-name="arrastms" class="menu-item">
-                <Button text="Arms" class="fa menu-icon" tap="{{ switchStat }}"></Button>
-            </StackLayout>
-            <StackLayout row="0" col="3" data-name="armtrss" class="menu-item">
-                <Button text="Arms" class="fa menu-icon" tap="{{ switchStat }}"></Button>
-            </StackLayout>
-            <StackLayout row="1" col="0" data-name="thighs" class="menu-item">
-                <Button text="Thighs" class="fa menu-icon" tap="{{ switchStat }}"></Button>
-            </StackLayout>
-            <StackLayout row="1" col="1" data-name="chearstst" class="menu-item">
-                <Button text="Chest" class="fa menu-icon" tap="{{ switchStat }}"></Button>
-            </StackLayout>
-            <StackLayout row="1" col="2" data-name="carstt" class="menu-item">
-                <Button text="Chest" class="fa menu-icon" tap="{{ switchStat }}"></Button>
-            </StackLayout>
-            <StackLayout row="1" col="3" data-name="b" class="menu-item">
-                <Button text="Chest" class="fa menu-icon" tap="{{ switchStat }}"></Button>
-            </StackLayout>
-        </GridLayout>
+            <GridLayout rows="auto, *" 
+                xmlns:chart="nativescript-ui-chart" class="modal_chart">
+
+                <chart:RadCartesianChart row="1" selectionMode="None">
+                    <chart:RadCartesianChart.horizontalAxis>
+                        <chart:DateTimeCategoricalAxis dateFormat="MM-dd" verticalLocation="Bottom" lineHidden="true" majorTickInterval="1" labelTextColor="#ffffff" ticksHidden="true" firstLabelVisibility="Visible" lastLabelVisibility="Visible" labelMargin="10" android:labelMargin="20" />
+                    </chart:RadCartesianChart.horizontalAxis>
+                    <chart:RadCartesianChart.verticalAxis>
+                        <chart:LinearAxis lineHidden="true" labelFormat="%.0f" labelTextColor="#ffffff" ticksHidden="true" labelMargin="10" android:labelMargin="20" majorStep="10"/>
+                    </chart:RadCartesianChart.verticalAxis>
+                    <chart:RadCartesianChart.series>
+                        <chart:LineSeries seriesName="Weight" categoryProperty="date" valueProperty="{{ stat }}" stackMode="None" items="{{ graphStats }}" />
+                    </chart:RadCartesianChart.series>
+                    <chart:RadCartesianChart.grid>
+                        <chart:RadCartesianChartGrid horizontalLinesVisible="true" verticalLinesVisible="false" verticalStripLinesVisible="false" horizontalStripLinesVisible="false" horizontalStrokeColor="#A4D1DA" />
+                    </chart:RadCartesianChart.grid>
+                    <chart:RadCartesianChart.palettes>
+                        <chart:Palette seriesName="Weight">
+                            <chart:Palette.entries>
+                                <chart:PaletteEntry strokeColor="rgb(164, 209, 218)" strokeWidth="3" android:strokeWidth="6" />
+                            </chart:Palette.entries>
+                        </chart:Palette>
+                    </chart:RadCartesianChart.palettes>
+                </chart:RadCartesianChart>
+            </GridLayout>
         </StackLayout>
 
+        <GridLayout rows="auto, auto" columns="*, *, *" class="menu-container">
+            <StackLayout row="0" col="0" data-name="weight" class="menu-item">
+                <Button id="weight" text="Weight" class="fa menu-icon" tap="{{ switchStat }}"></Button>
+            </StackLayout>
+            <StackLayout row="0" col="1" data-name="arms" class="menu-item">
+                <Button id="arms" text="Arms" class="fa menu-icon" tap="{{ switchStat }}"></Button>
+            </StackLayout>
+            <StackLayout row="0" col="2" data-name="chest" class="menu-item">
+                <Button id="chest" text="Chest" class="fa menu-icon" tap="{{ switchStat }}"></Button>
+            </StackLayout>
+            <StackLayout row="1" col="0" data-name="waist" class="menu-item">
+                <Button id="waist" text="Waist" class="fa menu-icon" tap="{{ switchStat }}"></Button>
+            </StackLayout>
+            <StackLayout row="1" col="1" data-name="hips" class="menu-item">
+                <Button id="hips" text="Hips" class="fa menu-icon" tap="{{ switchStat }}"></Button>
+            </StackLayout>
+            <StackLayout row="1" col="2" data-name="butt" class="menu-item">
+                <Button id="butt" text="Butt" class="fa menu-icon" tap="{{ switchStat }}"></Button>
+            </StackLayout>
+        </GridLayout>
 
 
-		
+        <lv:RadListView items="{{ items }}" class="list-group">
+            <lv:RadListView.listViewLayout>
+                <lv:ListViewLinearLayout scrollDirection="Vertical"/>
+            </lv:RadListView.listViewLayout>
+            <lv:RadListView.itemTemplate>
+                <GridLayout class="list-group-item" rows="auto" columns="auto, *">
+                    <StackLayout row="0" col="1">
+                        <Label text="{{ itemName }}" class="list-group-item-heading" />
+                        <Label text="{{ itemDesc }}" class="list-group-item-text" />
+                    </StackLayout>
+                </GridLayout>
+            </lv:RadListView.itemTemplate>
+        </lv:RadListView>
+    </StackLayout>
+
+
+
+
+
+
 
 
 </Page>
