@@ -1,20 +1,20 @@
 <Page id="main" loaded="pageLoaded" 
     xmlns="http://www.nativescript.org/tns.xsd" 
     xmlns:lv="nativescript-ui-listview" backgroundColor="#ebf1f2" class="page">
-    <ActionBar class="action-bar" height="40" flat="true" title="{{ title }}">
+    <ActionBar class="action-bar" flat="true" title="{{ title }}">
         <NavigationButton class="back-btn" android.systemIcon="ic_menu_back" tap="onNavBtnTap" style="color:white;"/>
     </ActionBar>
     <!-- dialog -->
     <StackLayout class="wrapper" alignItems="flex-end" width="100%">
         <StackLayout class="dialog">
             <FlexboxLayout justifyContent="center" padding="0" margin="0">
-                <Label text="{{ title + ' Trends 30 days' }}" style="padding:0; margin-top:0; margin-bottom:3em; color:white;" />
+                <Label text="{{ title + ' Trends 30 days (' + unit  + ')' }}" style="padding:0; margin-top:0; margin-bottom:8em; color:white; font-weight:500" />
             </FlexboxLayout>
 
             <FlexboxLayout justifyContent="center" padding="0" margin="0">
-                <Label style="height:20em;width:10px;background-color:rgb(164, 209, 218);border-radius:50%;"/>
-                <Label text="{{ title }}" style="color:white;" />
-                <Label style="height:20em;width:10px;background-color:rgb(27, 55, 61);border-radius:50%;"/>
+                <Label style="height:20em;width:10px;background-color:rgb(164, 209, 218);border-radius:50%; margin-right:-5em;"/>
+                <Label text="{{ title + ' (' + unit + ')' }}" style="color:white;" />
+                <Label style="height:20em;width:10px;background-color:rgb(27, 55, 61);border-radius:50%; margin-right:-5em;"/>
                 <Label text="{{ 'Your ' + title + ' Trend' }}" style="color:white;"/>
             </FlexboxLayout>
 
@@ -25,10 +25,10 @@
 
                 <chart:RadCartesianChart row="1" selectionMode="None">
                     <chart:RadCartesianChart.horizontalAxis>
-                        <chart:DateTimeCategoricalAxis dateFormat="MM-dd" verticalLocation="Bottom" lineHidden="true" majorTickInterval="1" labelTextColor="#ffffff" ticksHidden="true" firstLabelVisibility="Visible" lastLabelVisibility="Visible" labelMargin="10" android:labelMargin="20" />
+                        <chart:DateTimeCategoricalAxis dateFormat="MMM dd" verticalLocation="Bottom" lineHidden="true" majorTickInterval="1" labelTextColor="#ffffff" ticksHidden="true" firstLabelVisibility="Visible" lastLabelVisibility="Visible" labelMargin="10" android:labelMargin="20" />
                     </chart:RadCartesianChart.horizontalAxis>
                     <chart:RadCartesianChart.verticalAxis>
-                        <chart:LinearAxis lineHidden="true" labelFormat="%.0f" labelTextColor="#ffffff" ticksHidden="true" labelMargin="10" android:labelMargin="20" majorStep="10"/>
+                        <chart:LinearAxis lineHidden="true" labelFormat="%.0f" labelTextColor="#ffffff" ticksHidden="true" labelMargin="10" android:labelMargin="20" majorStep="5"  maximum="{{ graphMax }}" minimum="{{ graphMin }}"/>
                     </chart:RadCartesianChart.verticalAxis>
                     <chart:RadCartesianChart.series>
                         <chart:LineSeries seriesName="Weight" categoryProperty="date" valueProperty="{{ stat }}" stackMode="None" items="{{ graphStats }}" />
