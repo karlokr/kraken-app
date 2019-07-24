@@ -20,7 +20,7 @@
     padding: 5em;
     margin-top: 30em;
     border-radius: 10px;
-    background-color: rgb(176, 235, 247);
+    background-color: rgb(215, 248, 255);
 }
 
 .menu-icon {
@@ -28,11 +28,11 @@
     background: rgb(255, 255, 255);
     border-radius: 10px;
     border-width: 2px;
-    border-color: #BCA817;
+    border-color: rgb(59, 97, 105);
     /* border-color: rgb(161, 160, 145); */
     margin: 3em;
-    color: black;
-    font-weight:bold;
+    color: rgb(27, 55, 61);
+    font-weight:600;
 }
 
 .back-btn{
@@ -56,3 +56,6 @@
 }
 
 
+.modal_chart {
+    width: 100%;
+}

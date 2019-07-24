@@ -22,7 +22,7 @@ function StatsViewModel(args) {
 			const menuButtonParent = args.object.parent;
 			var btn = args.object;
 			var stat = menuButtonParent.get("data-name");
-			btn.borderWidth = "6px";
+			btn.borderWidth = "4px";
 			viewModel.set("stat", stat);
 			viewModel.set("title", this.capitalizeFirst(stat));
 			this.stat == "weight" ? this.unit = "lbs" : this.unit = "cm";
@@ -50,7 +50,9 @@ function StatsViewModel(args) {
 					var key = keys[i];
 					var inner = Object.keys(data[key]);
 					var innerKey = inner[1];
-					dates.push(data[key][inner[0]]);
+					//record the date as UTC
+					dates.push(new Date(data[key][inner[0]] + "Z"));
+					data[key][inner[0]] = new Date(data[key][inner[0]] + "Z");
 					//find the min/max
 					data[key][innerKey] < min ? min = data[key][innerKey] : min = min;
 					data[key][innerKey] > max ? max = data[key][innerKey] : max = max;
@@ -58,8 +60,10 @@ function StatsViewModel(args) {
 					x.push(i);
 					y.push(data[key][innerKey]);
 				}
-				viewModel.set("graphMin", min - 3);
+				console.log(dates);
 				viewModel.set("graphMax", max + 3);
+				viewModel.set("graphMin", min - 3);
+				
 				viewModel.set("graphStats", data);
 
 				//calculate the line of best fit for the stats data
@@ -104,7 +108,7 @@ function StatsViewModel(args) {
 	// Run on page load:
 	viewModel.getGraphStats();
 
-	viewModel.page.getViewById("weight").borderWidth = "6px";
+	viewModel.page.getViewById("weight").borderWidth = "4px";
 
 	viewModel.items.push({
 		itemName: "Arcade Fire",
