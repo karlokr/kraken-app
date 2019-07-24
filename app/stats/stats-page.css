@@ -24,12 +24,15 @@
 }
 
 .menu-icon {
-    background: rgb(252, 246, 202);
+    /* background: rgb(252, 246, 202); */
+    background: rgb(255, 255, 255);
     border-radius: 10px;
     border-width: 2px;
     border-color: #BCA817;
+    /* border-color: rgb(161, 160, 145); */
     margin: 3em;
     color: black;
+    font-weight:bold;
 }
 
 .back-btn{

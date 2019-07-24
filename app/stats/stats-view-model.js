@@ -11,8 +11,9 @@ function StatsViewModel(args) {
 		unit: "lbs",
 		stats: ["weight", "chest", "arms", "waist", "hips", "butt"],
 		graphStats: [],
+		graphBestFit: [],
 		graphMin: 0,
-		graphMax: 0,
+		graphMax: 1000,
 		items: [],
 		switchStat: function (args) {
 			for (x in viewModel.stats) {
@@ -36,33 +37,68 @@ function StatsViewModel(args) {
 					dropQuotesOnKeys: true,
 					minify: true
 				});
-				console.log(properJSON);
+
+				//get the minimum and maximum value of the stat
+				//for optimally displaying the stats graph
 				var min = 1000;
 				var max = 0;
+				var x = [];
+				var y = [];
+				var dates = [];
 				var keys = Object.keys(data);
 				for (var i = 0; i < keys.length; i++) {
 					var key = keys[i];
 					var inner = Object.keys(data[key]);
 					var innerKey = inner[1];
-					if (data[key][innerKey] < min) {
-						min = data[key][innerKey]
-					}
-					if (data[key][innerKey] > max) {
-						max = data[key][innerKey]
-					}
+					dates.push(data[key][inner[0]]);
+					//find the min/max
+					data[key][innerKey] < min ? min = data[key][innerKey] : min = min;
+					data[key][innerKey] > max ? max = data[key][innerKey] : max = max;
+					//collect data needed for the best fit
+					x.push(i);
+					y.push(data[key][innerKey]);
 				}
-				console.log("min: " + min);
-				console.log("max: " + max);
 				viewModel.set("graphMin", min - 3);
 				viewModel.set("graphMax", max + 3);
 				viewModel.set("graphStats", data);
+
+				//calculate the line of best fit for the stats data
+				var sx = 0.0;
+				var sy = 0.0;
+				var stt = 0.0;
+				var sts = 0.0;
+				var n = x.length;
+				for (var i = 0; i < n; i++) {
+					sx += x[i];
+					sy += y[i];
+				}
+				for (var i = 0; i < n; i++) {
+					var t = x[i] - sx / n;
+					stt += t * t;
+					sts += t * y[i];
+				}
+				var slope = sts / stt;
+				var intercept = (sy - sx * slope) / n;
+				var bestFit = [];
+				for (var i = 0; i < n; i++) {
+					bestFit.push(slope * x[i] + intercept);
+				}
+
+				//build the JSON object of the best fit data for the viewmodel
+				var jsonObj = {};
+				var result = [];
+				for (var i = 0; i < n; i++) {
+					jsonObj = {};
+					jsonObj.date = dates[i];
+					jsonObj[viewModel.get("stat")] = bestFit[i];
+					result.push(jsonObj);
+				}
+				viewModel.set("graphBestFit", result);
 			})
 		},
 		capitalizeFirst(str) {
 			return str.charAt(0).toUpperCase() + str.slice(1);
 		}
-
-
 	})
 
 	// Run on page load:
