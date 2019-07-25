@@ -52,6 +52,7 @@ function StatsViewModel(args) {
 					var innerKey = inner[1];
 					//record the date as UTC
 					dates.push(new Date(data[key][inner[0]] + "Z"));
+					console.log(data[key][inner[0]]);
 					data[key][inner[0]] = new Date(data[key][inner[0]] + "Z");
 					//find the min/max
 					data[key][innerKey] < min ? min = data[key][innerKey] : min = min;

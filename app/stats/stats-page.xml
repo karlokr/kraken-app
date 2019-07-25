@@ -3,7 +3,13 @@
     xmlns:lv="nativescript-ui-listview"
     xmlns:chart="nativescript-ui-chart" backgroundColor="#ebf1f2" class="page">
     <ActionBar class="action-bar" flat="true" title="{{ title }}">
-        <NavigationButton class="back-btn" android.systemIcon="ic_menu_back" tap="onNavBtnTap" style="color:white;"/>
+        <!-- <NavigationButton class="back-btn" icon="../images/add.png" tap="onNavBtnTap" style="color:white;"/> -->
+        <NavigationButton text="Go Back" icon="~/images/next.png" tap="onNavBtnTap"/>
+        <!-- <ActionItem android.position="actionBar" ios.position="right" tap=" {{ onProfileButtonTap }}">
+            <Button icon="~/images/add.png" class="action-button"/>
+        </ActionItem> -->
+        <ActionItem icon="~/images/add.png" android.position="actionBar" ios.position="right" tap=" {{ onProfileButtonTap }}">
+        </ActionItem>
     </ActionBar>
     <!-- dialog -->
     <StackLayout class="wrapper" alignItems="flex-end" width="100%">

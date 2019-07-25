@@ -13,6 +13,17 @@
     height: 30%;
 }
 
+.action-button {
+    font-family: "FontAwesome";
+    font-size: 24;
+    font-weight: normal;
+    text-align: center;
+    background-color: #3E646C;
+    padding:0;
+    margin:0;
+    z-index:0;
+    width: 80px;
+}
 
 
 .menu-container {
