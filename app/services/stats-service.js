@@ -20,7 +20,24 @@ exports.getGraphStats = function (data) {
             return res.json();
         })
         .then(function (data) {
-            //console.log(data.origin); 
             return data;
+        })
+};
+
+exports.insertStat = function (data) {
+    return fetchModule.fetch(
+            "https://joshkraken.com/sqlconnect/insertStat.php", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    stat: data.stat,
+                    id: appSettings.getString("id"),
+                    measurement: data.measurement
+                })
+            })
+        .then(function (data) {
+            return data["_bodyText"];
         })
 };

@@ -29,3 +29,6 @@ refer to http://docs.nativescript.org/ui/theme.
     margin-bottom: 15;
 }
 
+Dialog, Label, Button {
+    color: rgb(27, 55, 61);
+}

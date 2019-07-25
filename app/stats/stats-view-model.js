@@ -1,21 +1,24 @@
 const observableModule = require("tns-core-modules/data/observable");
 var statsService = require("~/services/stats-service");
 const jsonB = require('./json_beautifier.js');
-var view = require("ui/core/view");
+const topmost = require("tns-core-modules/ui/frame").topmost;
+const dialogsModule = require("tns-core-modules/ui/dialogs");
 
 function StatsViewModel(args) {
 	var viewModel = observableModule.fromObject({
 		page: args,
 		stat: "weight",
 		title: "Weight",
-		unit: "lbs",
+		unit: "kg",
 		stats: ["weight", "chest", "arms", "waist", "hips", "butt"],
 		graphStats: [],
 		graphBestFit: [],
 		graphMin: 0,
-		graphMax: 1000,
+		graphMax: 1,
 		items: [],
 		switchStat: function (args) {
+			viewModel.set("graphMin", 0);
+			viewModel.set("graphMax", 1);
 			for (x in viewModel.stats) {
 				viewModel.page.getViewById(this.stats[x]).borderWidth = "2px";
 			}
@@ -25,7 +28,7 @@ function StatsViewModel(args) {
 			btn.borderWidth = "4px";
 			viewModel.set("stat", stat);
 			viewModel.set("title", this.capitalizeFirst(stat));
-			this.stat == "weight" ? this.unit = "lbs" : this.unit = "cm";
+			this.stat == "weight" ? this.unit = "kg" : this.unit = "inches";
 			this.getGraphStats();
 		},
 		getGraphStats() {
@@ -52,7 +55,6 @@ function StatsViewModel(args) {
 					var innerKey = inner[1];
 					//record the date as UTC
 					dates.push(new Date(data[key][inner[0]] + "Z"));
-					console.log(data[key][inner[0]]);
 					data[key][inner[0]] = new Date(data[key][inner[0]] + "Z");
 					//find the min/max
 					data[key][innerKey] < min ? min = data[key][innerKey] : min = min;
@@ -64,7 +66,7 @@ function StatsViewModel(args) {
 				console.log(dates);
 				viewModel.set("graphMax", max + 3);
 				viewModel.set("graphMin", min - 3);
-				
+
 				viewModel.set("graphStats", data);
 
 				//calculate the line of best fit for the stats data
@@ -103,6 +105,33 @@ function StatsViewModel(args) {
 		},
 		capitalizeFirst(str) {
 			return str.charAt(0).toUpperCase() + str.slice(1);
+		},
+		onNavBtnTap() {
+			topmost().navigate({
+				moduleName: "home/home-page",
+				clearHistory: true
+			});
+		},
+		addStat() {
+			dialogsModule.prompt({
+				title: "Enter todays " + this.stat + " measurement",
+				message: "Please enter the measurement in " + this.unit,
+				inputType: dialogsModule.inputType.decimal,
+				defaultText: "",
+				okButtonText: "Ok",
+				cancelButtonText: "Cancel"
+			}).then((data) => {
+				if (data.result) {
+					statsService.insertStat({
+						stat: this.stat,
+						measurement: data.text
+					}).then(() => {
+						this.getGraphStats();
+					}).catch(() => {
+						alert("Unfortunately, an error occurred resetting your password.");
+					});
+				}
+			});
 		}
 	})
 

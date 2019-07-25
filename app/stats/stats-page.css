@@ -1,4 +1,5 @@
 @import '~nativescript-theme-core/css/core.light.css';
+
 .action-bar {
     background-color: #3E646C;
     color: #ffffff;
@@ -19,19 +20,32 @@
     font-weight: normal;
     text-align: center;
     background-color: #3E646C;
-    padding:0;
-    margin:0;
-    z-index:0;
-    width: 80px;
+    padding: 0;
+    margin: 0;
+    z-index: 0;
 }
+
 
 
 .menu-container {
     margin: 10em;
     padding: 5em;
-    margin-top: 30em;
+    margin-top: 15em;
     border-radius: 10px;
+    padding-bottom: 8em;
     background-color: rgb(215, 248, 255);
+}
+
+.menu-label {
+    padding-left: 5em;
+    padding-top: 8em;
+    padding-bottom: 8em;
+}
+
+.menu-label-text {
+    margin-left: 6em;
+    color: rgb(27, 55, 61);
+    font-size: 20;
 }
 
 .menu-icon {
@@ -43,17 +57,17 @@
     /* border-color: rgb(161, 160, 145); */
     margin: 3em;
     color: rgb(27, 55, 61);
-    font-weight:600;
+    font-weight: 600;
 }
 
-.back-btn{
+.back-btn {
     color: red;
     background-color: blue;
 }
 
 .wrapper {
     padding-top: 5em;
-    background: linear-gradient(#3E646C 0%, #3E646C 10%,  rgb(98, 161, 173) 30%);
+    background: linear-gradient(#3E646C 0%, #3E646C 10%, rgb(98, 161, 173) 30%);
 }
 
 .dialog Label {

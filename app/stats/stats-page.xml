@@ -1,14 +1,10 @@
 <Page id="main" loaded="pageLoaded" 
     xmlns="http://www.nativescript.org/tns.xsd" 
-    xmlns:lv="nativescript-ui-listview"
+    xmlns:lv="nativescript-ui-listview" 
     xmlns:chart="nativescript-ui-chart" backgroundColor="#ebf1f2" class="page">
     <ActionBar class="action-bar" flat="true" title="{{ title }}">
-        <!-- <NavigationButton class="back-btn" icon="../images/add.png" tap="onNavBtnTap" style="color:white;"/> -->
-        <NavigationButton text="Go Back" icon="~/images/next.png" tap="onNavBtnTap"/>
-        <!-- <ActionItem android.position="actionBar" ios.position="right" tap=" {{ onProfileButtonTap }}">
-            <Button icon="~/images/add.png" class="action-button"/>
-        </ActionItem> -->
-        <ActionItem icon="~/images/add.png" android.position="actionBar" ios.position="right" tap=" {{ onProfileButtonTap }}">
+        <NavigationButton text="Go Back" icon="~/images/next.png" tap="{{ onNavBtnTap }}"/>
+        <ActionItem icon="~/images/add.png" android.position="actionBar" ios.position="right" tap=" {{ addStat }}">
         </ActionItem>
     </ActionBar>
     <!-- dialog -->
@@ -32,7 +28,7 @@
 
                 <chart:RadCartesianChart row="1" selectionMode="None">
                     <chart:RadCartesianChart.horizontalAxis>
-                        <chart:DateTimeContinuousAxis  dateFormat="MMM dd" lineHidden="true" majorStep="Week" labelTextColor="#ffffff" ticksColor="#A4D1DA" plotMode="OnTicks" labelMargin="20" android:labelMargin="20" />
+                        <chart:DateTimeContinuousAxis dateFormat="MMM dd" lineHidden="true" majorStep="Week" labelTextColor="#ffffff" ticksColor="#A4D1DA" plotMode="OnTicks" labelMargin="20" android:labelMargin="20" />
                     </chart:RadCartesianChart.horizontalAxis>
                     <chart:RadCartesianChart.verticalAxis>
                         <chart:LinearAxis lineHidden="true" labelFormat="%.0f" labelTextColor="#ffffff" ticksHidden="true" labelMargin="20" android:labelMargin="20" majorStep="5" maximum="{{ graphMax }}" minimum="{{ graphMin }}"/>
@@ -60,26 +56,32 @@
             </GridLayout>
         </StackLayout>
 
-        <GridLayout rows="auto, auto" columns="*, *, *" class="menu-container">
-            <StackLayout row="0" col="0" data-name="weight" class="menu-item">
-                <Button id="weight" text="Weight" class="fa menu-icon" tap="{{ switchStat }}"></Button>
+        <StackLayout class="menu-container">
+            <StackLayout class="menu-label" orientation="horizontal">
+                <Image src="~/images/stats.png" style="width:50px;"></Image>
+                <Label text="YOUR STATS" class="menu-label-text"></Label>
             </StackLayout>
-            <StackLayout row="0" col="1" data-name="arms" class="menu-item">
-                <Button id="arms" text="Arms" class="fa menu-icon" tap="{{ switchStat }}"></Button>
-            </StackLayout>
-            <StackLayout row="0" col="2" data-name="chest" class="menu-item">
-                <Button id="chest" text="Chest" class="fa menu-icon" tap="{{ switchStat }}"></Button>
-            </StackLayout>
-            <StackLayout row="1" col="0" data-name="waist" class="menu-item">
-                <Button id="waist" text="Waist" class="fa menu-icon" tap="{{ switchStat }}"></Button>
-            </StackLayout>
-            <StackLayout row="1" col="1" data-name="hips" class="menu-item">
-                <Button id="hips" text="Hips" class="fa menu-icon" tap="{{ switchStat }}"></Button>
-            </StackLayout>
-            <StackLayout row="1" col="2" data-name="butt" class="menu-item">
-                <Button id="butt" text="Butt" class="fa menu-icon" tap="{{ switchStat }}"></Button>
-            </StackLayout>
-        </GridLayout>
+            <GridLayout rows="auto, auto" columns="*, *, *">
+                <StackLayout row="0" col="0" data-name="weight" class="menu-item">
+                    <Button id="weight" text="Weight" class="fa menu-icon" tap="{{ switchStat }}"></Button>
+                </StackLayout>
+                <StackLayout row="0" col="1" data-name="arms" class="menu-item">
+                    <Button id="arms" text="Arms" class="fa menu-icon" tap="{{ switchStat }}"></Button>
+                </StackLayout>
+                <StackLayout row="0" col="2" data-name="chest" class="menu-item">
+                    <Button id="chest" text="Chest" class="fa menu-icon" tap="{{ switchStat }}"></Button>
+                </StackLayout>
+                <StackLayout row="1" col="0" data-name="waist" class="menu-item">
+                    <Button id="waist" text="Waist" class="fa menu-icon" tap="{{ switchStat }}"></Button>
+                </StackLayout>
+                <StackLayout row="1" col="1" data-name="hips" class="menu-item">
+                    <Button id="hips" text="Hips" class="fa menu-icon" tap="{{ switchStat }}"></Button>
+                </StackLayout>
+                <StackLayout row="1" col="2" data-name="butt" class="menu-item">
+                    <Button id="butt" text="Butt" class="fa menu-icon" tap="{{ switchStat }}"></Button>
+                </StackLayout>
+            </GridLayout>
+        </StackLayout>
 
 
         <lv:RadListView items="{{ items }}" class="list-group">
