@@ -32,3 +32,8 @@ refer to http://docs.nativescript.org/ui/theme.
 Dialog, Label, Button {
     color: rgb(27, 55, 61);
 }
+.action-bar {
+    background-color: #3E646C;
+    color: #ffffff;
+    padding-right: 10;
+}

@@ -36,7 +36,7 @@
             </StackLayout>
             <StackLayout row="2" col="1" data-name="photo-gallery" class="menu-item">
                 <Button text="&#xf030;" class="fa menu-icon" tap="{{ onPhotosTap }}"></Button>
-                <Label text="Progress Photos" class="text-center" tap="{{ onPhotosTap }}"></Label>
+                <Label text="Progress Pics" class="text-center" tap="{{ onPhotosTap }}"></Label>
             </StackLayout>
             
         </GridLayout>

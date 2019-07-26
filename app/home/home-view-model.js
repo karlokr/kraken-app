@@ -37,6 +37,12 @@ function HomeViewModel(userInfo) {
             topmost().navigate({
                 moduleName: "stats/stats-page",
             });
+        },
+
+        onPhotosTap: function(args) {
+            topmost().navigate({
+                moduleName: "progress/main-page",
+            });
         }
     });
 

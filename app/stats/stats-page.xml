@@ -3,7 +3,7 @@
     xmlns:lv="nativescript-ui-listview" 
     xmlns:chart="nativescript-ui-chart" backgroundColor="#ebf1f2" class="page">
     <ActionBar class="action-bar" flat="true" title="{{ title }}">
-        <NavigationButton text="Go Back" icon="~/images/next.png" tap="{{ onNavBtnTap }}"/>
+        <NavigationButton text="" icon="~/images/next.png" tap="{{ onNavBtnTap }}"/>
         <ActionItem icon="~/images/add.png" android.position="actionBar" ios.position="right" tap=" {{ addStat }}">
         </ActionItem>
     </ActionBar>

@@ -1,0 +1,20 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" backgroundSpanUnderStatusBar="true" class="page-layout" loaded="onLoaded">
+    <ActionBar class="action-bar" flat="true" title="Progress Pics">
+        <NavigationButton text="" icon="~/images/next.png" tap="onNavBtnTap"/>
+        <ActionItem icon="~/images/add.png" android.position="actionBar" ios.position="right" tap=" {{ takePicture }}">
+        </ActionItem>
+    </ActionBar>
+    <ScrollView orientation="vertical">
+        <Repeater id="repeaterObj" items="{{arrayPictures}}">
+            <Repeater.itemTemplate >
+                <GridLayout cols="*,100" rows="*" id="gridObj" tap="tapPicture" >
+                    <Image class="picture-stack" col="0" colspan="2" row="0" stretch="aspectFit" src="{{$value}}"/>
+                    <StackLayout visibility="{{$value.note.length>0  ? 'visible' : 'hidden'}}" col="0" row="0" class="note-picture-wrapper">
+                        <Label textWrap="true" verticalAlignement="bottom" text="{{$value.note}}" class="note-picture-text" style="color:white"></Label>
+                    </StackLayout>
+                </GridLayout>
+            </Repeater.itemTemplate>
+
+        </Repeater>
+    </ScrollView>
+</Page>
