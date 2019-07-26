@@ -109,12 +109,23 @@ refer to http://docs.nativescript.org/ui/theme.
     margin-bottom: 16;
 }
 .menu-icon {
-    width: 90;
-    height: 90;    
+    width: 90%;
+    height: 120;     
     vertical-align: top;
     border-width: 1;
+    /* border-radius: 50%; */
+    font-size: 56;
+    color: #3E646C;
+    background-color: #ffffff;
+    border-color: #d8d8d8;
+}
+
+.settings-icon {
+    width: 90;
+    height: 90;     
+    border-width: 1;
     border-radius: 50%;
-    font-size: 36;
+    font-size: 42;
     color: #3E646C;
     background-color: #ffffff;
     border-color: #d8d8d8;
