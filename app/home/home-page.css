@@ -120,6 +120,7 @@ refer to http://docs.nativescript.org/ui/theme.
     border-color: #d8d8d8;
 }
 
-.action-button{
-    font-size: 20;
+.action-button {
+    font-size: 32;
+    color: white;
 }

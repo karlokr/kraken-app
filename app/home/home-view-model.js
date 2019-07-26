@@ -5,7 +5,7 @@ var appSettings = require("application-settings");
 
 function HomeViewModel(userInfo) {
     const viewModel = observableModule.fromObject({
-        loggedUser: appSettings.getString("email"),
+        loggedUser: appSettings.getString("firstName"),
 
         logout: function () {
             // Kinvey.User.logout()

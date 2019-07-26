@@ -37,7 +37,8 @@ function LoginViewModel() {
                 switch (code) {
                     case "0": 
                         appSettings.setString("email", this.email);
-                        appSettings.setString("id", res[1])
+                        appSettings.setString("id", res[1]);
+                        appSettings.setString("firstName", res[2]);
                         topmost().navigate({
                             moduleName: "home/home-page",
                             clearHistory: true

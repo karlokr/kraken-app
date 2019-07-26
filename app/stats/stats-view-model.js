@@ -63,7 +63,6 @@ function StatsViewModel(args) {
 					x.push(i);
 					y.push(data[key][innerKey]);
 				}
-				console.log(dates);
 				viewModel.set("graphMax", max + 3);
 				viewModel.set("graphMin", min - 3);
 
