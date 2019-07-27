@@ -5,16 +5,13 @@
         </ActionItem>
     </ActionBar>
     <ScrollView orientation="vertical">
-        <Repeater id="repeaterObj" items="{{arrayPictures}}">
-            <Repeater.itemTemplate >
-                <GridLayout cols="*,100" rows="*" id="gridObj" tap="tapPicture" >
-                    <Image class="picture-stack" col="0" colspan="2" row="0" stretch="aspectFit" src="{{$value}}"/>
-                    <StackLayout visibility="{{$value.note.length>0  ? 'visible' : 'hidden'}}" col="0" row="0" class="note-picture-wrapper">
-                        <Label textWrap="true" verticalAlignement="bottom" text="{{$value.note}}" class="note-picture-text" style="color:white"></Label>
-                    </StackLayout>
-                </GridLayout>
+        <Repeater separatorColor="transparent" id="repeaterObj" items="{{arrayPictures}}">
+            <Repeater.itemsLayout>
+                <FlexboxLayout flexDirection="row" flexWrap="wrap" alignSelf="center" />
+            </Repeater.itemsLayout>
+            <Repeater.itemTemplate>
+                <Image tap="tapPicture" src="{{$value}}" class="image-icon" height="200" stretch="aspectFill" />
             </Repeater.itemTemplate>
-
         </Repeater>
     </ScrollView>
 </Page>

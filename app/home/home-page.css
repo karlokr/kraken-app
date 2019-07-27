@@ -121,14 +121,15 @@ refer to http://docs.nativescript.org/ui/theme.
 }
 
 .settings-icon {
-    width: 90;
-    height: 90;     
+    width: 60;
+    height: 60;     
     border-width: 1;
     border-radius: 50%;
-    font-size: 42;
+    font-size: 32;
     color: #3E646C;
     background-color: #ffffff;
     border-color: #d8d8d8;
+    margin-bottom: 8;
 }
 
 .action-button {

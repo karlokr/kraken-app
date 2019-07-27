@@ -18,13 +18,13 @@ var cameraModel = new PhotoGalleryComponent();
 function PhotoGalleryComponent() {
   var PhotoGalleryObj = new Observable();
   PhotoGalleryObj.arrayPictures = new ObservableArray();
-  PhotoGalleryObj.takePicture = function() {
+  PhotoGalleryObj.takePicture = function () {
     cameraModule
       .takePicture({
-        width: 300, //These are in device independent pixels
-        height: 300, //Only one may be respected depending on os/device if
+        // width: 300, //These are in device independent pixels
+        // height: 300, //Only one may be respected depending on os/device if
         keepAspectRatio: true, //    keepAspectRatio is enabled.
-        saveToGallery: false //Don't save a copy in local gallery, ignored by some Android devices
+        saveToGallery: true //Don't save a copy in local gallery, ignored by some Android devices
       })
       .then(picture => {
         imageSourceModule.fromAsset(picture).then(
@@ -43,37 +43,37 @@ function PhotoGalleryComponent() {
             if (currentPage.android) {
               let tmpfolder = fsModule.Folder.fromPath(
                 utilsModule.ad
-                  .getApplicationContext()
-                  .getExternalFilesDir(null)
-                  .getAbsolutePath()
+                .getApplicationContext()
+                .getExternalFilesDir(null)
+                .getAbsolutePath()
               );
               tmpfolder.getEntities().then(
-                function(entities) {
-                  entities.forEach(function(entity) {
+                function (entities) {
+                  entities.forEach(function (entity) {
                     if (entity.name.substr(0, 5) == "NSIMG") {
                       var tmpfile = tmpfolder.getFile(entity.name);
                       tmpfile.remove();
                     }
                   });
                 },
-                function(error) {
+                function (error) {
                   console.log(error.message);
                 }
               );
               utilsModule.GC(); //trigger garbage collection for android
-            }             
+            }
           },
           err => {
-            console.log("Failed to load from asset");                    
+            console.log("Failed to load from asset");
           }
         );
       });
   };
 
-  PhotoGalleryObj.deletePicture = function(args) {
+  PhotoGalleryObj.deletePicture = function (args) {
     const documents = fsModule.knownFolders.documents();
-    let parentobj = args.object.parent.parent; //StackLayout
-    let imgobj = parentobj.getChildAt(0); //image is the first child
+    let parentobj = args.object.parent.parent;
+    let imgobj = parentobj.getViewById("fullImage");
     const filename = imgobj.src.filename;
     var file = documents.getFile(filename);
     file.remove();
@@ -81,19 +81,22 @@ function PhotoGalleryComponent() {
     this.arrayPictures.splice(pictureIndex, 1);
     this.storeData();
   };
-  PhotoGalleryObj.storeData = function() {
+  PhotoGalleryObj.storeData = function () {
     let localArr = [];
     for (var i = 0; i < this.arrayPictures.length; i++) {
       let entry = this.arrayPictures.getItem(i);
-      localArr.push({ note: entry.note, filename: entry.filename });      
+      localArr.push({
+        note: entry.note,
+        filename: entry.filename
+      });
     }
     applicationSettings.setString("localdata", JSON.stringify(localArr));
-    if (this.arrayPictures.length) {//hack to trigger refresh of bound image array
+    if (this.arrayPictures.length) {
       var loadedImage = this.arrayPictures.shift();
       this.arrayPictures.unshift(loadedImage);
     }
   };
-  PhotoGalleryObj.loadData = function() {
+  PhotoGalleryObj.loadData = function () {
     let strData = applicationSettings.getString("localdata");
     if (strData && strData.length) {
       let localArr = JSON.parse(strData);
@@ -111,8 +114,8 @@ function PhotoGalleryComponent() {
   return PhotoGalleryObj;
 }
 
-exports.tapPicture = function(eventData) {
-  var imgObj = eventData.object.getChildAt(0);
+exports.tapPicture = function (eventData) {
+  var imgObj = eventData.object;
   navContextObj = {
     srcPicture: imgObj.src,
     cameraModel: cameraModel
@@ -130,7 +133,7 @@ exports.tapPicture = function(eventData) {
   });
 };
 
-exports.onNavBtnTap = function() {
+exports.onNavBtnTap = function () {
   console.log("tapped");
   topmost().navigate({
     moduleName: "home/home-page",
@@ -160,6 +163,6 @@ function onLoaded(args) {
     );
     cameraModel.loadData();
     initFlag = 1;
-  } 
+  }
 }
 exports.onLoaded = onLoaded;
