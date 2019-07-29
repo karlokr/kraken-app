@@ -1,4 +1,6 @@
 const HomeViewModel = require("./home-view-model");
+var orientation = require('nativescript-orientation');
+orientation.disableRotation();
 
 /* ***********************************************************
 * Use the "onNavigatingTo" handler to initialize the page binding context.

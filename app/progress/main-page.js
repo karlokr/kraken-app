@@ -4,6 +4,8 @@ const ObservableArray = require("data/observable-array").ObservableArray;
 const fromObject = require("tns-core-modules/data/observable").fromObject;
 //const frameModule = require("tns-core-modules/ui/frame");
 const topmost = require("tns-core-modules/ui/frame").topmost;
+var orientation = require('nativescript-orientation');
+orientation.disableRotation();
 
 
 const applicationSettings = require("application-settings");
@@ -115,7 +117,7 @@ function PhotoGalleryComponent() {
 }
 
 exports.tapPicture = function (eventData) {
-  var imgObj = eventData.object;
+  var imgObj = eventData.object; 
   navContextObj = {
     srcPicture: imgObj.src,
     cameraModel: cameraModel

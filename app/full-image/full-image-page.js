@@ -1,5 +1,7 @@
 var frameModule = require("tns-core-modules/ui/frame");
 var cameraModel;
+var orientation = require('nativescript-orientation');
+orientation.disableRotation();
 
 exports.navigatingTo = function(args) {
   args.object.bindingContext = args.context;

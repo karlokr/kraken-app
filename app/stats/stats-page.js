@@ -1,4 +1,6 @@
 var StatsViewModel = require("./stats-view-model");
+var orientation = require('nativescript-orientation');
+orientation.disableRotation();
 
 
 exports.pageLoaded = function(args) {

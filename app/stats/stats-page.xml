@@ -84,7 +84,7 @@
         </StackLayout>
 
 
-        <lv:RadListView items="{{ items }}" class="list-group">
+        <!-- <lv:RadListView items="{{ items }}" class="list-group">
             <lv:RadListView.listViewLayout>
                 <lv:ListViewLinearLayout scrollDirection="Vertical"/>
             </lv:RadListView.listViewLayout>
@@ -96,7 +96,7 @@
                     </StackLayout>
                 </GridLayout>
             </lv:RadListView.itemTemplate>
-        </lv:RadListView>
+        </lv:RadListView> -->
     </StackLayout>
 
 
