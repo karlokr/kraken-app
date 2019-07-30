@@ -4,8 +4,8 @@
         <ActionItem icon="~/images/remove.png" android.position="actionBar" ios.position="right" tap="deletePicture">
         </ActionItem>
     </ActionBar>
-        <StackLayout>  
-            <Image class="picture-full" id="fullImage" stretch="zoom" src="{{srcPicture}}"  />                                             
+        <StackLayout class="picture-full" id="fullImage">  
+            <Image stretch="zoom" src="{{srcPicture}}"  />                                             
         </StackLayout>
 </Page>
                 

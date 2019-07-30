@@ -148,13 +148,15 @@ function PhotoGalleryComponent() {
     }
   };
 
-  PhotoGalleryObj.loadData = function () {
+  PhotoGalleryObj.loadData = function (args) {
     statsService.getPhotos()  
       .then(function (data) {
+        args.busy = false;
         for (var i = 0; i < data.length; i++) {
           var row = JSON.parse(data[i]);
           var loadedImage = imageSourceModule.fromBase64(row.img);
           loadedImage.note = row.note;
+          loadedImage.filename = row.filename;
           PhotoGalleryObj.arrayPictures.unshift(loadedImage);
         }
       })
@@ -208,7 +210,9 @@ function onLoaded(args) {
         buttonCamera.isEnabled = false;
       }
     );
-    cameraModel.loadData();
+    var indicator = currentPage.getViewById("actv");
+    indicator.busy = true;
+    cameraModel.loadData(currentPage.getViewById("actv"));
     initFlag = 1;
   }
 }

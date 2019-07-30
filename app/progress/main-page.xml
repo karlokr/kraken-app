@@ -4,14 +4,19 @@
         <ActionItem icon="~/images/add.png" android.position="actionBar" ios.position="right" tap=" {{ takePicture }}">
         </ActionItem>
     </ActionBar>
-    <ScrollView orientation="vertical">
-        <Repeater separatorColor="transparent" id="repeaterObj" items="{{arrayPictures}}">
-            <Repeater.itemsLayout>
-                <FlexboxLayout flexDirection="row" flexWrap="wrap" alignSelf="center" />
-            </Repeater.itemsLayout>
-            <Repeater.itemTemplate>
-                <Image tap="tapPicture" src="{{$value}}" class="image-icon" height="200" stretch="aspectFill" />
-            </Repeater.itemTemplate>
-        </Repeater>
+    <ScrollView row="0" orientation="vertical">
+        <GridLayout rows="*">
+            <Repeater separatorColor="transparent" id="repeaterObj" items="{{arrayPictures}}">
+                <Repeater.itemsLayout>
+                    <FlexboxLayout flexDirection="row" flexWrap="wrap" alignSelf="center" />
+                </Repeater.itemsLayout>
+                <Repeater.itemTemplate>
+                    <Image tap="tapPicture" src="{{$value}}" class="image-icon" height="200" stretch="aspectFill" />
+                </Repeater.itemTemplate>
+            </Repeater>
+            <ActivityIndicator color="rgb(27, 55, 61)" rowspan="1" busy="false" width="100" height="100" class="activity-indicator" id="actv" style="margin-top:200;"></ActivityIndicator>
+        </GridLayout>
     </ScrollView>
+
+
 </Page>
