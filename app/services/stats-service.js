@@ -24,6 +24,24 @@ exports.getGraphStats = function (data) {
         })
 };
 
+exports.getPhotos = function (data) {
+    return fetchModule.fetch(
+            "https://joshkraken.com/sqlconnect/getPics.php", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    id: appSettings.getString("id")
+                })
+            }).then(function (res) {
+            return res.json();
+        })
+        .then(function (data) {
+            return data;
+        })
+};
+
 exports.insertStat = function (data) {
     return fetchModule.fetch(
             "https://joshkraken.com/sqlconnect/insertStat.php", {

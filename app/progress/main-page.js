@@ -4,11 +4,13 @@ const ObservableArray = require("data/observable-array").ObservableArray;
 const fromObject = require("tns-core-modules/data/observable").fromObject;
 const topmost = require("tns-core-modules/ui/frame").topmost;
 var orientation = require('nativescript-orientation');
+var statsService = require("~/services/stats-service");
 const applicationSettings = require("application-settings");
 const fsModule = require("tns-core-modules/file-system");
 const imageSourceModule = require("tns-core-modules/image-source");
 const utilsModule = require("utils/utils");
 var bghttpModule = require("nativescript-background-http");
+var session = bghttpModule.session("image-upload");
 var initFlag = 0;
 
 var currentPage;
@@ -18,6 +20,7 @@ orientation.disableRotation();
 function PhotoGalleryComponent() {
   var PhotoGalleryObj = new Observable();
   PhotoGalleryObj.arrayPictures = new ObservableArray();
+
   PhotoGalleryObj.takePicture = function () {
     cameraModule
       .takePicture({
@@ -38,50 +41,50 @@ function PhotoGalleryComponent() {
             loadedImage.note = timeNow.substring(0, timeNow.length - 15);
             this.arrayPictures.unshift(loadedImage);
 
-            //store image on database
-            // httpModule.request({
-            //   url: "https://joshkraken.com/sqlconnect/uploadPic.php",
-            //   method: "POST",
-            //   headers: {
-            //     "Content-Type": "multipart/form-data"
-            //   },
-            //   content: {
-            //     id: appSettings.getString("id"),
-            //     firstName: appSettings.getString("firstName"),
-            //     lastName: appSettings.getString("lastName"),
-            //     fileToUpload: loadedImage
-            //   }
-            // }).then((response) => {
-            //   const result = response.content.toJSON();
-            //   console.log(result);
-            // }, (e) => {console.log(e)});
-            var session = bghttpModule.session("image-upload");
+            //store image in database
+            console.log("right before request");
             var request = {
               url: "https://joshkraken.com/sqlconnect/uploadPic.php",
               method: "POST",
               headers: {
                 "Content-Type": "application/octet-stream"
               },
-              description: "{ 'uploading': " + filename + " }"
+              description: "{ 'uploading': " + filename + " }",
+              androidDisplayNotificationProgress: "false",
+              androidNotificationTitle: "Progress picture uploaded"
             };
-            var params = [
-              { name: "lastName", value: applicationSettings.get("lastName") },
-              { name: "firstName", value: applicationSettings.get("firstName") },
-              { name: "fileToUpload", filename: path, mimeType: "image/png" }
+            var params = [{
+                name: "lastName",
+                value: applicationSettings.getString("lastName").toLowerCase()
+              },
+              {
+                name: "firstName",
+                value: applicationSettings.getString("firstName").toLowerCase()
+              },
+              {
+                name: "id",
+                value: applicationSettings.getString("id")
+              },
+              {
+                name: "fileToUpload",
+                filename: path,
+                mimeType: "image/png"
+              }
             ];
             var task = session.multipartUpload(params, request);
-            task.on("progress", logEvent);
-            task.on("error", logEvent);
-            task.on("complete", logEvent);
+            // task.on("progress", logEvent);
+            // task.on("error", logEvent);
+            // task.on("complete", logEvent);
 
-            function logEvent(e) {
-              console.log("----------------");
-              console.log('Status: ' + e.eventName);
-              if (e.totalBytes !== undefined) {
-                console.log('current bytes transfered: ' + e.currentBytes);
-                console.log('Total bytes to transfer: ' + e.totalBytes);
-              }
-            }
+            // // only for logging image upload
+            // function logEvent(e) {
+            //   console.log("----------------");
+            //   console.log('Status: ' + e.eventName);
+            //   if (e.totalBytes !== undefined) {
+            //     console.log('current bytes transfered: ' + e.currentBytes);
+            //     console.log('Total bytes to transfer: ' + e.totalBytes);
+            //   }
+            // }
 
             this.storeData();
             if (currentPage.android) {
@@ -125,6 +128,7 @@ function PhotoGalleryComponent() {
     this.arrayPictures.splice(pictureIndex, 1);
     this.storeData();
   };
+
   PhotoGalleryObj.storeData = function () {
     let localArr = [];
     for (var i = 0; i < this.arrayPictures.length; i++) {
@@ -140,20 +144,16 @@ function PhotoGalleryComponent() {
       this.arrayPictures.unshift(loadedImage);
     }
   };
+
   PhotoGalleryObj.loadData = function () {
-    let strData = applicationSettings.getString("localdata");
-    if (strData && strData.length) {
-      let localArr = JSON.parse(strData);
-      for (var i = localArr.length - 1; i > -1; i--) {
-        let entry = localArr[i];
-        const folder = fsModule.knownFolders.documents();
-        const path = fsModule.path.join(folder.path, entry.filename);
-        var loadedImage = imageSourceModule.fromFile(path);
-        loadedImage.filename = entry.filename;
-        loadedImage.note = entry.note;
-        this.arrayPictures.unshift(loadedImage);
-      }
-    }
+    statsService.getPhotos()
+      .then(function (data) {
+        for (var i = 0; i < data.length; i++) {
+          console.log(data[i]);
+          var loadedImage = imageSourceModule.fromBase64(data[i]);
+          PhotoGalleryObj.arrayPictures.unshift(loadedImage);
+        }
+      })
   };
   return PhotoGalleryObj;
 }
