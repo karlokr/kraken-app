@@ -42,7 +42,6 @@ function PhotoGalleryComponent() {
             this.arrayPictures.unshift(loadedImage);
 
             //store image in database
-            console.log("right before request");
             var request = {
               url: "https://joshkraken.com/sqlconnect/uploadPic.php",
               method: "POST",
@@ -64,6 +63,10 @@ function PhotoGalleryComponent() {
               {
                 name: "id",
                 value: applicationSettings.getString("id")
+              },
+              {
+                name: "note",
+                value: loadedImage.note
               },
               {
                 name: "fileToUpload",
@@ -146,15 +149,16 @@ function PhotoGalleryComponent() {
   };
 
   PhotoGalleryObj.loadData = function () {
-    statsService.getPhotos()
+    statsService.getPhotos()  
       .then(function (data) {
         for (var i = 0; i < data.length; i++) {
-          console.log(data[i]);
-          var loadedImage = imageSourceModule.fromBase64(data[i]);
+          var row = JSON.parse(data[i]);
+          var loadedImage = imageSourceModule.fromBase64(row.img);
+          loadedImage.note = row.note;
           PhotoGalleryObj.arrayPictures.unshift(loadedImage);
         }
       })
-  };
+  };  
   return PhotoGalleryObj;
 }
 
@@ -164,7 +168,6 @@ exports.tapPicture = function (eventData) {
     srcPicture: imgObj.src,
     cameraModel: cameraModel
   };
-  //var topmost = frameModule.topmost();
   topmost().navigate({
     moduleName: "full-image/full-image-page",
     context: navContextObj,
