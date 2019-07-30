@@ -1,20 +1,10 @@
-﻿/*
-In NativeScript, the app.css file is where you place CSS rules that
-you would like to apply to your entire application. Check out
-http://docs.nativescript.org/ui/styling for a full list of the CSS
-selectors and properties you can use to style UI components.
-
-/*
-In many cases you may want to use the NativeScript core theme instead
-of writing your own CSS rules. For a full list of class names in the theme
-refer to http://docs.nativescript.org/ui/theme.
-*/
-@import '~nativescript-theme-core/css/core.light.css';
+﻿@import '~nativescript-theme-core/css/core.light.css';
 
 /* Common */
 .fa {
     font-family: "FontAwesome";
 }
+
 .page {
     background-color: #ffffff;
     color: #000000;
@@ -42,6 +32,7 @@ refer to http://docs.nativescript.org/ui/theme.
     color: #ffffff;
     padding-right: 10;
 }
+
 .hr {
     background-color: #3E646C;
     width: 95%;
@@ -54,6 +45,7 @@ refer to http://docs.nativescript.org/ui/theme.
     background-color: #3E646C;
     android-status-bar-background: #3E646C;
 }
+
 .page-login {
     background-color: #3E646C;
     background-repeat: no-repeat;
@@ -63,10 +55,12 @@ refer to http://docs.nativescript.org/ui/theme.
     flex-direction: column;
     align-items: center;
 }
+
 .company-name-container {
     height: 30%;
 }
-.company-name{
+
+.company-name {
     margin-top: 60;
 }
 
@@ -95,6 +89,7 @@ refer to http://docs.nativescript.org/ui/theme.
     color: #3E646C;
     margin-top: 20;
 }
+
 .flexbox-item Label {
     margin-bottom: 4;
 }
@@ -108,9 +103,10 @@ refer to http://docs.nativescript.org/ui/theme.
     width: 50%;
     margin-bottom: 16;
 }
+
 .menu-icon {
     width: 90%;
-    height: 120;     
+    height: 120;
     vertical-align: top;
     border-width: 1;
     /* border-radius: 50%; */
@@ -122,7 +118,7 @@ refer to http://docs.nativescript.org/ui/theme.
 
 .settings-icon {
     width: 60;
-    height: 60;     
+    height: 60;
     border-width: 1;
     border-radius: 50%;
     font-size: 32;

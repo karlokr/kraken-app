@@ -38,13 +38,13 @@
                 <Button text="&#xf21e;" class="fa menu-icon" tap="{{ onMenuButtonTap }}"></Button>
                 <Label text="MindBody Login" class="text-center" tap="{{ onMenuButtonTap }}"></Label>
             </StackLayout>
-            
-            
+
+
         </GridLayout>
         <StackLayout row="2" data-name="settings" class="menu-item">
-                <Button text="&#xf013;" class="fa settings-icon" tap="{{ onMenuButtonTap }}"></Button>
-                <!-- <Label text="Settings" class="text-center" tap="{{ onMenuButtonTap }}"></Label> -->
-            </StackLayout>
+            <Button text="&#xf013;" class="fa settings-icon" tap="{{ onMenuButtonTap }}"></Button>
+            <!-- <Label text="Settings" class="text-center" tap="{{ onMenuButtonTap }}"></Label> -->
+        </StackLayout>
     </GridLayout>
 
 </Page>

@@ -21,8 +21,6 @@
                 <Label text="{{ 'Your ' + title + ' Trend' }}" style="color:white;"/>
             </FlexboxLayout>
 
-
-
             <GridLayout rows="auto, *" 
                 xmlns:chart="nativescript-ui-chart" class="modal_chart">
 

@@ -149,7 +149,7 @@ function PhotoGalleryComponent() {
   };
 
   PhotoGalleryObj.loadData = function (args) {
-    statsService.getPhotos()  
+    statsService.getPhotos()
       .then(function (data) {
         args.busy = false;
         for (var i = 0; i < data.length; i++) {
@@ -160,7 +160,7 @@ function PhotoGalleryComponent() {
           PhotoGalleryObj.arrayPictures.unshift(loadedImage);
         }
       })
-  };  
+  };
   return PhotoGalleryObj;
 }
 

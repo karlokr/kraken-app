@@ -7,31 +7,33 @@ function handleErrors(error) {
 
 exports.register = function (user) {
     var promise = fetchModule.fetch(
-        "https://joshkraken.com/sqlconnect/register.php",
-        {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            email: user.email,
-            firstName: user.firstName,
-            lastName: user.lastName,
-            password: user.password
-        })
-    });
+        "https://joshkraken.com/sqlconnect/register.php", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                email: user.email,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                password: user.password
+            })
+        });
     return promise;
 };
 
 exports.login = function (user) {
     var promise = fetchModule.fetch(
-        "https://joshkraken.com/sqlconnect/login.php",
-        {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            email: user.email,
-            password: user.password
-        })
-    });
+        "https://joshkraken.com/sqlconnect/login.php", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                email: user.email,
+                password: user.password
+            })
+        });
     return promise;
 };
 
@@ -39,7 +41,9 @@ exports.resetPassword = function (email) {
     var promise = httpModule.request({
         url: "https://joshkraken.com/sqlconnect/resetpw.php",
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+            "Content-Type": "application/json"
+        },
         content: JSON.stringify({
             email: email
         })

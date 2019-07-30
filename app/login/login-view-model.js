@@ -29,40 +29,40 @@ function LoginViewModel() {
         },
         login() {
             userService.login({
-                email: this.email,
-                password: this.password
-            }).then((data) => { 
-                res = data["_bodyText"].split("\t");
-                code = res[0];
-                switch (code) {
-                    case "0": 
-                        appSettings.setString("email", this.email);
-                        appSettings.setString("id", res[1]);
-                        appSettings.setString("firstName", res[2]);
-                        appSettings.setString("lastName", res[3]);
-                        topmost().navigate({
-                            moduleName: "home/home-page",
-                            clearHistory: true
-                        });
-                        break;
-                    case "1":
-                        alert("Server is down for maintainence. Please try again later.");
-                        break;
-                    case "2":
-                        alert("Username does not exist. Please sign up for an account.");
-                        break;
-                    case "3":
-                        alert("Username does not exist. Please sign up for an account.");
-                        break;
-                    case "6":
-                        alert("The password you've entered is incorrect.");
-                        break;
-                }
-            })
-            .catch((e) => {
-                console.error(e);
-                alert("Server is down for maintainence. Please try again later.");
-            });
+                    email: this.email,
+                    password: this.password
+                }).then((data) => {
+                    res = data["_bodyText"].split("\t");
+                    code = res[0];
+                    switch (code) {
+                        case "0":
+                            appSettings.setString("email", this.email);
+                            appSettings.setString("id", res[1]);
+                            appSettings.setString("firstName", res[2]);
+                            appSettings.setString("lastName", res[3]);
+                            topmost().navigate({
+                                moduleName: "home/home-page",
+                                clearHistory: true
+                            });
+                            break;
+                        case "1":
+                            alert("Server is down for maintainence. Please try again later.");
+                            break;
+                        case "2":
+                            alert("Username does not exist. Please sign up for an account.");
+                            break;
+                        case "3":
+                            alert("Username does not exist. Please sign up for an account.");
+                            break;
+                        case "6":
+                            alert("The password you've entered is incorrect.");
+                            break;
+                    }
+                })
+                .catch((e) => {
+                    console.error(e);
+                    alert("Server is down for maintainence. Please try again later.");
+                });
         },
         register() {
             if (this.password != this.confirmPassword) {
@@ -70,34 +70,34 @@ function LoginViewModel() {
                 return;
             }
             userService.register({
-                email: this.email,
-                firstName: this.firstName,
-                lastName: this.lastName,
-                password: this.password
-            }).then((data) => {
-                res = data["_bodyText"].split("\t");
-                code = res[0];
-                switch (code) {
-                    case "0": 
-                        alert("Your account was successfully created. You can now login.");
-                        this.isLoggingIn = true;
-                        break;
-                    case "1":
-                        alert("Server is down for maintainence. Please try again later.");
-                        break;
-                    case "2":
-                        alert("Server is down for maintainence. Please try again later.");
-                        break;
-                    case "3":
-                        alert("Email already exists in system. Did you forget your password?");
-                        break;
-                    case "4":
-                        alert("Server is down for maintainence. Please try again later.");
-                        break;
-                    case "5":
-                        alert("Server is down for maintainence. Please try again later.");
-                        break;
-                }                    
+                    email: this.email,
+                    firstName: this.firstName,
+                    lastName: this.lastName,
+                    password: this.password
+                }).then((data) => {
+                    res = data["_bodyText"].split("\t");
+                    code = res[0];
+                    switch (code) {
+                        case "0":
+                            alert("Your account was successfully created. You can now login.");
+                            this.isLoggingIn = true;
+                            break;
+                        case "1":
+                            alert("Server is down for maintainence. Please try again later.");
+                            break;
+                        case "2":
+                            alert("Server is down for maintainence. Please try again later.");
+                            break;
+                        case "3":
+                            alert("Email already exists in system. Did you forget your password?");
+                            break;
+                        case "4":
+                            alert("Server is down for maintainence. Please try again later.");
+                            break;
+                        case "5":
+                            alert("Server is down for maintainence. Please try again later.");
+                            break;
+                    }
                 })
                 .catch((error) => {
                     console.error(error);
@@ -115,11 +115,11 @@ function LoginViewModel() {
             }).then((data) => {
                 if (data.result) {
                     userService.resetPassword(data.text.trim())
-                      .then(() => {
-                        alert("Your password was successfully reset. Please check your email for instructions on choosing a new password.");
-                      }).catch(() => {
-                        alert("Unfortunately, an error occurred resetting your password.");
-                      });
+                        .then(() => {
+                            alert("Your password was successfully reset. Please check your email for instructions on choosing a new password.");
+                        }).catch(() => {
+                            alert("Unfortunately, an error occurred resetting your password.");
+                        });
                 }
             });
         }

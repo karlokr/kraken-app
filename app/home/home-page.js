@@ -3,9 +3,9 @@ var orientation = require('nativescript-orientation');
 orientation.disableRotation();
 
 /* ***********************************************************
-* Use the "onNavigatingTo" handler to initialize the page binding context.
-* Call any view model data initialization load here.
-*************************************************************/
+ * Use the "onNavigatingTo" handler to initialize the page binding context.
+ * Call any view model data initialization load here.
+ *************************************************************/
 function onNavigatingTo(args) {
     const page = args.object;
     page.actionBarHidden = false;

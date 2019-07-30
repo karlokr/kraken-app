@@ -22,24 +22,24 @@ function HomeViewModel(userInfo) {
             //     });
         },
 
-        onMenuButtonTap: function(args) {
+        onMenuButtonTap: function (args) {
             // Navigate to corresponding page
             const menuButtonParent = args.object.parent;
             utilityModule.openUrl(menuButtonParent.get("data-name"));
         },
 
-        onProfileButtonTap: function() {
+        onProfileButtonTap: function () {
             // Navigate to profile page here
             alert("Navigate to profile page");
         },
 
-        onStatsTap: function(args) {
+        onStatsTap: function (args) {
             topmost().navigate({
                 moduleName: "stats/stats-page",
             });
         },
 
-        onPhotosTap: function(args) {
+        onPhotosTap: function (args) {
             topmost().navigate({
                 moduleName: "progress/main-page",
             });
