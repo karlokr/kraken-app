@@ -2,20 +2,18 @@ const cameraModule = require("nativescript-camera");
 const Observable = require("tns-core-modules/data/observable").Observable;
 const ObservableArray = require("data/observable-array").ObservableArray;
 const fromObject = require("tns-core-modules/data/observable").fromObject;
-//const frameModule = require("tns-core-modules/ui/frame");
 const topmost = require("tns-core-modules/ui/frame").topmost;
 var orientation = require('nativescript-orientation');
-orientation.disableRotation();
-
-
 const applicationSettings = require("application-settings");
 const fsModule = require("tns-core-modules/file-system");
 const imageSourceModule = require("tns-core-modules/image-source");
 const utilsModule = require("utils/utils");
+var bghttpModule = require("nativescript-background-http");
 var initFlag = 0;
 
 var currentPage;
 var cameraModel = new PhotoGalleryComponent();
+orientation.disableRotation();
 
 function PhotoGalleryComponent() {
   var PhotoGalleryObj = new Observable();
@@ -23,10 +21,8 @@ function PhotoGalleryComponent() {
   PhotoGalleryObj.takePicture = function () {
     cameraModule
       .takePicture({
-        // width: 300, //These are in device independent pixels
-        // height: 300, //Only one may be respected depending on os/device if
-        keepAspectRatio: true, //    keepAspectRatio is enabled.
-        saveToGallery: true //Don't save a copy in local gallery, ignored by some Android devices
+        keepAspectRatio: true,
+        saveToGallery: true
       })
       .then(picture => {
         imageSourceModule.fromAsset(picture).then(
@@ -41,6 +37,52 @@ function PhotoGalleryComponent() {
             var timeNow = ts.toLocaleString();
             loadedImage.note = timeNow.substring(0, timeNow.length - 15);
             this.arrayPictures.unshift(loadedImage);
+
+            //store image on database
+            // httpModule.request({
+            //   url: "https://joshkraken.com/sqlconnect/uploadPic.php",
+            //   method: "POST",
+            //   headers: {
+            //     "Content-Type": "multipart/form-data"
+            //   },
+            //   content: {
+            //     id: appSettings.getString("id"),
+            //     firstName: appSettings.getString("firstName"),
+            //     lastName: appSettings.getString("lastName"),
+            //     fileToUpload: loadedImage
+            //   }
+            // }).then((response) => {
+            //   const result = response.content.toJSON();
+            //   console.log(result);
+            // }, (e) => {console.log(e)});
+            var session = bghttpModule.session("image-upload");
+            var request = {
+              url: "https://joshkraken.com/sqlconnect/uploadPic.php",
+              method: "POST",
+              headers: {
+                "Content-Type": "application/octet-stream"
+              },
+              description: "{ 'uploading': " + filename + " }"
+            };
+            var params = [
+              { name: "lastName", value: applicationSettings.get("lastName") },
+              { name: "firstName", value: applicationSettings.get("firstName") },
+              { name: "fileToUpload", filename: path, mimeType: "image/png" }
+            ];
+            var task = session.multipartUpload(params, request);
+            task.on("progress", logEvent);
+            task.on("error", logEvent);
+            task.on("complete", logEvent);
+
+            function logEvent(e) {
+              console.log("----------------");
+              console.log('Status: ' + e.eventName);
+              if (e.totalBytes !== undefined) {
+                console.log('current bytes transfered: ' + e.currentBytes);
+                console.log('Total bytes to transfer: ' + e.totalBytes);
+              }
+            }
+
             this.storeData();
             if (currentPage.android) {
               let tmpfolder = fsModule.Folder.fromPath(
@@ -117,7 +159,7 @@ function PhotoGalleryComponent() {
 }
 
 exports.tapPicture = function (eventData) {
-  var imgObj = eventData.object; 
+  var imgObj = eventData.object;
   navContextObj = {
     srcPicture: imgObj.src,
     cameraModel: cameraModel
