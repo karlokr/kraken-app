@@ -1,8 +1,12 @@
 const observableModule = require("tns-core-modules/data/observable");
+const ObservableArray = require("tns-core-modules/data/observable-array").ObservableArray;
 var statsService = require("~/services/stats-service");
 const jsonB = require('./json_beautifier.js');
 const topmost = require("tns-core-modules/ui/frame").topmost;
 const dialogsModule = require("tns-core-modules/ui/dialogs");
+var listview = require("tns-core-modules/ui/list-view");
+const labelModule = require("tns-core-modules/ui/label");
+const gridlayout = require("tns-core-modules/ui/layouts/grid-layout");
 
 function StatsViewModel(args) {
 	var viewModel = observableModule.fromObject({
@@ -15,7 +19,8 @@ function StatsViewModel(args) {
 		graphBestFit: [],
 		graphMin: 0,
 		graphMax: 1,
-		items: [],
+		items: new ObservableArray(),
+		week: 0,
 		switchStat: function (args) {
 			viewModel.set("graphMin", 0);
 			viewModel.set("graphMax", 1);
@@ -30,6 +35,51 @@ function StatsViewModel(args) {
 			viewModel.set("title", this.capitalizeFirst(stat));
 			this.stat == "weight" ? this.unit = "kg" : this.unit = "inches";
 			this.getGraphStats();
+			viewModel.page.getViewById("container").removeChildren();
+			viewModel.set("week", 0);
+			this.getListView();
+			setTimeout(() => {
+				this.getListView();
+			}, 20);
+		},
+		getListView() {
+			statsService.getListView({
+				stat: this.stat,
+				week: String(this.week)
+			}).then(function (data) {
+				var ListVw = new listview.ListView();
+				var stcklayout = new gridlayout.GridLayout();
+				stcklayout.id = data.week;
+				stcklayout.backgroundColor = "#3E646C";
+				stcklayout.padding = "10";
+				stcklayout.paddingLeft = "15";
+				stcklayout.paddingRight = "15";
+				stcklayout.rows = "auto";
+				stcklayout.columns = "*";
+				//stcklayout.orientation = "horizontal";
+				const heading = new labelModule.Label();
+				const avg = new labelModule.Label();
+				heading.text = "Week " + data.week;
+				heading.color = "white";
+				avg.row = "0";
+				avg.horizontalAlignment = "right";
+				avg.textAlignment = "right";
+				avg.color= "white";
+				avg.text = Math.round( data.avg * 10 ) / 10 + " " + viewModel.get("unit") + " avg"
+				ListVw.items = [];
+				ListVw.className = "list-group";
+				ListVw.height = 50 * data.stats.length + 1 * data.stats.length;
+				ListVw.itemTemplate = '<GridLayout class="list-group-item" rows="auto" columns="auto, *">  <StackLayout row="0" col="1" orientation="horizontal"> <Label text="{{ date }}" class="list-group-item-heading" /> <Label text="{{ weight }}" class="list-group-item-text" /> </StackLayout> </GridLayout>';
+
+				for (var i = data.stats.length - 1; i >= 0; i--) {
+					ListVw.items.push(data.stats[i]);
+				}
+				viewModel.page.getViewById("container").addChild(stcklayout);
+				viewModel.page.getViewById(data.week).addChild(heading);
+				viewModel.page.getViewById(data.week).addChild(avg);
+				viewModel.page.getViewById("container").addChild(ListVw);
+			})
+			this.week++;
 		},
 		getGraphStats() {
 			statsService.getGraphStats({
@@ -40,6 +90,7 @@ function StatsViewModel(args) {
 					dropQuotesOnKeys: true,
 					minify: true
 				});
+				//console.log(data);
 
 				//get the minimum and maximum value of the stat
 				//for optimally displaying the stats graph
@@ -135,35 +186,13 @@ function StatsViewModel(args) {
 	})
 
 	// Run on page load:
+	viewModel.getListView();
 	viewModel.getGraphStats();
+	setTimeout(() => {
+		viewModel.getListView();
+	}, 100);
 
 	viewModel.page.getViewById("weight").borderWidth = "4px";
-
-	viewModel.items.push({
-		itemName: "Arcade Fire",
-		itemDesc: "Funeral"
-	}, {
-		itemName: "Bon Iver",
-		itemDesc: "For Emma, Forever Ago"
-	}, {
-		itemName: "Daft Punk",
-		itemDesc: "Random Access Memories"
-	}, {
-		itemName: "Elbow",
-		itemDesc: "Build a Rocket Boys!"
-	}, {
-		itemName: "Arcade Fire",
-		itemDesc: "Funeral"
-	}, {
-		itemName: "Bon Iver",
-		itemDesc: "For Emma, Forever Ago"
-	}, {
-		itemName: "Daft Punk",
-		itemDesc: "Random Access Memories"
-	}, {
-		itemName: "Elbow",
-		itemDesc: "Build a Rocket Boys!"
-	})
 
 	return viewModel;
 }

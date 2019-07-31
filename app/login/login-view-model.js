@@ -2,7 +2,7 @@ const observableModule = require("tns-core-modules/data/observable");
 const dialogsModule = require("tns-core-modules/ui/dialogs");
 const userService = require("~/services/user-service");
 const topmost = require("tns-core-modules/ui/frame").topmost;
-var appSettings = require("application-settings");
+var appSettings = require("tns-core-modules/application-settings");
 
 function LoginViewModel() {
     const viewModel = observableModule.fromObject({

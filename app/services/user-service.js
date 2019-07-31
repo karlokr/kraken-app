@@ -1,5 +1,5 @@
 const httpModule = require("https");
-const fetchModule = require("fetch");
+const fetchModule = require("tns-core-modules/fetch");
 
 function handleErrors(error) {
     console.error(error.message);
