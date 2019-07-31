@@ -7,6 +7,7 @@ const dialogsModule = require("tns-core-modules/ui/dialogs");
 var listview = require("tns-core-modules/ui/list-view");
 const labelModule = require("tns-core-modules/ui/label");
 const gridlayout = require("tns-core-modules/ui/layouts/grid-layout");
+var moment = require('moment');
 
 function StatsViewModel(args) {
 	var viewModel = observableModule.fromObject({
@@ -22,10 +23,11 @@ function StatsViewModel(args) {
 		items: new ObservableArray(),
 		week: 0,
 		lastItemY: 0,
-		lastItemY: 0,
+		firstItem: true,
 		switchStat: function (args) {
 			viewModel.set("graphMin", 0);
 			viewModel.set("graphMax", 1);
+			viewModel.set("firstItem", true)
 			for (x in viewModel.stats) {
 				viewModel.page.getViewById(this.stats[x]).borderWidth = "2px";
 			}
@@ -49,6 +51,26 @@ function StatsViewModel(args) {
 				stat: this.stat,
 				week: String(this.week)
 			}).then(function (data) {
+				getDateFromWeek = function(week, year) {
+					return moment(year).add(week, 'weeks').startOf('week').format('MMM DD') +  " - " + moment(year).add(week, 'weeks').endOf('week').format('MMM DD')
+				};
+
+				if (viewModel.get("firstItem")) {
+					data.week = "THIS WEEK";
+					viewModel.set("firstItem", false)
+				} else {
+					data.week = getDateFromWeek(String(data.week), "2019");
+				}
+				
+
+
+				for (var i = 0; i < data.stats.length; i++) {
+					var element = data.stats[i];
+					var val = element[viewModel.get("stat")];
+					delete element[viewModel.get("stat")];
+					element.stat = val;
+				}
+
 				var ListVw = new listview.ListView();
 				var stcklayout = new gridlayout.GridLayout();
 				stcklayout.id = data.week;
@@ -58,10 +80,9 @@ function StatsViewModel(args) {
 				stcklayout.paddingRight = "15";
 				stcklayout.rows = "auto";
 				stcklayout.columns = "*";
-				//stcklayout.orientation = "horizontal";
 				const heading = new labelModule.Label();
 				const avg = new labelModule.Label();
-				heading.text = "Week " + data.week;
+				heading.text = data.week;
 				heading.color = "white";
 				avg.row = "0";
 				avg.horizontalAlignment = "right";
@@ -71,7 +92,7 @@ function StatsViewModel(args) {
 				ListVw.items = [];
 				ListVw.className = "list-group";
 				ListVw.height = 50 * data.stats.length + 1 * data.stats.length;
-				ListVw.itemTemplate = '<GridLayout class="list-group-item" rows="auto" columns="auto, *">  <StackLayout row="0" col="1" orientation="horizontal"> <Label text="{{ date }}" class="list-group-item-heading" /> <Label text="{{ weight }}" class="list-group-item-text" /> </StackLayout> </GridLayout>';
+				ListVw.itemTemplate = '<GridLayout class="list-group-item" rows="auto" columns="auto, *">  <StackLayout row="0" col="1" orientation="horizontal"> <Label text="{{ date }}" class="list-group-item-heading" /> <Label text="{{ stat }}" class="list-group-item-text" /> </StackLayout> </GridLayout>';
 
 				for (var i = data.stats.length - 1; i >= 0; i--) {
 					ListVw.items.push(data.stats[i]);
