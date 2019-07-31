@@ -20,7 +20,6 @@ function StatsViewModel(args) {
 		graphBestFit: [],
 		graphMin: 0,
 		graphMax: 1,
-		items: new ObservableArray(),
 		week: 0,
 		lastItemY: 0,
 		firstItem: true,
@@ -41,36 +40,43 @@ function StatsViewModel(args) {
 			this.getGraphStats();
 			viewModel.page.getViewById("container").removeChildren();
 			viewModel.set("week", 0);
-			this.getListView();
+			this.getListView(viewModel.get("week"));
 			setTimeout(() => {
-				this.getListView();
+				this.getListView(viewModel.get("week"));
 			}, 20);
 		},
-		getListView() {
+		getListView(weekno) {
 			statsService.getListView({
 				stat: this.stat,
 				week: String(this.week)
 			}).then(function (data) {
-				getDateFromWeek = function(week, year) {
-					return moment(year).add(week, 'weeks').startOf('week').format('MMM DD') +  " - " + moment(year).add(week, 'weeks').endOf('week').format('MMM DD')
+				// get the calendar range of the week number
+				getDateFromWeek = function (week, year) {
+					return moment(year).add(week, 'weeks').startOf('week').format('MMM DD') + " - " + moment(year).add(week, 'weeks').endOf('week').format('MMM DD')
 				};
-
-				if (viewModel.get("firstItem")) {
+				var year = new Date(data.stats[data.stats.length - 1].date + "Z");
+				var yearno = year.getFullYear();
+				if (viewModel.get("firstItem") && weekno == 0) {
 					data.week = "THIS WEEK";
 					viewModel.set("firstItem", false)
 				} else {
-					data.week = getDateFromWeek(String(data.week), "2019");
+					data.week = getDateFromWeek(String(data.week), String(yearno));
 				}
-				
 
-
+				// replace stat key (eg, weight, arms, etc) with "stat"
 				for (var i = 0; i < data.stats.length; i++) {
 					var element = data.stats[i];
 					var val = element[viewModel.get("stat")];
 					delete element[viewModel.get("stat")];
 					element.stat = val;
+					var utcTime = new Date(data.stats[i].date + "Z");
+					var days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+					var localText = days[utcTime.getDay()] + ". " + utcTime.getHours() + ":" + ('0'+utcTime.getMinutes()).slice(-2);
+					data.stats[i].date = days[utcTime.getDay()] + ". ";
+					data.stats[i].time = ('0'+utcTime.getHours()).slice(-2) + ":" + ('0'+utcTime.getMinutes()).slice(-2);
 				}
 
+				// generate listview
 				var ListVw = new listview.ListView();
 				var stcklayout = new gridlayout.GridLayout();
 				stcklayout.id = data.week;
@@ -91,8 +97,18 @@ function StatsViewModel(args) {
 				avg.text = Math.round(data.avg * 10) / 10 + " " + viewModel.get("unit") + " avg"
 				ListVw.items = [];
 				ListVw.className = "list-group";
-				ListVw.height = 50 * data.stats.length + 1 * data.stats.length;
-				ListVw.itemTemplate = '<GridLayout class="list-group-item" rows="auto" columns="auto, *">  <StackLayout row="0" col="1" orientation="horizontal"> <Label text="{{ date }}" class="list-group-item-heading" /> <Label text="{{ stat }}" class="list-group-item-text" /> </StackLayout> </GridLayout>';
+				ListVw.height = 52 * data.stats.length + 1 * data.stats.length;
+				ListVw.itemTemplate = '<GridLayout class="list-group-item" rows="auto" columns="auto, *">' +
+					'<GridLayout rows="auto,*" columns="*" row="0" col="1">' +
+					'<StackLayout row="0" horizontalAlignment="left" orientation="horizontal">' +
+					'<Label text="{{ date }}" class="list-group-item-heading" horizontalAlignment="left" />' +
+					'<Label text="{{ time }}" class="list-group-item-heading-time" horizontalAlignment="left" />' +
+					'</StackLayout>' +
+					'<StackLayout row="0" horizontalAlignment="right" orientation="horizontal">' +
+					'<Label  text="{{ stat }}" class="list-group-item-text-stat"/>' +
+					'<Label  text=" ' + viewModel.unit + '" class="list-group-item-text-unit"/>' +
+					'</StackLayout>' +
+					'</GridLayout> </GridLayout>';
 
 				for (var i = data.stats.length - 1; i >= 0; i--) {
 					ListVw.items.push(data.stats[i]);
@@ -207,10 +223,10 @@ function StatsViewModel(args) {
 						this.getGraphStats();
 						viewModel.page.getViewById("container").removeChildren();
 						viewModel.set("week", 0);
-						this.getListView();
+						this.getListView(viewModel.get("week"));
 						setTimeout(() => {
-							this.getListView();
-						}, 20);
+							this.getListView(viewModel.get("week"));
+						}, 50);
 					}).catch(() => {
 						alert("Unfortunately, an error occurred resetting your password.");
 					});
@@ -220,10 +236,10 @@ function StatsViewModel(args) {
 	})
 
 	// Run on page load:
-	viewModel.getListView();
+	viewModel.getListView(viewModel.get("week"));
 	viewModel.getGraphStats();
 	setTimeout(() => {
-		viewModel.getListView();
+		viewModel.getListView(viewModel.get("week"));
 	}, 100);
 
 	viewModel.page.getViewById("weight").borderWidth = "4px";

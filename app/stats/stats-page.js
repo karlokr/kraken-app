@@ -13,7 +13,7 @@ exports.onScroll = function (event) {
 	const vm = page.bindingContext;
 	const scrollView = event.object,
 		verticalOffset = scrollView.verticalOffset;
-	if ( Math.abs(vm.lastItemY - verticalOffset) <= 10) {
+	if (Math.abs(vm.lastItemY - verticalOffset) <= 10) {
 		if (!vm.busy) {
 			vm.busy = true;
 			setTimeout(() => {
@@ -21,6 +21,6 @@ exports.onScroll = function (event) {
 				vm.busy = false;
 			}, 20);
 		}
-		
+
 	}
 }

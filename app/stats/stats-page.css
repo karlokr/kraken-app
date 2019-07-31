@@ -12,6 +12,7 @@
     padding: 0;
     border-radius: 12 12 0 0;
     height: 30%;
+    background: linear-gradient(#3E646C 0%, #3E646C 10%, rgb(98, 161, 173) 100%);
 }
 
 .action-button {
@@ -27,7 +28,7 @@
 
 .list-group-item {
     /* border-color: red green lightgray orange; */
-    height: 50;
+    height: 52;
     /* border-width: 0 0 1 0; */
     background-color: white;
     /* margin-bottom: 0;
@@ -35,8 +36,34 @@
     margin-top: 0;
     padding-top: 0; */
 }
+.list-group-item-text-unit {
+    height: 52;
+    font-size: 16;
+    color: gray;
+}
+.list-group-item-text-stat {
+    height: 52;
+    font-size: 16;
+    font-weight:500;
+}
+.list-group-item-heading {
+    height: 52;
+    font-size: 16;
+    color: black;
+    font-weight:500;
+}
+.list-group-item-heading-time {
+    height: 52;
+    font-size: 16;
+    color: gray;
+    vertical-align: bottom;
+}
 
 
+.menu-wrapper {
+    width: 100%;
+    background-color: rgb(98, 161, 173);
+}
 
 .menu-container {
     margin: 10em;
@@ -78,7 +105,7 @@
 
 .wrapper {
     padding-top: 5em;
-    background: linear-gradient(#3E646C 0%, #3E646C 10%, rgb(98, 161, 173) 30%);
+    background: #3E646C;
 }
 
 .dialog Label {
