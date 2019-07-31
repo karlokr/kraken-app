@@ -21,6 +21,8 @@ function StatsViewModel(args) {
 		graphMax: 1,
 		items: new ObservableArray(),
 		week: 0,
+		lastItemY: 0,
+		lastItemY: 0,
 		switchStat: function (args) {
 			viewModel.set("graphMin", 0);
 			viewModel.set("graphMax", 1);
@@ -161,6 +163,11 @@ function StatsViewModel(args) {
 				moduleName: "home/home-page",
 				clearHistory: true
 			});
+		},
+		onLayoutChanged(event) {
+			const containerLyt = viewModel.page.getViewById("scroller");
+			var verticalOffset = containerLyt.scrollableHeight;
+			this.lastItemY = verticalOffset
 		},
 		addStat() {
 			dialogsModule.prompt({

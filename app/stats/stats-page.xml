@@ -8,8 +8,10 @@
         </ActionItem>
     </ActionBar>
     <!-- dialog -->
-    <ScrollView>
-        <StackLayout class="wrapper" alignItems="flex-end" width="100%">
+    <ScrollView scroll="onScroll" id="scroller">
+    <!-- <ScrollView> -->
+        <StackLayout class="wrapper" alignItems="flex-end" width="100%" layoutChanged="{{ onLayoutChanged }}">
+        <!-- <StackLayout class="wrapper" alignItems="flex-end" width="100%"> -->
             <StackLayout class="dialog">
                 <FlexboxLayout justifyContent="center" padding="0" margin="0">
                     <Label text="{{ title + ' Trends 30 days (' + unit  + ')' }}" style="padding:0; margin-top:0; margin-bottom:8em; color:white; font-weight:500" />
@@ -82,8 +84,8 @@
                 </GridLayout>
             </StackLayout>
 
-        <StackLayout id="container">
-        </StackLayout>
+            <StackLayout id="container">
+            </StackLayout>
 
         </StackLayout>
     </ScrollView>

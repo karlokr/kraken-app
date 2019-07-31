@@ -7,3 +7,20 @@ exports.pageLoaded = function (args) {
 	var statsViewModel = new StatsViewModel(page);
 	page.bindingContext = statsViewModel;
 }
+
+exports.onScroll = function (event) {
+	const page = event.object.page;
+	const vm = page.bindingContext;
+	const scrollView = event.object,
+		verticalOffset = scrollView.verticalOffset;
+	if ( Math.abs(vm.lastItemY - verticalOffset) <= 10) {
+		if (!vm.busy) {
+			vm.busy = true;
+			setTimeout(() => {
+				vm.getListView();
+				vm.busy = false;
+			}, 20);
+		}
+		
+	}
+}
