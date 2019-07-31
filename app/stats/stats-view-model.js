@@ -64,8 +64,8 @@ function StatsViewModel(args) {
 				avg.row = "0";
 				avg.horizontalAlignment = "right";
 				avg.textAlignment = "right";
-				avg.color= "white";
-				avg.text = Math.round( data.avg * 10 ) / 10 + " " + viewModel.get("unit") + " avg"
+				avg.color = "white";
+				avg.text = Math.round(data.avg * 10) / 10 + " " + viewModel.get("unit") + " avg"
 				ListVw.items = [];
 				ListVw.className = "list-group";
 				ListVw.height = 50 * data.stats.length + 1 * data.stats.length;
@@ -177,6 +177,12 @@ function StatsViewModel(args) {
 						measurement: data.text
 					}).then(() => {
 						this.getGraphStats();
+						viewModel.page.getViewById("container").removeChildren();
+						viewModel.set("week", 0);
+						this.getListView();
+						setTimeout(() => {
+							this.getListView();
+						}, 20);
 					}).catch(() => {
 						alert("Unfortunately, an error occurred resetting your password.");
 					});
