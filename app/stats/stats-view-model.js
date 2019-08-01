@@ -23,10 +23,12 @@ function StatsViewModel(args) {
 		week: 0,
 		lastItemY: 0,
 		firstItem: true,
+		listEntries: 0,
 		switchStat: function (args) {
 			viewModel.set("graphMin", 0);
 			viewModel.set("graphMax", 1);
-			viewModel.set("firstItem", true)
+			viewModel.set("firstItem", true);
+			viewModel.set("listEntries", 0);
 			for (x in viewModel.stats) {
 				viewModel.page.getViewById(this.stats[x]).borderWidth = "2px";
 			}
@@ -43,13 +45,25 @@ function StatsViewModel(args) {
 			this.getListView(viewModel.get("week"));
 			setTimeout(() => {
 				this.getListView(viewModel.get("week"));
-			}, 20);
+			}, 50);
+			setTimeout(() => {
+				if (viewModel.get("listEntries") < 6) {
+					this.getListView(viewModel.get("week"));
+					setTimeout(() => {
+						if (viewModel.get("listEntries") < 6) {
+							this.getListView(viewModel.get("week"));
+						}
+					}, 100);
+				}
+			}, 100);
 		},
 		getListView(weekno) {
 			statsService.getListView({
 				stat: this.stat,
 				week: String(this.week)
 			}).then(function (data) {
+				viewModel.set("listEntries", data.stats.length + viewModel.get("listEntries"));
+				console.log(viewModel.get("listEntries"));
 				// get the calendar range of the week number
 				getDateFromWeek = function (week, year) {
 					return moment(year).add(week, 'weeks').startOf('week').format('MMM DD') + " - " + moment(year).add(week, 'weeks').endOf('week').format('MMM DD')
@@ -70,10 +84,10 @@ function StatsViewModel(args) {
 					delete element[viewModel.get("stat")];
 					element.stat = val;
 					var utcTime = new Date(data.stats[i].date + "Z");
-					var days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-					var localText = days[utcTime.getDay()] + ". " + utcTime.getHours() + ":" + ('0'+utcTime.getMinutes()).slice(-2);
+					var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+					// var localText = days[utcTime.getDay()] + ". " + utcTime.getHours() + ":" + ('0'+utcTime.getMinutes()).slice(-2);
 					data.stats[i].date = days[utcTime.getDay()] + ". ";
-					data.stats[i].time = ('0'+utcTime.getHours()).slice(-2) + ":" + ('0'+utcTime.getMinutes()).slice(-2);
+					data.stats[i].time = ('0' + utcTime.getHours()).slice(-2) + ":" + ('0' + utcTime.getMinutes()).slice(-2);
 				}
 
 				// generate listview
@@ -119,6 +133,7 @@ function StatsViewModel(args) {
 				viewModel.page.getViewById("container").addChild(ListVw);
 			})
 			this.week++;
+
 		},
 		getGraphStats() {
 			statsService.getGraphStats({
@@ -240,6 +255,17 @@ function StatsViewModel(args) {
 	viewModel.getGraphStats();
 	setTimeout(() => {
 		viewModel.getListView(viewModel.get("week"));
+	}, 100);
+
+	setTimeout(() => {
+		if (viewModel.get("listEntries") < 6) {
+			viewModel.getListView(viewModel.get("week"));
+			setTimeout(() => {
+				if (viewModel.get("listEntries") < 6) {
+					viewModel.getListView(viewModel.get("week"));
+				}
+			}, 100);
+		}
 	}, 100);
 
 	viewModel.page.getViewById("weight").borderWidth = "4px";
