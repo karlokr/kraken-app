@@ -125,6 +125,13 @@ function LoginViewModel() {
         }
     });
 
+    if (appSettings.getString("email") != null && appSettings.getString("email") != undefined) {
+        topmost().navigate({
+            moduleName: "home/home-page",
+            clearHistory: true
+        });
+    } 
+
     return viewModel;
 }
 

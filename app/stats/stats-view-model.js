@@ -39,13 +39,13 @@ function StatsViewModel(args) {
 			viewModel.set("stat", stat);
 			viewModel.set("title", this.capitalizeFirst(stat));
 			this.stat == "weight" ? this.unit = "kg" : this.unit = "inches";
-			this.getGraphStats();
 			viewModel.page.getViewById("container").removeChildren();
 			viewModel.set("week", 0);
 			this.getListView(viewModel.get("week"));
+			this.getGraphStats();
 			setTimeout(() => {
 				this.getListView(viewModel.get("week"));
-			}, 50);
+			}, 100);
 			setTimeout(() => {
 				if (viewModel.get("listEntries") < 6) {
 					this.getListView(viewModel.get("week"));
@@ -235,10 +235,13 @@ function StatsViewModel(args) {
 						stat: this.stat,
 						measurement: data.text
 					}).then(() => {
-						this.getGraphStats();
+
 						viewModel.page.getViewById("container").removeChildren();
 						viewModel.set("week", 0);
+						viewModel.set("firstItem", true);
+						viewModel.set("listEntries", 0);
 						this.getListView(viewModel.get("week"));
+						this.getGraphStats();
 						setTimeout(() => {
 							this.getListView(viewModel.get("week"));
 						}, 50);
