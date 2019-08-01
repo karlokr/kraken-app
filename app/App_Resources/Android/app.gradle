@@ -8,7 +8,7 @@
 android {  
   defaultConfig {  
     generatedDensities = []
-    applicationId = "org.nativescript.playjs" 
+    applicationId = "org.krakentraining.krakenapp" 
     
     //override supported platforms
     // ndk {

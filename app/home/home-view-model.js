@@ -2,6 +2,7 @@ const observableModule = require("tns-core-modules/data/observable");
 const topmost = require("tns-core-modules/ui/frame").topmost;
 var utilityModule = require("utils/utils");
 var appSettings = require("application-settings");
+var firebase =  require('nativescript-plugin-firebase');
 
 function HomeViewModel(userInfo) {
     const viewModel = observableModule.fromObject({
@@ -46,7 +47,34 @@ function HomeViewModel(userInfo) {
         }
     });
 
+    firebase.init({
+            showNotifications: true,
+            showNotificationsWhenInForeground: true,
+
+            onPushTokenReceivedCallback: (token) => {
+                console.log('[Firebase] onPushTokenReceivedCallback:', {
+                    token
+                });
+            },
+
+            onMessageReceivedCallback: (message) => {
+                console.log('[Firebase] onMessageReceivedCallback:', {
+                    message
+                });
+            }
+        })
+        .then(() => {
+            console.log('[Firebase] Initialized');
+        })
+        .catch(error => {
+            console.log('[Firebase] Initialize', {
+                error
+            });
+        });
+
     return viewModel;
 }
+
+
 
 module.exports = HomeViewModel;
