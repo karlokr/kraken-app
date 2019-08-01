@@ -244,7 +244,17 @@ function StatsViewModel(args) {
 						this.getGraphStats();
 						setTimeout(() => {
 							this.getListView(viewModel.get("week"));
-						}, 50);
+						}, 100);
+						setTimeout(() => {
+							if (viewModel.get("listEntries") < 6) {
+								this.getListView(viewModel.get("week"));
+								setTimeout(() => {
+									if (viewModel.get("listEntries") < 6) {
+										this.getListView(viewModel.get("week"));
+									}
+								}, 100);
+							}
+						}, 100);
 					}).catch(() => {
 						alert("Unfortunately, an error occurred resetting your password.");
 					});
