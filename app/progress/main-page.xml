@@ -4,9 +4,9 @@
         <ActionItem icon="~/images/add.png" android.position="actionBar" ios.position="right" tap=" {{ takePicture }}">
         </ActionItem>
     </ActionBar>
-    <ScrollView row="0" orientation="vertical">
-        <GridLayout rows="*">
-            <Repeater separatorColor="transparent" id="repeaterObj" items="{{arrayPictures}}">
+    <ScrollView row="0" orientation="vertical" scroll="onScroll" id="scroller">
+        <GridLayout rows="*" layoutChanged="onLayoutChanged" id="wrapper">
+            <Repeater separatorColor="transparent" id="repeaterObj" items="{{arrayPictures}}" >
                 <Repeater.itemsLayout>
                     <FlexboxLayout flexDirection="row" flexWrap="wrap" alignSelf="center" />
                 </Repeater.itemsLayout>

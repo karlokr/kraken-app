@@ -2,7 +2,6 @@ const observableModule = require("tns-core-modules/data/observable");
 const topmost = require("tns-core-modules/ui/frame").topmost;
 var utilityModule = require("utils/utils");
 var appSettings = require("application-settings");
-var firebase =  require('nativescript-plugin-firebase');
 
 function HomeViewModel(userInfo) {
     const viewModel = observableModule.fromObject({
@@ -25,6 +24,7 @@ function HomeViewModel(userInfo) {
 
         onMenuButtonTap: function (args) {
             // Navigate to corresponding page
+            console.log("first press or second");
             const menuButtonParent = args.object.parent;
             utilityModule.openUrl(menuButtonParent.get("data-name"));
         },
@@ -46,31 +46,6 @@ function HomeViewModel(userInfo) {
             });
         }
     });
-
-    firebase.init({
-            showNotifications: true,
-            showNotificationsWhenInForeground: true,
-
-            onPushTokenReceivedCallback: (token) => {
-                console.log('[Firebase] onPushTokenReceivedCallback:', {
-                    token
-                });
-            },
-
-            onMessageReceivedCallback: (message) => {
-                console.log('[Firebase] onMessageReceivedCallback:', {
-                    message
-                });
-            }
-        })
-        .then(() => {
-            console.log('[Firebase] Initialized');
-        })
-        .catch(error => {
-            console.log('[Firebase] Initialize', {
-                error
-            });
-        });
 
     return viewModel;
 }

@@ -32,7 +32,8 @@ exports.getPhotos = function (data) {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    id: appSettings.getString("id")
+                    id: appSettings.getString("id"),
+                    pageno: data.pageno
                 })
             }).then(function (res) {
             return res.json();

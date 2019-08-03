@@ -21,6 +21,8 @@ function PhotoGalleryComponent() {
   var PhotoGalleryObj = new Observable();
   PhotoGalleryObj.arrayPictures = new ObservableArray();
 
+  PhotoGalleryObj.lastItemY = 0;
+  PhotoGalleryObj.pageno = 0;
   PhotoGalleryObj.takePicture = function () {
     cameraModule
       .takePicture({
@@ -149,16 +151,23 @@ function PhotoGalleryComponent() {
   };
 
   PhotoGalleryObj.loadData = function (args) {
-    statsService.getPhotos()
+    args.busy = true;
+    console.log(PhotoGalleryObj.pageno);
+    statsService.getPhotos({
+        pageno: PhotoGalleryObj.pageno
+      })
       .then(function (data) {
-        args.busy = false;
+
         for (var i = 0; i < data.length; i++) {
           var row = JSON.parse(data[i]);
           var loadedImage = imageSourceModule.fromBase64(row.img);
           loadedImage.note = row.note;
           loadedImage.filename = row.filename;
-          PhotoGalleryObj.arrayPictures.unshift(loadedImage);
+          PhotoGalleryObj.arrayPictures.push(loadedImage);
         }
+        // PhotoGalleryObj.arrayPictures.reverse();
+        args.busy = false;
+        PhotoGalleryObj.pageno = PhotoGalleryObj.pageno + 1;
       })
   };
   return PhotoGalleryObj;
@@ -182,12 +191,38 @@ exports.tapPicture = function (eventData) {
   });
 };
 
+exports.onLayoutChanged = function (event) {
+  const page = event.object.page;
+  const vm = page.bindingContext;
+  const containerLyt = page.getViewById("scroller");
+  console.log("layout changed " + containerLyt.scrollableHeight);
+  var verticalOffset = containerLyt.scrollableHeight;
+  vm.set("lastItemY", verticalOffset);
+}
+
 exports.onNavBtnTap = function () {
   console.log("tapped");
   topmost().navigate({
     moduleName: "home/home-page",
     clearHistory: true
   });
+}
+
+exports.onScroll = function (event) {
+  const page = event.object.page;
+  const vm = page.bindingContext;
+  const scrollView = event.object,
+    verticalOffset = scrollView.verticalOffset;
+  var indicator = page.getViewById("actv");
+  indicator.marginTop = (verticalOffset) + "";
+  if (Math.abs(vm.lastItemY - verticalOffset) <= 10) {
+    if (!indicator.busy) {
+      indicator.busy = true;
+      console.log("reached bottom :" + verticalOffset);
+      vm.loadData(indicator);
+    }
+
+  }
 }
 
 function onLoaded(args) {

@@ -42,7 +42,9 @@ function StatsViewModel(args) {
 			viewModel.page.getViewById("container").removeChildren();
 			viewModel.set("week", 0);
 			this.getListView(viewModel.get("week"));
-			this.getGraphStats();
+			setTimeout(() => {
+				this.getGraphStats();
+			}, 100);
 			setTimeout(() => {
 				this.getListView(viewModel.get("week"));
 			}, 100);
@@ -168,6 +170,21 @@ function StatsViewModel(args) {
 					x.push(i);
 					y.push(data[key][innerKey]);
 				}
+
+				//get the time between dates in seconds
+				var t = [];
+				for (var i = 0; i < dates.length; i++) {
+					var seconds = 0;
+					if (i == 0) {
+						seconds = 0;
+						t.push(seconds);
+					} else {
+						seconds = (dates[i] - dates[0])/1000;
+						t.push(seconds);
+					}
+					
+				}
+				x = t;
 				viewModel.set("graphMax", max + 3);
 				viewModel.set("graphMin", min - 3);
 
@@ -241,7 +258,9 @@ function StatsViewModel(args) {
 						viewModel.set("firstItem", true);
 						viewModel.set("listEntries", 0);
 						this.getListView(viewModel.get("week"));
-						this.getGraphStats();
+						setTimeout(() => {
+							this.getGraphStats();
+						}, 100);
 						setTimeout(() => {
 							this.getListView(viewModel.get("week"));
 						}, 100);
@@ -265,7 +284,9 @@ function StatsViewModel(args) {
 
 	// Run on page load:
 	viewModel.getListView(viewModel.get("week"));
-	viewModel.getGraphStats();
+	setTimeout(() => {
+		viewModel.getGraphStats();
+	}, 100);
 	setTimeout(() => {
 		viewModel.getListView(viewModel.get("week"));
 	}, 100);
