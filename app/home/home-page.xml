@@ -4,10 +4,10 @@
     <ActionBar class=" fa action-bar" title="">
         <StackLayout orientation="horizontal" ios:horizontalAlignment="center" android:horizontalAlignment="left" style="vertical-align: center;" class="action-bar">
             <Label text="&#xf2bd; " class="fa action-profile" style="font-size:32;font-weight:500;letter-spacing:0.05;"></Label>
-            <Label text="{{ loggedUser }}" class="fa action-label" style="font-size:20;font-weight:550;letter-spacing:0.03;vertical-align: center;"></Label>
+            <Label text="{{ loggedUser }}" class="action-label" style="font-size:20;font-weight:semibold;vertical-align: center;"></Label>
         </StackLayout>
-        <ActionItem android.position="actionBar" ios.position="right" tap=" {{ onProfileButtonTap }}" style="padding-left:15;">
-            <Label text="&#xf013;" class="fa action-button"></Label>
+        <ActionItem android.position="actionBar" ios.position="right" tap="openModal" style="margin-right:15;">
+            <Label text="&#xf013; " class="fa action-button" style="margin-right:15;"></Label>
         </ActionItem>
     </ActionBar>
 
@@ -16,7 +16,7 @@
             <Image class="logo-text" src="~/images/kraken.png" />
             <StackLayout class="hr"></StackLayout>
         </StackLayout>
-        <GridLayout row="1" rows="auto, auto, auto" columns="*, *" >
+        <GridLayout row="1" rows="auto, auto, auto" columns="*, *">
             <StackLayout row="0" col="0" data-name="https://krakentraining.com/" class="menu-item" id="Home">
                 <Button text="&#xf015;" class="fa menu-icon" tap="{{ onMenuButtonTap }}"></Button>
                 <Label text="Home" class="text-center" tap="{{ onMenuButtonTap }}"></Label>

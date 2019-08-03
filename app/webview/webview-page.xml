@@ -3,13 +3,11 @@
         <NavigationButton text="" icon="~/images/next.png" tap="onNavBtnTap"/>
     </ActionBar>
 
-   <StackLayout>
     <StackLayout>
-    <!-- >> web-view-xml-local-file -->
-        <GridLayout rows="*" columns="*">
-            <WebView row="0" col="0" loaded="onFirstWebViewLoaded" src="{{ url }}"/>
-        </GridLayout>
-    <!-- << web-view-xml-local-file -->
+        <StackLayout>
+            <GridLayout rows="*" columns="*">
+                <WebView row="0" col="0" loaded="onFirstWebViewLoaded" src="{{ url }}"/>
+            </GridLayout>
+        </StackLayout>
     </StackLayout>
-</StackLayout>
 </Page>

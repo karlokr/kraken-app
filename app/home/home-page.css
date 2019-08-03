@@ -34,10 +34,10 @@
     font-family: "FontAwesome";
     font-size: 14;
 }
+
 .action-label {
     background-color: #3E646C;
     color: #ffffff;
-    font-family: "FontAwesome";
     font-size: 24;
 }
 
@@ -55,9 +55,11 @@
     margin-top: 21;
     height: 1;
 }
+
 .logo-text {
     margin-top: 21;
 }
+
 /* Login */
 .page-login-container {
     background-color: #3E646C;

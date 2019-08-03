@@ -1,11 +1,8 @@
 const HomeViewModel = require("./home-view-model");
 var orientation = require('nativescript-orientation');
+const modalViewModule = "modal/modal-page";
 orientation.disableRotation();
 
-/* ***********************************************************
- * Use the "onNavigatingTo" handler to initialize the page binding context.
- * Call any view model data initialization load here.
- *************************************************************/
 function onNavigatingTo(args) {
     const page = args.object;
     page.actionBarHidden = false;
@@ -13,3 +10,24 @@ function onNavigatingTo(args) {
 }
 
 exports.onNavigatingTo = onNavigatingTo;
+
+function openModal(args) {
+    const mainView = args.object;
+    const option = {
+        context: {
+            username: "test_username",
+            password: "test"
+        },
+        closeCallback: () => {
+
+        },
+        // closeCallback: (username, password) => {
+        //     // Receive data from the modal view. e.g. username & password
+        //     alert(`Username: ${username} : Password: ${password}`);
+        // },
+        fullscreen: false
+    };
+    mainView.showModal(modalViewModule, option);
+}
+
+exports.openModal = openModal;

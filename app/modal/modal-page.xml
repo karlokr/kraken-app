@@ -1,0 +1,11 @@
+<Page xmlns="http://www.nativescript.org/tns.xsd" shownModally="onShownModally" style="border-radius:100;">
+    <StackLayout style="padding:10;">
+        <GridLayout rows="100 100" columns="* 2*" >
+            <Label row="0" col="0" text="Settings" textWrap="true" />
+            <!-- <TextField row="0" col="1" hint="username" text="{{ username }}" />
+            <Label row="1" col="0" text="Password:" textWrap="true" />
+            <TextField row="1" col="1" hint="password" secure="true" text="{{ password }}" /> -->
+        </GridLayout>
+        <Button text="Close" tap="onCloseButtonTap" />
+    </StackLayout>
+</Page>
