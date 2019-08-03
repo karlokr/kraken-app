@@ -1,7 +1,6 @@
 const observableModule = require("tns-core-modules/data/observable");
 const topmost = require("tns-core-modules/ui/frame").topmost;
-var utilityModule = require("utils/utils");
-var appSettings = require("application-settings");
+var appSettings = require("tns-core-modules/application-settings");
 
 function HomeViewModel(userInfo) {
     const viewModel = observableModule.fromObject({
@@ -26,7 +25,11 @@ function HomeViewModel(userInfo) {
             // Navigate to corresponding page
             console.log("first press or second");
             const menuButtonParent = args.object.parent;
-            utilityModule.openUrl(menuButtonParent.get("data-name"));
+            appSettings.setString("url", menuButtonParent.get("data-name"));
+            appSettings.setString("url_title", menuButtonParent.get("id"));
+            topmost().navigate({
+                moduleName: "webview/webview-page"
+            });
         },
 
         onProfileButtonTap: function () {
