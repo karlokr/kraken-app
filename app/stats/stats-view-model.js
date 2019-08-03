@@ -41,23 +41,7 @@ function StatsViewModel(args) {
 			this.stat == "weight" ? this.unit = "kg" : this.unit = "inches";
 			viewModel.page.getViewById("container").removeChildren();
 			viewModel.set("week", 0);
-			this.getListView(viewModel.get("week"));
-			setTimeout(() => {
-				this.getGraphStats();
-			}, 100);
-			setTimeout(() => {
-				this.getListView(viewModel.get("week"));
-			}, 100);
-			setTimeout(() => {
-				if (viewModel.get("listEntries") < 6) {
-					this.getListView(viewModel.get("week"));
-					setTimeout(() => {
-						if (viewModel.get("listEntries") < 6) {
-							this.getListView(viewModel.get("week"));
-						}
-					}, 100);
-				}
-			}, 100);
+			this.loadItems();
 		},
 		getListView(weekno) {
 			statsService.getListView({
@@ -179,10 +163,10 @@ function StatsViewModel(args) {
 						seconds = 0;
 						t.push(seconds);
 					} else {
-						seconds = (dates[i] - dates[0])/1000;
+						seconds = (dates[i] - dates[0]) / 1000;
 						t.push(seconds);
 					}
-					
+
 				}
 				x = t;
 				viewModel.set("graphMax", max + 3);
@@ -227,6 +211,37 @@ function StatsViewModel(args) {
 		capitalizeFirst(str) {
 			return str.charAt(0).toUpperCase() + str.slice(1);
 		},
+		loadItems() {
+			this.getGraphStats();
+		
+			function accumulatorListView(nextID) {
+				return new Promise((resolve, reject) => {
+					setTimeout(() => {
+						viewModel.getListView(viewModel.get("week"));
+						resolve();
+					}, 100);
+				});
+			}
+		
+			[1, 2].reduce((accumulatorPromise, nextID) => {
+				console.log(`Loop! ${new Date()}`);
+				return accumulatorPromise.then(() => {
+					return accumulatorListView(nextID);
+				});
+			}, Promise.resolve());
+		
+			setTimeout(() => {
+				if (viewModel.get("listEntries") < 6) {
+					viewModel.getListView(viewModel.get("week"));
+					[1, 2].reduce((accumulatorPromise, nextID) => {
+						console.log(`Loop! ${new Date()}`);
+						return accumulatorPromise.then(() => {
+							return accumulatorListView(nextID);
+						});
+					}, Promise.resolve());
+				}
+			}, 1000);
+		},
 		onNavBtnTap() {
 			topmost().navigate({
 				moduleName: "home/home-page",
@@ -257,23 +272,7 @@ function StatsViewModel(args) {
 						viewModel.set("week", 0);
 						viewModel.set("firstItem", true);
 						viewModel.set("listEntries", 0);
-						this.getListView(viewModel.get("week"));
-						setTimeout(() => {
-							this.getGraphStats();
-						}, 100);
-						setTimeout(() => {
-							this.getListView(viewModel.get("week"));
-						}, 100);
-						setTimeout(() => {
-							if (viewModel.get("listEntries") < 6) {
-								this.getListView(viewModel.get("week"));
-								setTimeout(() => {
-									if (viewModel.get("listEntries") < 6) {
-										this.getListView(viewModel.get("week"));
-									}
-								}, 100);
-							}
-						}, 100);
+						this.loadItems();
 					}).catch(() => {
 						alert("Unfortunately, an error occurred resetting your password.");
 					});
@@ -283,27 +282,8 @@ function StatsViewModel(args) {
 	})
 
 	// Run on page load:
-	viewModel.getListView(viewModel.get("week"));
-	setTimeout(() => {
-		viewModel.getGraphStats();
-	}, 100);
-	setTimeout(() => {
-		viewModel.getListView(viewModel.get("week"));
-	}, 100);
-
-	setTimeout(() => {
-		if (viewModel.get("listEntries") < 6) {
-			viewModel.getListView(viewModel.get("week"));
-			setTimeout(() => {
-				if (viewModel.get("listEntries") < 6) {
-					viewModel.getListView(viewModel.get("week"));
-				}
-			}, 100);
-		}
-	}, 100);
-
 	viewModel.page.getViewById("weight").borderWidth = "4px";
-
+	viewModel.loadItems();
 	return viewModel;
 }
 
