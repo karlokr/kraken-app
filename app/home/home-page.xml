@@ -1,19 +1,22 @@
 <Page class="page" navigatingTo="onNavigatingTo" 
     xmlns="http://schemas.nativescript.org/tns.xsd">
 
-    <ActionBar class="action-bar" title="Kraken Training">
-        <ActionItem android.position="actionBar" ios.position="right" tap=" {{ onProfileButtonTap }}">
-            <Label text="&#xf2bd;" class="fa action-button"></Label>
+    <ActionBar class=" fa action-bar" title="">
+        <StackLayout orientation="horizontal" ios:horizontalAlignment="center" android:horizontalAlignment="left" style="vertical-align: center;" class="action-bar">
+            <Label text="&#xf2bd; " class="fa action-profile" style="font-size:32;font-weight:500;letter-spacing:0.05;"></Label>
+            <Label text="{{ loggedUser }}" class="fa action-label" style="font-size:20;font-weight:550;letter-spacing:0.03;vertical-align: center;"></Label>
+        </StackLayout>
+        <ActionItem android.position="actionBar" ios.position="right" tap=" {{ onProfileButtonTap }}" style="padding-left:15;">
+            <Label text="&#xf013;" class="fa action-button"></Label>
         </ActionItem>
     </ActionBar>
 
-    <GridLayout rows="auto, *, auto, auto">
+    <GridLayout rows="auto, *" class="menu-container">
         <StackLayout row="0" class="m-b-25">
-            <Label class="t-30 text-center title" text="Welcome"></Label>
-            <Label class="t-18 text-center font-weight-bold" text="{{ loggedUser }}"></Label>
+            <Image class="logo-text" src="~/images/kraken.png" />
             <StackLayout class="hr"></StackLayout>
         </StackLayout>
-        <GridLayout row="1" rows="auto, auto, auto, auto" columns="*, *" class="menu-container">
+        <GridLayout row="1" rows="auto, auto, auto" columns="*, *" >
             <StackLayout row="0" col="0" data-name="https://krakentraining.com/" class="menu-item" id="Home">
                 <Button text="&#xf015;" class="fa menu-icon" tap="{{ onMenuButtonTap }}"></Button>
                 <Label text="Home" class="text-center" tap="{{ onMenuButtonTap }}"></Label>
@@ -41,10 +44,6 @@
 
 
         </GridLayout>
-        <StackLayout row="2" data-name="settings" class="menu-item">
-            <Button text="&#xf013;" class="fa settings-icon" tap="{{ onMenuButtonTap }}"></Button>
-            <!-- <Label text="Settings" class="text-center" tap="{{ onMenuButtonTap }}"></Label> -->
-        </StackLayout>
     </GridLayout>
 
 </Page>

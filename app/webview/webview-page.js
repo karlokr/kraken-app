@@ -29,4 +29,3 @@ exports.onNavBtnTap = function () {
 
 exports.onNavigatingTo = onNavigatingTo;
 exports.onFirstWebViewLoaded = onFirstWebViewLoaded;
-// << web-view-src-local-file
