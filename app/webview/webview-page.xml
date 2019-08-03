@@ -1,7 +1,6 @@
 <Page xmlns="http://www.nativescript.org/tns.xsd" navigatingTo="onNavigatingTo">
     <ActionBar class="action-bar" flat="true" title="{{ url_title }}">
         <NavigationButton text="" icon="~/images/next.png" tap="onNavBtnTap"/>
-        </ActionItem>
     </ActionBar>
 
    <StackLayout>

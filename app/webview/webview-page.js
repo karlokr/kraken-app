@@ -18,18 +18,6 @@ function onFirstWebViewLoaded(webargs) {
 
     vm.set("url", appSettings.getString("url"));
     vm.set("url_title", appSettings.getString("url_title"));
-    vm.set("resultFirstWebView", "First WebView is still loading...");
-    // handling WebView load finish event
-    webview.on(webViewModule.WebView.loadFinishedEvent, (args) => {
-        let message = "";
-        if (!args.error) {
-            message = `First WebView finished loading of ${args.url}`;
-            console.log(args);
-        } else {
-            message = `Error loading first WebView ${args.url} : ${args.error}`;
-        }
-
-    });
 }
 
 exports.onNavBtnTap = function () {
