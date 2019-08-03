@@ -1,5 +1,5 @@
 const application = require("tns-core-modules/application");
-var appSettings = require("application-settings");
+var appSettings = require("tns-core-modules/application-settings");
 
 if (appSettings.getString("email") != null && appSettings.getString("email") != undefined) {
     application.start({

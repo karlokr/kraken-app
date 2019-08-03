@@ -1,10 +1,5 @@
-const fetchModule = require("fetch");
-var appSettings = require("application-settings");
-
-function handleErrors(error) {
-    console.error(error.message);
-}
-
+const fetchModule = require("tns-core-modules/fetch");
+var appSettings = require("tns-core-modules/application-settings");
 exports.getGraphStats = function (data) {
     return fetchModule.fetch(
             "https://joshkraken.com/sqlconnect/graphStats.php", {
