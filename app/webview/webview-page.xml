@@ -1,13 +1,10 @@
-<Page xmlns="http://www.nativescript.org/tns.xsd" navigatingTo="onNavigatingTo">
+<Page xmlns="http://www.nativescript.org/tns.xsd" navigatingTo="onNavigatingTo" loaded="pageLoaded" unloaded="pageUnloaded">
     <ActionBar class="action-bar" flat="true" title="{{ url_title }}">
         <NavigationButton text="" icon="~/images/next.png" tap="onNavBtnTap"/>
     </ActionBar>
 
-    <StackLayout>
-        <StackLayout>
-            <GridLayout rows="*" columns="*">
-                <WebView row="0" col="0" loaded="onFirstWebViewLoaded" src="{{ url }}"/>
-            </GridLayout>
-        </StackLayout>
-    </StackLayout>
+    <GridLayout rows="*">
+        <WebView row="0" loaded="onWebViewLoaded" id="myWebView" src="{{ webViewSrc }}" />
+    </GridLayout>
+
 </Page>
