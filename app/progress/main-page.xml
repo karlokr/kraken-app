@@ -1,4 +1,4 @@
-<Page xmlns="http://schemas.nativescript.org/tns.xsd" backgroundSpanUnderStatusBar="true" class="page-layout" loaded="onLoaded">
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" backgroundSpanUnderStatusBar="true" class="page-layout" loaded="onLoaded" navigatingTo="onNavigatingTo">
     <ActionBar class="action-bar" flat="true" title="Progress Pics">
         <NavigationButton text="" icon="~/images/next.png" tap="onNavBtnTap"/>
         <ActionItem icon="~/images/add.png" android.position="actionBar" ios.position="right" tap=" {{ takePicture }}">
@@ -6,7 +6,7 @@
     </ActionBar>
     <ScrollView row="0" orientation="vertical" scroll="onScroll" id="scroller">
         <GridLayout rows="*" layoutChanged="onLayoutChanged" id="wrapper">
-            <Repeater separatorColor="transparent" id="repeaterObj" items="{{arrayPictures}}" >
+            <Repeater separatorColor="transparent" id="repeaterObj" items="{{arrayPictures}}">
                 <Repeater.itemsLayout>
                     <FlexboxLayout flexDirection="row" flexWrap="wrap" alignSelf="center" />
                 </Repeater.itemsLayout>

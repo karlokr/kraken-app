@@ -24,6 +24,7 @@ function StatsViewModel(args) {
 		lastItemY: 0,
 		firstItem: true,
 		listEntries: 0,
+		weekArrays: [],
 		switchStat: function (args) {
 			viewModel.set("graphMin", 0);
 			viewModel.set("graphMax", 1);
@@ -49,77 +50,81 @@ function StatsViewModel(args) {
 				week: String(this.week)
 			}).then(function (data) {
 				viewModel.set("listEntries", data.stats.length + viewModel.get("listEntries"));
-				console.log(viewModel.get("listEntries"));
+				
 				// get the calendar range of the week number
 				getDateFromWeek = function (week, year) {
 					return moment(year).add(week, 'weeks').startOf('week').format('MMM DD') + " - " + moment(year).add(week, 'weeks').endOf('week').format('MMM DD')
 				};
 				var year = new Date(data.stats[data.stats.length - 1].date + "Z");
 				var yearno = year.getFullYear();
-				if (viewModel.get("firstItem") && weekno == 0) {
-					data.week = "THIS WEEK";
+				if (viewModel.get("firstItem")) {
+					data.weekDisplay = "THIS WEEK";
 					viewModel.set("firstItem", false)
 				} else {
-					data.week = getDateFromWeek(String(data.week), String(yearno));
+					data.weekDisplay = getDateFromWeek(String(data.week), String(yearno));
 				}
 
 				// replace stat key (eg, weight, arms, etc) with "stat"
 				for (var i = 0; i < data.stats.length; i++) {
 					var element = data.stats[i];
 					var val = element[viewModel.get("stat")];
-					delete element[viewModel.get("stat")];
 					element.stat = val;
 					var utcTime = new Date(data.stats[i].date + "Z");
 					var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 					// var localText = days[utcTime.getDay()] + ". " + utcTime.getHours() + ":" + ('0'+utcTime.getMinutes()).slice(-2);
-					data.stats[i].date = days[utcTime.getDay()] + ". ";
+					data.stats[i].day = days[utcTime.getDay()] + ". ";
 					data.stats[i].time = ('0' + utcTime.getHours()).slice(-2) + ":" + ('0' + utcTime.getMinutes()).slice(-2);
 				}
-
+				
+				viewModel.weekArrays.push(data);
 				// generate listview
-				var ListVw = new listview.ListView();
-				var stcklayout = new gridlayout.GridLayout();
-				stcklayout.id = data.week;
-				stcklayout.backgroundColor = "#3E646C";
-				stcklayout.padding = "10";
-				stcklayout.paddingLeft = "15";
-				stcklayout.paddingRight = "15";
-				stcklayout.rows = "auto";
-				stcklayout.columns = "*";
-				const heading = new labelModule.Label();
-				const avg = new labelModule.Label();
-				heading.text = data.week;
-				heading.color = "white";
-				avg.row = "0";
-				avg.horizontalAlignment = "right";
-				avg.textAlignment = "right";
-				avg.color = "white";
-				avg.text = Math.round(data.avg * 10) / 10 + " " + viewModel.get("unit") + " avg"
-				ListVw.items = [];
-				ListVw.className = "list-group";
-				ListVw.height = 52 * data.stats.length + 1 * data.stats.length;
-				ListVw.itemTemplate = '<GridLayout class="list-group-item" rows="auto" columns="auto, *">' +
-					'<GridLayout rows="auto,*" columns="*" row="0" col="1">' +
-					'<StackLayout row="0" horizontalAlignment="left" orientation="horizontal">' +
-					'<Label text="{{ date }}" class="list-group-item-heading" horizontalAlignment="left" />' +
-					'<Label text="{{ time }}" class="list-group-item-heading-time" horizontalAlignment="left" />' +
-					'</StackLayout>' +
-					'<StackLayout row="0" horizontalAlignment="right" orientation="horizontal">' +
-					'<Label  text="{{ stat }}" class="list-group-item-text-stat"/>' +
-					'<Label  text=" ' + viewModel.unit + '" class="list-group-item-text-unit"/>' +
-					'</StackLayout>' +
-					'</GridLayout> </GridLayout>';
-
-				for (var i = data.stats.length - 1; i >= 0; i--) {
-					ListVw.items.push(data.stats[i]);
-				}
-				viewModel.page.getViewById("container").addChild(stcklayout);
-				viewModel.page.getViewById(data.week).addChild(heading);
-				viewModel.page.getViewById(data.week).addChild(avg);
-				viewModel.page.getViewById("container").addChild(ListVw);
+				viewModel.generateListView(viewModel.weekArrays.length - 1);
 			})
 			this.week++;
 
+		},
+		generateListView(index) {
+			console.log(viewModel.weekArrays[index]);
+			var ListVw = new listview.ListView();
+			var stcklayout = new gridlayout.GridLayout();
+			stcklayout.id = viewModel.weekArrays[index].week;
+			stcklayout.backgroundColor = "#3E646C";
+			stcklayout.padding = "10";
+			stcklayout.paddingLeft = "15";
+			stcklayout.paddingRight = "15";
+			stcklayout.rows = "auto";
+			stcklayout.columns = "*";
+			const heading = new labelModule.Label();
+			const avg = new labelModule.Label();
+			heading.text = viewModel.weekArrays[index].weekDisplay;
+			heading.color = "white";
+			avg.row = "0";
+			avg.horizontalAlignment = "right";
+			avg.textAlignment = "right";
+			avg.color = "white";
+			avg.text = Math.round(viewModel.weekArrays[index].avg * 10) / 10 + " " + viewModel.get("unit") + " avg"
+			ListVw.items = [];
+			ListVw.className = "list-group";
+			ListVw.height = 52 * viewModel.weekArrays[index].stats.length + 1 * viewModel.weekArrays[index].stats.length;
+			ListVw.itemTemplate = '<GridLayout class="list-group-item" rows="auto" columns="auto, *">' +
+				'<GridLayout rows="auto,*" columns="*" row="0" col="1">' +
+				'<StackLayout row="0" horizontalAlignment="left" orientation="horizontal">' +
+				'<Label text="{{ day }}" class="list-group-item-heading" horizontalAlignment="left" />' +
+				'<Label text="{{ time }}" class="list-group-item-heading-time" horizontalAlignment="left" />' +
+				'</StackLayout>' +
+				'<StackLayout row="0" horizontalAlignment="right" orientation="horizontal">' +
+				'<Label  text="{{ stat }}" class="list-group-item-text-stat"/>' +
+				'<Label  text=" ' + viewModel.unit + '" class="list-group-item-text-unit"/>' +
+				'</StackLayout>' +
+				'</GridLayout> </GridLayout>';
+
+			for (var j = viewModel.weekArrays[index].stats.length - 1; j >= 0; j--) {
+				ListVw.items.push(viewModel.weekArrays[index].stats[j]);
+			}
+			viewModel.page.getViewById("container").addChild(stcklayout);
+			viewModel.page.getViewById(viewModel.weekArrays[index].week).addChild(heading);
+			viewModel.page.getViewById(viewModel.weekArrays[index].week).addChild(avg);
+			viewModel.page.getViewById("container").addChild(ListVw);
 		},
 		getGraphStats() {
 			statsService.getGraphStats({
@@ -213,7 +218,7 @@ function StatsViewModel(args) {
 		},
 		loadItems() {
 			this.getGraphStats();
-		
+
 			function accumulatorListView(nextID) {
 				return new Promise((resolve, reject) => {
 					setTimeout(() => {
@@ -222,17 +227,16 @@ function StatsViewModel(args) {
 					}, 100);
 				});
 			}
-		
+
 			[1, 2].reduce((accumulatorPromise, nextID) => {
 				console.log(`Loop! ${new Date()}`);
 				return accumulatorPromise.then(() => {
 					return accumulatorListView(nextID);
 				});
 			}, Promise.resolve());
-		
+
 			setTimeout(() => {
 				if (viewModel.get("listEntries") < 6) {
-					viewModel.getListView(viewModel.get("week"));
 					[1, 2].reduce((accumulatorPromise, nextID) => {
 						console.log(`Loop! ${new Date()}`);
 						return accumulatorPromise.then(() => {
@@ -274,7 +278,7 @@ function StatsViewModel(args) {
 						viewModel.set("listEntries", 0);
 						this.loadItems();
 					}).catch(() => {
-						alert("Unfortunately, an error occurred resetting your password.");
+						//alert("Unfortunately, an error occurred resetting your password.");
 					});
 				}
 			});

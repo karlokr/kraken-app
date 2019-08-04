@@ -38,6 +38,28 @@ exports.getPhotos = function (data) {
         })
 };
 
+exports.deletePhoto = function (data) {
+    return fetchModule.fetch(
+            "https://joshkraken.com/sqlconnect/deletePic.php", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    id: appSettings.getString("id"),
+                    firstName: appSettings.getString("firstName").toLowerCase(),
+                    lastName: appSettings.getString("lastName").toLowerCase(),
+                    filename: data.filename,
+                    note: data.note
+                })
+            }).then(function (res) {
+            return res.json();
+        })
+        .then(function (data) {
+            return data;
+        })
+};
+
 exports.getListView = function (data) {
     return fetchModule.fetch(
             "https://joshkraken.com/sqlconnect/getListView.php", {

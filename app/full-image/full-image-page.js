@@ -1,4 +1,5 @@
 var frameModule = require("tns-core-modules/ui/frame");
+const ObservableArray = require("tns-core-modules/data/observable-array").ObservableArray;
 var cameraModel;
 var orientation = require('nativescript-orientation');
 orientation.disableRotation();

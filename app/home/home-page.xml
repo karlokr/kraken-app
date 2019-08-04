@@ -10,40 +10,40 @@
             <Label text="&#xf013; " class="fa action-button" style="margin-right:15;"></Label>
         </ActionItem>
     </ActionBar>
+    <ScrollView>
+        <GridLayout rows="auto, *" class="menu-container">
+            <StackLayout row="0" class="m-b-25">
+                <Image class="logo-text" src="~/images/kraken.png" />
+                <StackLayout class="hr"></StackLayout>
+            </StackLayout>
+            <GridLayout row="1" rows="auto, auto, auto" columns="*, *">
+                <StackLayout row="0" col="0" data-name="https://krakentraining.com/" class="menu-item" id="Home">
+                    <Button text="&#xf015;" class="fa menu-icon" tap="{{ onMenuButtonTap }}"></Button>
+                    <Label text="Home" class="text-center" tap="{{ onMenuButtonTap }}"></Label>
+                </StackLayout>
+                <StackLayout row="0" col="1" data-name="https://krakentraining.com/blog" class="menu-item" id="Blog">
+                    <Button text="&#xf1ea;" class="fa menu-icon" tap="{{ onMenuButtonTap }}"></Button>
+                    <Label text="Blog" class="text-center" tap="{{ onMenuButtonTap }}"></Label>
+                </StackLayout>
+                <StackLayout row="1" col="0" data-name="stats" class="menu-item" id="Stats">
+                    <Button text="&#xf201;" class="fa menu-icon" tap="{{ onStatsTap }}"></Button>
+                    <Label text="Stats" class="text-center" tap="{{ onStatsTap }}"></Label>
+                </StackLayout>
+                <StackLayout row="1" col="1" data-name="photo-gallery" class="menu-item" id="Progress Pics">
+                    <Button text="&#xf030;" class="fa menu-icon" tap="{{ onPhotosTap }}"></Button>
+                    <Label text="Progress Pics" class="text-center" tap="{{ onPhotosTap }}"></Label>
+                </StackLayout>
+                <StackLayout row="2" col="0" data-name="https://learn.krakentransformations.com" class="menu-item" id="Courses">
+                    <Button text="&#xf19c;" class="fa menu-icon" tap="{{ onMenuButtonTap }}"></Button>
+                    <Label text="Courses" class="text-center" tap="{{ onMenuButtonTap }}"></Label>
+                </StackLayout>
+                <StackLayout row="2" col="1" data-name="https://clients.mindbodyonline.com/LoginLaunch?studioid=466195" class="menu-item" id="MindBody">
+                    <Button text="&#xf21e;" class="fa menu-icon" tap="{{ onMenuButtonTap }}"></Button>
+                    <Label text="MindBody Login" class="text-center" tap="{{ onMenuButtonTap }}"></Label>
+                </StackLayout>
 
-    <GridLayout rows="auto, *" class="menu-container">
-        <StackLayout row="0" class="m-b-25">
-            <Image class="logo-text" src="~/images/kraken.png" />
-            <StackLayout class="hr"></StackLayout>
-        </StackLayout>
-        <GridLayout row="1" rows="auto, auto, auto" columns="*, *">
-            <StackLayout row="0" col="0" data-name="https://krakentraining.com/" class="menu-item" id="Home">
-                <Button text="&#xf015;" class="fa menu-icon" tap="{{ onMenuButtonTap }}"></Button>
-                <Label text="Home" class="text-center" tap="{{ onMenuButtonTap }}"></Label>
-            </StackLayout>
-            <StackLayout row="0" col="1" data-name="https://krakentraining.com/blog" class="menu-item" id="Blog">
-                <Button text="&#xf1ea;" class="fa menu-icon" tap="{{ onMenuButtonTap }}"></Button>
-                <Label text="Blog" class="text-center" tap="{{ onMenuButtonTap }}"></Label>
-            </StackLayout>
-            <StackLayout row="1" col="0" data-name="stats" class="menu-item" id="Stats">
-                <Button text="&#xf201;" class="fa menu-icon" tap="{{ onStatsTap }}"></Button>
-                <Label text="Stats" class="text-center" tap="{{ onStatsTap }}"></Label>
-            </StackLayout>
-            <StackLayout row="1" col="1" data-name="photo-gallery" class="menu-item" id="Progress Pics">
-                <Button text="&#xf030;" class="fa menu-icon" tap="{{ onPhotosTap }}"></Button>
-                <Label text="Progress Pics" class="text-center" tap="{{ onPhotosTap }}"></Label>
-            </StackLayout>
-            <StackLayout row="2" col="0" data-name="https://learn.krakentransformations.com" class="menu-item" id="Courses">
-                <Button text="&#xf19c;" class="fa menu-icon" tap="{{ onMenuButtonTap }}"></Button>
-                <Label text="Courses" class="text-center" tap="{{ onMenuButtonTap }}"></Label>
-            </StackLayout>
-            <StackLayout row="2" col="1" data-name="https://clients.mindbodyonline.com/LoginLaunch?studioid=466195" class="menu-item" id="MindBody">
-                <Button text="&#xf21e;" class="fa menu-icon" tap="{{ onMenuButtonTap }}"></Button>
-                <Label text="MindBody Login" class="text-center" tap="{{ onMenuButtonTap }}"></Label>
-            </StackLayout>
 
-
+            </GridLayout>
         </GridLayout>
-    </GridLayout>
-
+    </ScrollView>
 </Page>

@@ -123,15 +123,12 @@ function PhotoGalleryComponent() {
   };
 
   PhotoGalleryObj.deletePicture = function (args) {
-    const documents = fsModule.knownFolders.documents();
-    let parentobj = args.object.parent.parent;
-    let imgobj = parentobj.getViewById("fullImage");
-    const filename = imgobj.src.filename;
-    var file = documents.getFile(filename);
-    file.remove();
-    let pictureIndex = this.arrayPictures.indexOf(imgobj.src);
-    this.arrayPictures.splice(pictureIndex, 1);
-    this.storeData();
+    
+    
+    statsService.deletePhoto({
+      filename: args.object.id,
+      note: args.object.parent.title
+    })
   };
 
   PhotoGalleryObj.storeData = function () {
@@ -150,9 +147,7 @@ function PhotoGalleryComponent() {
     }
   };
 
-  PhotoGalleryObj.loadData = function (args) {
-    args.busy = true;
-    console.log(PhotoGalleryObj.pageno);
+  PhotoGalleryObj.reloadData = function (args) {
     statsService.getPhotos({
         pageno: PhotoGalleryObj.pageno
       })
@@ -165,7 +160,24 @@ function PhotoGalleryComponent() {
           loadedImage.filename = row.filename;
           PhotoGalleryObj.arrayPictures.push(loadedImage);
         }
-        // PhotoGalleryObj.arrayPictures.reverse();
+        PhotoGalleryObj.pageno = PhotoGalleryObj.pageno + 1;
+      })
+  };
+
+  PhotoGalleryObj.loadData = function (args) {
+    args.busy = true;
+    statsService.getPhotos({
+        pageno: PhotoGalleryObj.pageno
+      })
+      .then(function (data) {
+
+        for (var i = 0; i < data.length; i++) {
+          var row = JSON.parse(data[i]);
+          var loadedImage = imageSourceModule.fromBase64(row.img);
+          loadedImage.note = row.note;
+          loadedImage.filename = row.filename;
+          PhotoGalleryObj.arrayPictures.push(loadedImage);
+        }
         args.busy = false;
         PhotoGalleryObj.pageno = PhotoGalleryObj.pageno + 1;
       })
@@ -252,3 +264,39 @@ function onLoaded(args) {
   }
 }
 exports.onLoaded = onLoaded;
+
+function onNavigatingTo(args) {
+  if (initFlag == 0) {
+    args.object.page.bindingContext = fromObject(cameraModel);
+    currentPage = args.object;
+    var buttonCamera = currentPage.getViewById("buttonCamera");
+    if (cameraModule.isAvailable()) {
+      //checks to make sure device has a camera
+    } else {
+      //ignore this on simulators for now
+    }
+    cameraModule.requestPermissions().then(
+      //request permissions for camera
+      success => {
+        //have permissions
+      },
+      failure => {
+        //no permissions for camera,disable picture button
+        buttonCamera.isEnabled = false;
+      }
+    );
+    var indicator = currentPage.getViewById("actv");
+    indicator.busy = true;
+    cameraModel.loadData(currentPage.getViewById("actv"));
+    initFlag = 1;
+  } else {
+    currentPage = args.object;
+    cameraModel.arrayPictures = new ObservableArray();
+    cameraModel.pageno = 0;
+    var indicator = currentPage.getViewById("actv");
+    indicator.busy = true;
+    cameraModel.loadData(currentPage.getViewById("actv"));
+    initFlag = 1;
+  }
+}
+exports.onNavigatingTo = onNavigatingTo;

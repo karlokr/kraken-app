@@ -1,11 +1,11 @@
 <Page xmlns="http://schemas.nativescript.org/tns.xsd" backgroundSpanUnderStatusBar="true" class="page-layout" navigatingTo="navigatingTo" navigatingFrom="navigatingFrom">
     <ActionBar title="{{ srcPicture.note }}" class="action-bar">
         <NavigationButton text="" icon="~/images/next.png" tap="onNavBtnTap"/>
-        <ActionItem icon="~/images/remove.png" android.position="actionBar" ios.position="right" tap="deletePicture">
+        <ActionItem icon="~/images/remove.png" android.position="actionBar" ios.position="right" tap="deletePicture" id="{{ srcPicture.filename }}">
         </ActionItem>
     </ActionBar>
-    <StackLayout class="picture-full" id="fullImage">
-        <Image stretch="zoom" src="{{srcPicture}}" />
+    <StackLayout class="picture-full">
+        <Image stretch="zoom" src="{{srcPicture}}"/>
     </StackLayout>
 </Page>
                 
