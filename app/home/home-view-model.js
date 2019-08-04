@@ -7,18 +7,7 @@ function HomeViewModel(userInfo) {
         loggedUser: appSettings.getString("firstName"),
 
         logout: function () {
-            // Kinvey.User.logout()
-            //     .then(() => {
-            //         topmost().navigate({
-            //             moduleName: "login/login-page",
-            //             animated: true,
-            //             transition: {
-            //                 name: "slideTop",
-            //                 duration: 350,
-            //                 curve: "ease"
-            //             }
-            //         });
-            //     });
+            // TODO
         },
 
         onMenuButtonTap: function (args) {
