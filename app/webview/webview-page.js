@@ -47,7 +47,7 @@ function onNavigatingTo(args) {
     vm.set("tftext", appSettings.getString("url"));
     page.bindingContext = vm;
 }
-// handling WebView load finish event
+
 function onWebViewLoaded(webargs) {
     const page = webargs.object.page;
     const vm = page.bindingContext;
