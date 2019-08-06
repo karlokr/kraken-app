@@ -238,8 +238,6 @@ function StatsViewModel(args) {
 					viewModel.set("graphMax", max + 3);
 					viewModel.set("graphMin", min - 3);
 				}
-				
-
 				viewModel.set("graphStats", data);
 
 				//calculate the line of best fit for the stats data
