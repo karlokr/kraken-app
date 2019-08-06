@@ -4,6 +4,9 @@
     xmlns:chart="nativescript-ui-chart" backgroundColor="#ebf1f2" class="page">
     <ActionBar class="action-bar" flat="true" title="{{ title }}">
         <NavigationButton text="" icon="~/images/next.png" tap="{{ onNavBtnTap }}"/>
+        <ActionItem android.position="actionBar" ios.position="right" tap="{{ openModal }}" >
+            <Label text="&#xf013; " class="fa action-label"></Label>
+        </ActionItem>
         <ActionItem icon="~/images/add.png" android.position="actionBar" ios.position="right" tap=" {{ addStat }}">
         </ActionItem>
     </ActionBar>

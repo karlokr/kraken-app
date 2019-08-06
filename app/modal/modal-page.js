@@ -1,4 +1,5 @@
 const observableModule = require("tns-core-modules/data/observable");
+var appSettings = require("tns-core-modules/application-settings");
 let closeCallback;
 
 function onShownModally(args) {
@@ -18,3 +19,32 @@ function onCloseButtonTap(args) {
     closeCallback();
 }
 exports.onCloseButtonTap = onCloseButtonTap;
+
+function changeWeightUnit(args) {
+    const page = args.object.page;
+    const bindingContext = page.bindingContext;
+    console.log("tapped");
+    if (appSettings.getBoolean("weightUnit")) {
+        appSettings.setBoolean("weightUnit", false);
+        bindingContext.set("weightUnit", false)
+    } else {
+        appSettings.setBoolean("weightUnit", true);
+        bindingContext.set("weightUnit", true)
+    }
+}
+
+function changeLengthUnit(args) {
+    const page = args.object.page;
+    const bindingContext = page.bindingContext;
+    console.log("tapped");
+    if (appSettings.getBoolean("lengthUnit")) {
+        appSettings.setBoolean("lengthUnit", false);
+        bindingContext.set("lengthUnit", false)
+    } else {
+        appSettings.setBoolean("lengthUnit", true);
+        bindingContext.set("lengthUnit", true)
+    }
+}
+
+exports.changeWeightUnit = changeWeightUnit;
+exports.changeLengthUnit = changeLengthUnit;

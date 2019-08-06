@@ -1,11 +1,42 @@
 <Page xmlns="http://www.nativescript.org/tns.xsd" shownModally="onShownModally" style="border-radius:100;">
-    <StackLayout style="padding:10;">
-        <GridLayout rows="100 100" columns="* 2*" >
-            <Label row="0" col="0" text="Settings" textWrap="true" />
-            <!-- <TextField row="0" col="1" hint="username" text="{{ username }}" />
-            <Label row="1" col="0" text="Password:" textWrap="true" />
-            <TextField row="1" col="1" hint="password" secure="true" text="{{ password }}" /> -->
+    <StackLayout style="padding:20;">
+        <GridLayout rows="75 50 50" columns="* *">
+            <Label row="0" col="0" text="Settings" textWrap="true" class="font-awesome" style="font-size:24;padding-top:5;"/>
+            <Label row="1" col="0" text="Weight Unit" class="font-awesome" tap="changeWeightUnit">
+            </Label>
+            <StackLayout row="1" col="1" orientation="horizontal" horizontalAlignment="right">
+                <StackLayout orientation="horizontal" tap="changeWeightUnit">
+                    <Label text="kg" class="font-awesome unit-label" tap="changeWeightUnit">
+                    </Label>
+                    <Label text="{{ weightUnit ? '&#xf192;' : '&#xf10c;' }}" class="radio-button first" id="kg">
+                    </Label>
+                </StackLayout>
+                <StackLayout orientation="horizontal" tap="changeWeightUnit">
+                    <Label text="lb" class="font-awesome unit-label">
+                    </Label>
+                    <Label text="{{ weightUnit ? '&#xf10c;' : '&#xf192;' }}" class="radio-button" id="lb">
+                    </Label>
+                </StackLayout>
+            </StackLayout>
+            <Label row="2" col="0" text="Length Unit" class="font-awesome" tap="changeWeightUnit">
+            </Label>
+            <StackLayout row="2" col="1" orientation="horizontal" horizontalAlignment="right">
+                <StackLayout orientation="horizontal" tap="changeLengthUnit">
+                    <Label text="cm" class="font-awesome unit-label">
+                    </Label>
+                    <Label text="{{ lengthUnit ? '&#xf192;' : '&#xf10c;' }}" class="radio-button first" id="cm">
+                    </Label>
+                </StackLayout>
+                <StackLayout orientation="horizontal" tap="changeLengthUnit">
+                    <Label text="inch" class="font-awesome unit-label">
+                    </Label>
+                    <Label text="{{ lengthUnit ? '&#xf10c;' : '&#xf192;' }}" class="radio-button" id="inch">
+                    </Label>
+                </StackLayout>
+            </StackLayout>
+
+
         </GridLayout>
-        <Button text="Close" tap="onCloseButtonTap" />
+        <Button text="Save" tap="onCloseButtonTap" class="button" />
     </StackLayout>
 </Page>

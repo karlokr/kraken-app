@@ -3,3 +3,31 @@
     background-color: transparent;
     border-radius: 10;
 }
+
+.font-awesome {
+    font-family: "FontAwesome";
+    font-size: 18;
+ }
+ 
+ .button {
+    height: 50;
+    background-color: #3E646C;
+    color:white;
+    border-radius: 5;
+    font-size: 20;
+  }
+
+.radio-button {
+    font-family: "FontAwesome";
+    font-size: 18;
+    color:#3E646C;
+ }
+
+ .unit-label {
+    color:gray;
+    margin-right: 3;
+ }
+
+ .first {
+     margin-right: 16;
+ }

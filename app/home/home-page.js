@@ -1,5 +1,6 @@
 const HomeViewModel = require("./home-view-model");
 var orientation = require('nativescript-orientation');
+var appSettings = require("tns-core-modules/application-settings");
 const modalViewModule = "modal/modal-page";
 orientation.disableRotation();
 
@@ -15,8 +16,8 @@ function openModal(args) {
     const mainView = args.object;
     const option = {
         context: {
-            username: "test_username",
-            password: "test"
+            weightUnit: appSettings.getBoolean("weightUnit"), // true = kg
+            lengthUnit: appSettings.getBoolean("lengthUnit") // true = cm
         },
         closeCallback: () => {
 

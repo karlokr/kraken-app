@@ -15,6 +15,11 @@
     background: linear-gradient(#3E646C 0%, #3E646C 10%, rgb(98, 161, 173) 100%);
 }
 
+.action-label {
+    background-color: #3E646C;
+    color: #ffffff;
+    font-size: 32;
+}
 .action-button {
     font-family: "FontAwesome";
     font-size: 24;

@@ -41,6 +41,8 @@ function LoginViewModel() {
                             appSettings.setString("id", res[1]);
                             appSettings.setString("firstName", res[2]);
                             appSettings.setString("lastName", res[3]);
+                            appSettings.setBoolean("weightUnit", true);
+                            appSettings.setBoolean("lengthUnit", false);
                             topmost().navigate({
                                 moduleName: "home/home-page",
                                 clearHistory: true
