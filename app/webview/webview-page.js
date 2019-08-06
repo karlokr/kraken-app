@@ -20,20 +20,16 @@ exports.pageLoaded = function (args) {
     const page = args.object.page;
     const vm = page.bindingContext;
     myPage = page;
-    // We only want to register the event in Android
     if (application.android) {
         application.android.on(application.AndroidApplication.activityBackPressedEvent, backEvent);
     }
 };
 exports.pageUnloaded = function () {
-    // We only want to un-register the event on Android
     if (application.android) {
         application.android.off(application.AndroidApplication.activityBackPressedEvent, backEvent);
     }
 };
 
-// This does your checks to see if you want to go back
-// setting cancel=true will cancel the back 
 function backEvent(args) {
     const webView = myPage.getViewById("myWebView");
     if (webView.canGoBack) {
@@ -51,7 +47,7 @@ function onNavigatingTo(args) {
     vm.set("tftext", appSettings.getString("url"));
     page.bindingContext = vm;
 }
-// handling WebView load finish event
+
 function onWebViewLoaded(webargs) {
     const page = webargs.object.page;
     const vm = page.bindingContext;
@@ -59,14 +55,6 @@ function onWebViewLoaded(webargs) {
     webView = webview;
     vm.set("result", "WebView is still loading...");
     vm.set("enabled", false);
-    // application.android.on(AndroidApplication.activityBackPressedEvent, (AndroidActivityBackPressedEventData) => {
-    //     data.cancel = true; // prevents default back button behavior
-    //     console.log("webview can go back " + this.webView.canGoBack);
-    //     if (webView.canGoBack) //if webview can go back
-    //         webView.goBack();
-    //     else
-    //         this.router.backToPreviousPage();
-    // });
 
     webview.on(webViewModule.WebView.loadFinishedEvent, (args) => {
         let message = "";
@@ -80,7 +68,7 @@ function onWebViewLoaded(webargs) {
         console.log(`WebView message - ${message}`);
     });
 }
-// going to the previous page if such is available
+
 function goBack(args) {
     const page = args.object.page;
     const vm = page.bindingContext;
@@ -90,7 +78,7 @@ function goBack(args) {
         vm.set("enabled", true);
     }
 }
-// going forward if a page is available
+
 function goForward(args) {
     const page = args.object.page;
     const vm = page.bindingContext;
@@ -101,7 +89,7 @@ function goForward(args) {
         vm.set("enabled", false);
     }
 }
-// changing WebView source
+
 function submit(args) {
     const page = args.object.page;
     const vm = page.bindingContext;
