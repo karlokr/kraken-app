@@ -3,7 +3,7 @@ const dialogsModule = require("tns-core-modules/ui/dialogs");
 const userService = require("~/services/user-service");
 const topmost = require("tns-core-modules/ui/frame").topmost;
 var appSettings = require("tns-core-modules/application-settings");
-var firebase =  require('nativescript-plugin-firebase');
+var firebase = require('nativescript-plugin-firebase');
 
 function LoginViewModel() {
     const viewModel = observableModule.fromObject({
@@ -72,10 +72,42 @@ function LoginViewModel() {
                 alert("Your passwords do not match.");
                 return;
             }
+            if (this.firstName.trim() === "" || this.lastName.trim() === "") {
+                alert("Please enter your full name.");
+                return;
+            }
+
+            function validateEmail(email) {
+                var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                return re.test(email);
+            }
+            if (!validateEmail(this.email.trim())) {
+                alert("Please enter a valid email.");
+                return;
+            }
+            if (this.password.length < 6) {
+                alert("Your password must contain at least 6 characters.");
+                return;
+            }
+            re = /[0-9]/;
+            if (!re.test(this.password)) {
+                alert("Error: password must contain at least one number (0-9)!");
+                return;
+            }
+            re = /[a-z]/;
+            if (!re.test(this.password)) {
+                alert("Error: password must contain at least one lowercase letter (a-z)!");
+                return;
+            }
+            re = /[A-Z]/;
+            if (!re.test(this.password)) {
+                alert("Error: password must contain at least one uppercase letter (A-Z)!");
+                return;
+            }
             userService.register({
-                    email: this.email,
-                    firstName: this.firstName,
-                    lastName: this.lastName,
+                    email: this.email.trim(),
+                    firstName: this.firstName.trim(),
+                    lastName: this.lastName.trim(),
                     password: this.password
                 }).then((data) => {
                     res = data["_bodyText"].split("\t");
