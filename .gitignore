@@ -34,3 +34,5 @@ typings/
 
 google-services.json
 krakentraining.jks
+.migration_backup
+.update_backup
