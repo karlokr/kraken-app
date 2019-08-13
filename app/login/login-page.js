@@ -8,11 +8,15 @@ orientation.disableRotation();
 exports.pageLoaded = function (args) {
     const page = args.object;
     page.bindingContext = loginViewModel;
-    
+    if (appSettings.getString("email") != null && appSettings.getString("email") != undefined) {
+        topmost().navigate({
+            moduleName: "home/home-page",
+            clearHistory: true
+        });
+    }
 }
 
 exports.onNavigatingTo = function (args) {
-    const page = args.object;
     if (appSettings.getString("email") != null && appSettings.getString("email") != undefined) {
         topmost().navigate({
             moduleName: "home/home-page",
