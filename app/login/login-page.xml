@@ -1,11 +1,12 @@
 <Page loaded="pageLoaded" class="page" actionBarHidden="true" 
-	xmlns="http://www.nativescript.org/tns.xsd"
-	navigatingTo="onNavigatingTo">
+	xmlns="http://www.nativescript.org/tns.xsd" navigatingTo="onNavigatingTo">
 	<FlexboxLayout class="page">
 		<StackLayout class="form">
-			<Image class="logo" src="~/images/logo.jpg" />
-			<Image class="logo-text" src="~/images/logotext.png" />
-			<Label class="header" text="" />
+			<StackLayout>
+				<Image class="logo" src="~/images/logo.jpg" visibility="{{ !isLoggingIn ? 'collapse' : 'visible' }}"/>
+				<Image class="logo-text" src="~/images/logotext.png" />
+				<Label class="header" text="" />
+			</StackLayout>
 
 			<StackLayout class="input-field">
 				<TextField class="input" text="{{ email }}" hint="Email" keyboardType="email" autocorrect="false" autocapitalizationType="none" returnKeyType="next" />
