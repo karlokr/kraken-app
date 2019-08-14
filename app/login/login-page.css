@@ -12,19 +12,19 @@
 
 .logo {
   margin-bottom: 12;
-  height: 210;
+  height: 150;
   font-weight: bold;
 }
 
 .logo-text {
-  width: 90%;
+  width: 70%;
 }
 
 .header {
   horizontal-align: center;
   font-size: 25;
   font-weight: 600;
-  margin-bottom: 70;
+  margin-bottom: 20;
   text-align: center;
   color: #3E646C;
 }
