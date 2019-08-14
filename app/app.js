@@ -1,8 +1,18 @@
 const application = require("tns-core-modules/application");
+var appSettings = require("tns-core-modules/application-settings");
 
-application.run({
-    moduleName: "app-root"
-});
+
+if (appSettings.getString("email") != null && appSettings.getString("email") != undefined) {
+    application.run({
+        moduleName: "app-home"
+    });
+} else {
+    application.run({
+        moduleName: "app-login"
+    });
+}
+
+
 
 
 
