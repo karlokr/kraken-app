@@ -1,6 +1,6 @@
 <Page xmlns="http://www.nativescript.org/tns.xsd" navigatingTo="onNavigatingTo" loaded="pageLoaded" unloaded="pageUnloaded">
     <ActionBar class="action-bar" flat="true" title="{{ url_title }}">
-        <NavigationButton text="" icon="~/images/next.png" tap="onNavBtnTap"/>
+        <NavigationButton text="" icon="~/images/next.png" tap="goBack"/>
     </ActionBar>
 
     <GridLayout rows="*">

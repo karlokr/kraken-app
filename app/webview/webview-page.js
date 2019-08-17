@@ -35,7 +35,7 @@ function backEvent(args) {
     if (webView.canGoBack) {
         args.cancel = true;
         webView.goBack();
-    } 
+    }
 }
 
 function onNavigatingTo(args) {
@@ -76,6 +76,11 @@ function goBack(args) {
     if (webview.canGoBack) {
         webview.goBack();
         vm.set("enabled", true);
+    } else {
+        topmost().navigate({
+            moduleName: "home/home-page",
+            clearHistory: true
+        });
     }
 }
 
