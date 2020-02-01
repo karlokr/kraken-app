@@ -3,7 +3,6 @@ const dialogsModule = require("tns-core-modules/ui/dialogs");
 const userService = require("~/services/user-service");
 const topmost = require("tns-core-modules/ui/frame").topmost;
 var appSettings = require("tns-core-modules/application-settings");
-var firebase = require('nativescript-plugin-firebase');
 
 function LoginViewModel() {
     const viewModel = observableModule.fromObject({
@@ -159,31 +158,6 @@ function LoginViewModel() {
             });
         }
     });
-
-    firebase.init({
-            showNotifications: true,
-            showNotificationsWhenInForeground: true,
-
-            onPushTokenReceivedCallback: (token) => {
-                console.log('[Firebase] onPushTokenReceivedCallback:', {
-                    token
-                });
-            },
-
-            onMessageReceivedCallback: (message) => {
-                console.log('[Firebase] onMessageReceivedCallback:', {
-                    message
-                });
-            }
-        })
-        .then(() => {
-            console.log('[Firebase] Initialized');
-        })
-        .catch(error => {
-            console.log('[Firebase] Initialize', {
-                error
-            });
-        });
 
     if (appSettings.getString("email") != null && appSettings.getString("email") != undefined) {
         topmost().navigate({

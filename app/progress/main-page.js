@@ -45,7 +45,7 @@ function PhotoGalleryComponent() {
 
             //store image in database
             var request = {
-              url: "https://joshkraken.com/sqlconnect/uploadPic.php",
+              url: "https://ecocitythegame.ca/sqlconnect-kraken/uploadPic.php",
               method: "POST",
               headers: {
                 "Content-Type": "application/octet-stream"
