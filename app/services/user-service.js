@@ -7,7 +7,7 @@ function handleErrors(error) {
 
 exports.register = function (user) {
     var promise = fetchModule.fetch(
-        "https://joshkraken.com/sqlconnect/register.php", {
+        "https://ecocitythegame.ca/sqlconnect/register.php", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -24,7 +24,7 @@ exports.register = function (user) {
 
 exports.login = function (user) {
     var promise = fetchModule.fetch(
-        "https://joshkraken.com/sqlconnect/login.php", {
+        "https://ecocitythegame.ca/sqlconnect/login.php", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -39,7 +39,7 @@ exports.login = function (user) {
 
 exports.resetPassword = function (email) {
     var promise = httpModule.request({
-        url: "https://joshkraken.com/sqlconnect/resetpw.php",
+        url: "https://ecocitythegame.ca/sqlconnect/resetpw.php",
         method: "POST",
         headers: {
             "Content-Type": "application/json"

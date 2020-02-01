@@ -2,7 +2,7 @@ const fetchModule = require("tns-core-modules/fetch");
 var appSettings = require("tns-core-modules/application-settings");
 exports.getGraphStats = function (data) {
     return fetchModule.fetch(
-            "https://joshkraken.com/sqlconnect/graphStats.php", {
+            "https://ecocitythegame.ca/sqlconnect/graphStats.php", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -21,7 +21,7 @@ exports.getGraphStats = function (data) {
 
 exports.getPhotos = function (data) {
     return fetchModule.fetch(
-            "https://joshkraken.com/sqlconnect/getPics.php", {
+            "https://ecocitythegame.ca/sqlconnect/getPics.php", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -40,7 +40,7 @@ exports.getPhotos = function (data) {
 
 exports.deletePhoto = function (data) {
     return fetchModule.fetch(
-            "https://joshkraken.com/sqlconnect/deletePic.php", {
+            "https://ecocitythegame.ca/sqlconnect/deletePic.php", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -62,7 +62,7 @@ exports.deletePhoto = function (data) {
 
 exports.getListView = function (data) {
     return fetchModule.fetch(
-            "https://joshkraken.com/sqlconnect/getListView.php", {
+            "https://ecocitythegame.ca/sqlconnect/getListView.php", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -82,7 +82,7 @@ exports.getListView = function (data) {
 
 exports.insertStat = function (data) {
     return fetchModule.fetch(
-            "https://joshkraken.com/sqlconnect/insertStat.php", {
+            "https://ecocitythegame.ca/sqlconnect/insertStat.php", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
